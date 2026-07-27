@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 100" fill="none">
+  <defs>
+    <radialGradient id="balloonGradientExact" cx="42%" cy="38%" r="62%">
+      <stop offset="0%" stop-color="#FFF97A" />
+      <stop offset="50%" stop-color="#FACC15" />
+      <stop offset="100%" stop-color="#EAB308" />
+    </radialGradient>
+    <linearGradient id="partyHatGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#E879F9" />
+      <stop offset="50%" stop-color="#EC4899" />
+      <stop offset="100%" stop-color="#A855F7" />
+    </linearGradient>
+    <linearGradient id="goldTextGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFF566" />
+      <stop offset="60%" stop-color="#F59E0B" />
+      <stop offset="100%" stop-color="#D97706" />
+    </linearGradient>
+    <filter id="textShadow3D" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="2.5" dy="2.5" stdDeviation="0" flood-color="#0F172A" flood-opacity="1" />
+    </filter>
+  </defs>
+
+  <g id="mascotBalloon" transform="translate(6, 4)">
+    <path d="M 44 80 Q 41 89 38 96 M 46 80 Q 49 89 52 96" stroke="#0F172A" stroke-width="3" stroke-linecap="round" fill="none" />
+    <polygon points="40,75 50,75 48,81 42,81" fill="#CA8A04" stroke="#0F172A" stroke-width="2" />
+    <ellipse cx="45" cy="44" rx="37" ry="35" fill="url(#balloonGradientExact)" stroke="#0F172A" stroke-width="3" />
+    <ellipse cx="66" cy="22" rx="5" ry="2.5" fill="#FFFFFF" opacity="0.75" transform="rotate(-20 66 22)" />
+    <path d="M 13 42 Q 3 47 7 57 Q 11 60 16 52" fill="none" stroke="#0F172A" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M 77 42 Q 87 47 83 57 Q 79 60 74 52" fill="none" stroke="#0F172A" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" />
+    <ellipse cx="32" cy="32" rx="7.5" ry="10" fill="#FFFFFF" stroke="#0F172A" stroke-width="2.5" />
+    <ellipse cx="34" cy="33" rx="4" ry="5.5" fill="#0EA5E9" />
+    <circle cx="35" cy="34" r="2" fill="#0F172A" />
+    <circle cx="33" cy="30" r="1.2" fill="#FFFFFF" />
+    <path d="M 24 20 Q 32 16 38 21" fill="none" stroke="#0F172A" stroke-width="2.5" stroke-linecap="round" />
+    <ellipse cx="55" cy="32" rx="7.5" ry="10" fill="#FFFFFF" stroke="#0F172A" stroke-width="2.5" />
+    <ellipse cx="53" cy="33" rx="4" ry="5.5" fill="#0EA5E9" />
+    <circle cx="52" cy="34" r="2" fill="#0F172A" />
+    <circle cx="54" cy="30" r="1.2" fill="#FFFFFF" />
+    <path d="M 49 21 Q 55 16 63 20" fill="none" stroke="#0F172A" stroke-width="2.5" stroke-linecap="round" />
+    <path d="M 43 36 Q 48 40 42 43" fill="none" stroke="#0F172A" stroke-width="2.5" stroke-linecap="round" />
+    <path d="M 23 45 Q 44 67 66 45 Z" fill="#0F172A" stroke="#0F172A" stroke-width="2" stroke-linejoin="round" />
+    <path d="M 32 54 Q 44 65 56 54 Q 44 49 32 54 Z" fill="#F43F5E" />
+    <g id="partyHat" transform="translate(25, -15) rotate(10)">
+      <polygon points="18,24 28,-2 38,24" fill="url(#partyHatGrad)" stroke="#0F172A" stroke-width="2.5" stroke-linejoin="round" />
+      <path d="M 20,16 L 36,16" stroke="#FFFFFF" stroke-width="1.8" />
+      <path d="M 22,8 L 34,8" stroke="#FACC15" stroke-width="1.8" />
+      <path d="M 28,-7 L 30,-3 L 34,-3 L 31,0 L 32,4 L 28,2 L 24,4 L 25,0 L 22,-3 L 26,-3 Z" fill="#FACC15" stroke="#0F172A" stroke-width="1" />
+    </g>
+  </g>
+
+  <g id="brandTypography" transform="translate(94, 0)">
+    <text x="24" y="42" font-family="Outfit, sans-serif" font-weight="900" font-size="38" font-style="italic" letter-spacing="2" fill="url(#goldTextGrad)" stroke="#0F172A" stroke-width="3.5" paint-order="stroke fill" filter="url(#textShadow3D)">EVENT</text>
+    <text x="0" y="76" font-family="Outfit, sans-serif" font-weight="900" font-size="44" letter-spacing="1" fill="url(#goldTextGrad)" stroke="#0F172A" stroke-width="4" paint-order="stroke fill" filter="url(#textShadow3D)">USHERS</text>
+    <text x="4" y="94" font-family="Outfit, sans-serif" font-weight="800" font-size="9.5" letter-spacing="1.8" fill="#0F172A">THE CREW - CONNECT HUB</text>
+  </g>
+</svg>

@@ -1,0 +1,150 @@
+const mongoose = require("mongoose");
+const dotenv = require("dotenv");
+const path = require("path");
+
+dotenv.config({ path: path.join(__dirname, ".env") });
+
+const PageContent = require("./models/PageContent");
+const Blog = require("./models/Blog");
+const Category = require("./models/Category");
+const HireRequest = require("./models/HireRequest");
+const User = require("./models/User");
+
+const seedDatabase = async () => {
+  try {
+    const connStr = process.env.MONGODB_URI;
+    console.log(`[MongoDB Seeder]: Connecting to Atlas Cluster...`);
+    await mongoose.connect(connStr);
+    console.log(`[MongoDB Connected]: ${mongoose.connection.host}`);
+
+    // 1. Seed Page Contents
+    console.log("Seeding Page Content collection...");
+    await PageContent.deleteMany({});
+    await PageContent.insertMany([
+      {
+        pageKey: "home",
+        pageTitle: "Home Page",
+        path: "/",
+        heroHeadline: "We connect events with vetted ushers & crew — instantly.",
+        heroSubheading: "The all-in-one platform for event organizers to find vetted, reliable, and professional ushers & crew in minutes across Kenya.",
+        metaTitle: "Event Ushers — Premium Vetted Ushers & Crew Matching Platform",
+        metaDescription: "We connect events with vetted ushers & crew instantly. Hire corporate hostesses, event security, and technical staff in Nairobi, Mombasa & Kisumu.",
+        customContent: {
+          heroBadgeText: "EASY AND QUICK HIRE",
+          heroImageUrl: "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1200&q=80",
+          organizerCount: "250+",
+          usherCount: "1,500+",
+          projectCount: "350+",
+          cityCount: "18+",
+          supportStaffCount: "500+",
+        },
+      },
+      {
+        pageKey: "about",
+        pageTitle: "About Us Page",
+        path: "/about",
+        heroHeadline: "The Crew Connect-Hub for Unforgettable Events",
+        heroSubheading: "Empowering event organizers with vetted hospitality talent and seamless protocol support.",
+        metaTitle: "About Us — Event Ushers",
+        metaDescription: "Learn about Event Ushers mission, vision, and staffing benchmarks across Kenya.",
+        customContent: {
+          missionStatement: "To transform every event experience across Africa through smart matching technology, top-tier vetted talent, and unyielding commitment to hospitality excellence.",
+          visionStatement: "To become the leading digital infrastructure for event staffing, talent management, and hospitality logistics across Africa and beyond.",
+        },
+      },
+      {
+        pageKey: "contact",
+        pageTitle: "Contact Us Page",
+        path: "/contact",
+        heroHeadline: "Get in Touch with Our Staffing Coordinators",
+        heroSubheading: "Have questions about hiring ushers, event security, or technical crew for your upcoming event? We are available 24/7.",
+        metaTitle: "Contact Us — Event Ushers Staffing",
+        metaDescription: "Get in touch with Event Ushers staffing coordinators in Nairobi, Mombasa, and Kisumu.",
+        customContent: {
+          phone: "+254 (0) 700 EVENT CREW",
+          email: "info@eventushers.co.ke",
+          officeAddress: "Westlands Commercial Center, Ring Road, Westlands, Nairobi, Kenya",
+          workingHours: "Monday - Saturday: 8:00 AM - 8:00 PM (Emergency 24/7 Dispatch)",
+          instagramUrl: "https://instagram.com/eventushers",
+          facebookUrl: "https://facebook.com/eventushers",
+          twitterUrl: "https://twitter.com/eventushers",
+          linkedinUrl: "https://linkedin.com/company/eventushers",
+        },
+      },
+    ]);
+
+    // 2. Seed Categories
+    console.log("Seeding Categories collection...");
+    await Category.deleteMany({});
+    await Category.insertMany([
+      { name: "Guest Services & Hostesses", slug: "guest-services", description: "Polished corporate hostesses for ushering & VIP check-in", count: 42 },
+      { name: "VIP Protocol & Security", slug: "event-security", description: "Bouncers, bodyguards, and crowd control personnel", count: 28 },
+      { name: "Technical & AV Crew", slug: "technical-staff", description: "Stage managers, sound technicians, and lighting engineers", count: 19 },
+      { name: "Media & Photography", slug: "photography-media", description: "Event photographers, videographers, and drone operators", count: 15 },
+    ]);
+
+    // 3. Seed Inbound Hire / Contact Requests
+    console.log("Seeding Hire Requests & Contact collection...");
+    await HireRequest.deleteMany({});
+    await HireRequest.insertMany([
+      {
+        type: "contact_inquiry",
+        fullName: "Kamau Njuguna",
+        email: "kamau@innovatekenya.co.ke",
+        phone: "+254 712 345 678",
+        eventType: "Corporate Tech Summit",
+        crewCount: "20-50 Staff & Security",
+        location: "KICC Nairobi",
+        notes: "Inquiring about 15 hostesses and 5 VIP security bouncers for our annual tech summit at KICC Nairobi.",
+        status: "Pending",
+      },
+      {
+        type: "contact_inquiry",
+        fullName: "Amina Hassan",
+        email: "amina@mombasagalas.com",
+        phone: "+254 733 987 654",
+        eventType: "Gala & Award Ceremony",
+        crewCount: "5-20 Crew Members",
+        location: "Nyali Beach Resort Mombasa",
+        notes: "Looking for 10 hostess ushers dressed in formal black gowns for an evening award ceremony.",
+        status: "Replied",
+      },
+    ]);
+
+    // 4. Seed Blogs
+    console.log("Seeding Blogs collection...");
+    await Blog.deleteMany({});
+    await Blog.insertMany([
+      {
+        title: "How Event Ushers Support Staff Members Across Kenya",
+        slug: "how-event-ushers-support-staff-members-across-kenya",
+        category: "Staffing & Logistics",
+        excerpt: "Explore how standardized onboarding, protocol training, and digital payout tracking empower our crew members.",
+        content: "Standardized onboarding and protocol training empower our crew members to deliver world-class event hospitality across Nairobi, Mombasa, and Kisumu.",
+        image: "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=600&q=80",
+        author: "Event Ushers Editorial",
+        date: "October 14, 2026",
+        published: true,
+      },
+      {
+        title: "How Event Ushers Connects Organizers with the Perfect Crew",
+        slug: "how-event-ushers-connects-organizers-with-the-perfect-crew",
+        category: "Technology",
+        excerpt: "Learn how real-time location matching, verified identity checks, and automated scheduling eliminate event staffing headaches.",
+        content: "Real-time location matching and identity verification ensure fast dispatch of qualified event staff.",
+        image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=600&q=80",
+        author: "Wanjiru Mwangi",
+        date: "October 02, 2026",
+        published: true,
+      },
+    ]);
+
+    console.log("✅ [MongoDB Seeder Complete]: All Collections Created & Seeded Successfully in Atlas!");
+    process.exit(0);
+  } catch (err) {
+    console.error("❌ [MongoDB Seeder Error]:", err);
+    process.exit(1);
+  }
+};
+
+seedDatabase();
