@@ -3,13 +3,12 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Logo } from "@/components/Logo";
 import { 
   LayoutDashboard, 
   FileText, 
   Layers, 
-  Users, 
   FolderKanban, 
-  Sparkles, 
   LogOut,
   ExternalLink,
   ChevronRight,
@@ -39,20 +38,15 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({ onLogout }) => {
   ];
 
   return (
-    <aside className="w-64 bg-slate-950 text-white h-screen sticky top-0 border-r border-slate-800/80 flex flex-col justify-between shrink-0 overflow-y-auto z-40 selection:bg-amber-500 selection:text-slate-950">
+    <aside className="w-64 bg-slate-950 text-white h-screen sticky top-0 border-r border-slate-800/80 flex flex-col justify-between shrink-0 overflow-y-auto no-scrollbar z-40 selection:bg-amber-500 selection:text-slate-950">
       <div className="p-6 space-y-7">
         
-        {/* Brand Header */}
-        <Link href="/admin" className="flex items-center gap-3 group">
-          <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-amber-400 via-orange-500 to-pink-500 flex items-center justify-center shadow-lg shadow-pink-500/20 group-hover:scale-105 transition-transform">
-            <Sparkles className="w-5 h-5 text-white fill-white/20" />
-          </div>
-          <div>
-            <h2 className="text-base font-extrabold text-white tracking-tight leading-none mb-1">Event Ushers</h2>
-            <span className="text-[10px] font-extrabold text-amber-400 uppercase tracking-widest bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/20 inline-block">
-              Admin Portal
-            </span>
-          </div>
+        {/* Brand Header with Official Logo */}
+        <Link href="/admin" className="flex flex-col items-start gap-2.5 group">
+          <Logo size="sm" variant="dark" />
+          <span className="text-[10px] font-extrabold text-amber-400 uppercase tracking-widest bg-amber-500/10 px-2.5 py-0.5 rounded-full border border-amber-500/20 inline-block">
+            ADMIN PORTAL
+          </span>
         </Link>
 
         {/* Main Navigation Section */}

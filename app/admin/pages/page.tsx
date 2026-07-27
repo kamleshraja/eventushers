@@ -50,6 +50,7 @@ export default function AdminPageManagerPage() {
       metaTitle: "Event Ushers — Premium Vetted Ushers & Crew Matching Platform",
       metaDescription: "We connect events with vetted ushers & crew instantly. Hire corporate hostesses, event security, and technical staff in Nairobi, Mombasa & Kisumu.",
       customFields: {
+        siteLogoUrl: "/images/logo.png",
         heroBadgeText: "EASY AND QUICK HIRE",
         heroImageUrl: "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1200&q=80",
         trustHighlight1: "100% Background Vetted",
@@ -450,10 +451,10 @@ export default function AdminPageManagerPage() {
                     // Define field groups for clean separate cards
                     const groups: { title: string; icon: any; color: string; keys: string[] }[] = [
                       {
-                        title: "Hero & Banner Customizations",
+                        title: "Hero & Brand Logo Customizations",
                         icon: Sparkles,
                         color: "text-amber-500",
-                        keys: ["heroBadgeText", "heroImageUrl", "trustHighlight1", "trustHighlight2", "trustHighlight3"],
+                        keys: ["siteLogoUrl", "heroBadgeText", "heroImageUrl", "trustHighlight1", "trustHighlight2", "trustHighlight3"],
                       },
                       {
                         title: "About Us Section Content",
@@ -552,7 +553,7 @@ export default function AdminPageManagerPage() {
                               const v = customFields[k] || "";
                               return (
                                 <div key={k} className="space-y-1 sm:col-span-2">
-                                  {k.toLowerCase().includes("image") || k.toLowerCase().includes("img") ? (
+                                  {k.toLowerCase().includes("image") || k.toLowerCase().includes("img") || k.toLowerCase().includes("logo") || k.toLowerCase().includes("avatar") ? (
                                     <ImageUploader
                                       value={v}
                                       onChange={(newUrl) => setCustomFields({ ...customFields, [k]: newUrl })}

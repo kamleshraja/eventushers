@@ -34,19 +34,22 @@
   .bg-glass {
     @apply bg-white/90 backdrop-blur-md border border-slate-200/80 shadow-md;
   }
+  /* Hide scrollbar utility */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 }
 
-/* Custom scrollbar */
+/* Hide scrollbar globally for clean borderless design */
 ::-webkit-scrollbar {
-  width: 8px;
-}
-::-webkit-scrollbar-track {
-  background: #ffffff;
+  width: 0px;
+  height: 0px;
+  background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: #f59e0b;
-  border-radius: 4px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #d97706;
+  background: transparent;
 }
