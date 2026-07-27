@@ -12,6 +12,7 @@ export interface ServiceDetail {
   features: string[];
   deliverables: string[];
   idealFor: string[];
+  image?: string;
 }
 
 interface ServiceModalProps {

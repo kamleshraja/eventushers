@@ -205,6 +205,12 @@ export default function AdminBlogsPage() {
           authorAvatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&q=80",
           tags: ["Kenya Events", "Staffing"],
           keyTakeaways: ["Standardized protocol ensures event hospitality excellence."],
+          sections: [
+            {
+              heading: "Executive Overview",
+              paragraphs: [content || excerpt],
+            },
+          ],
         };
         const updated = [newArticle, ...articles];
         saveArticlesToStateAndStorage(updated);
