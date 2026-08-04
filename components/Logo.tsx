@@ -23,16 +23,16 @@ export const Logo: React.FC<LogoProps> = ({
     metaTitle: "Event Ushers",
     metaDescription: "We connect events with vetted ushers & crew instantly.",
     customFields: {
-      siteLogoUrl: "/images/logo.png",
+      siteLogoUrl: "/images/logo.jpeg",
     },
   });
 
-  const customLogo = homeData.customFields?.siteLogoUrl || "/images/logo.png";
+  const customLogo = homeData.customFields?.siteLogoUrl || "/images/logo.jpeg";
 
   const sizeClasses = {
-    sm: "h-9 sm:h-10",
-    md: "h-12 sm:h-14 lg:h-15",
-    lg: "h-16 sm:h-20",
+    sm: "h-11 sm:h-13",
+    md: "h-16 sm:h-20 lg:h-24",
+    lg: "h-24 sm:h-32",
   };
 
   const isDark = variant === "dark";

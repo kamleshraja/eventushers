@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ServiceDetail } from "./ServiceModal";
 import { servicesData } from "@/data/servicesData";
 import { UserCheck, Shield, Sparkles, Camera, Sliders, TrendingUp, ArrowRight, Check } from "lucide-react";
+import { usePageContent } from "@/lib/pageContent";
 
 export { servicesData };
 
@@ -14,6 +15,25 @@ interface ServicesProps {
 }
 
 export const Services: React.FC<ServicesProps> = ({ onSelectService, onOpenHire }) => {
+  const homeData = usePageContent("home", {
+    key: "home",
+    title: "Home Page",
+    path: "/",
+    headline: "We connect events with vetted ushers & crew — instantly.",
+    subheading: "The all-in-one platform for event organizers to find vetted, reliable, and professional ushers & crew in minutes.",
+    metaTitle: "Event Ushers",
+    metaDescription: "We connect events with vetted ushers & crew instantly.",
+    customFields: {
+      servicesSectionBadge: "OUR CORE SERVICES",
+      servicesSectionTitle: "Comprehensive Staffing Solutions Tailored for Every Occasion",
+      servicesSectionDescription: "From intimate private banquets to massive international expos, our vetted crew delivers flawless execution.",
+    },
+  });
+
+  const sectionBadge = homeData.customFields?.servicesSectionBadge || "OUR CORE SERVICES";
+  const sectionTitle = homeData.customFields?.servicesSectionTitle || "Comprehensive Staffing Solutions Tailored for Every Occasion";
+  const sectionDescription = homeData.customFields?.servicesSectionDescription || "From intimate private banquets to massive international expos, our vetted crew delivers flawless execution.";
+
   const getIcon = (id: string) => {
     switch (id) {
       case "guest-services":
@@ -36,19 +56,18 @@ export const Services: React.FC<ServicesProps> = ({ onSelectService, onOpenHire 
   return (
     <section id="services" className="py-16 md:py-20 relative bg-white text-slate-900 border-b border-slate-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
+
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16 space-y-3">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-950 text-amber-400 text-xs sm:text-sm font-extrabold uppercase tracking-wider">
             <Sparkles className="w-4 h-4" />
-            OUR CORE SERVICES
+            {sectionBadge}
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-950 tracking-tight">
-            Comprehensive Staffing Solutions <br />
-            <span className="text-gradient-amber">Tailored for Every Occasion</span>
+            {sectionTitle}
           </h2>
           <p className="text-base sm:text-lg lg:text-xl text-slate-600 font-normal">
-            From intimate private banquets to massive international expos, our vetted crew delivers flawless execution.
+            {sectionDescription}
           </p>
         </div>
 

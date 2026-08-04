@@ -25,6 +25,24 @@ export const About: React.FC<AboutProps> = () => {
       aboutSectionDescription: "Your ultimate partner in elevated event experiences across Kenya.",
       missionStatement: "To transform every event experience across Africa through smart matching technology, top-tier vetted talent, and unyielding commitment to hospitality excellence.",
       visionStatement: "To become the leading digital infrastructure for event staffing, talent management, and hospitality logistics across Africa and beyond.",
+      missionTitle: "Empowering Event Organizers Daily",
+      visionTitle: "Setting the Continental Standard",
+      aboutImage1Url: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=800&q=80",
+      aboutImage1Label: "Guest Hostesses",
+      aboutImage2Url: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80",
+      aboutImage2Label: "On-Site Briefing",
+      aboutImage3Url: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=800&q=80",
+      aboutImage3Label: "Protocol & VIP Security",
+      experienceBadgeYears: "5+",
+      experienceBadgeTitle: "Years of Excellence",
+      experienceBadgeSubtext: "500+ High-Profile Events Served",
+      whyChooseUsHeading: "Why Event Organizers Choose Us",
+      whyChooseUsItem1: "Vetted & Background Checked Crew",
+      whyChooseUsItem2: "On-Demand Instant Staff Dispatch",
+      whyChooseUsItem3: "Corporate Dress Code & Etiquette",
+      whyChooseUsItem4: "Dedicated On-Site Supervisor",
+      whyChooseUsItem5: "Punctuality & Reliability Guarantee",
+      whyChooseUsItem6: "Seamless Digital Attendance Tracking",
     },
   });
 
@@ -33,14 +51,26 @@ export const About: React.FC<AboutProps> = () => {
   const sectionDescription = homeData.customFields?.aboutSectionDescription || "Your ultimate partner in elevated event experiences across Kenya.";
   const missionText = homeData.customFields?.missionStatement || "To transform every event experience across Africa through smart matching technology, top-tier vetted talent, and unyielding commitment to hospitality excellence.";
   const visionText = homeData.customFields?.visionStatement || "To become the leading digital infrastructure for event staffing, talent management, and hospitality logistics across Africa and beyond.";
+  const missionTitle = homeData.customFields?.missionTitle || "Empowering Event Organizers Daily";
+  const visionTitle = homeData.customFields?.visionTitle || "Setting the Continental Standard";
+  const aboutImage1Url = homeData.customFields?.aboutImage1Url || "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=800&q=80";
+  const aboutImage1Label = homeData.customFields?.aboutImage1Label || "Guest Hostesses";
+  const aboutImage2Url = homeData.customFields?.aboutImage2Url || "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80";
+  const aboutImage2Label = homeData.customFields?.aboutImage2Label || "On-Site Briefing";
+  const aboutImage3Url = homeData.customFields?.aboutImage3Url || "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=800&q=80";
+  const aboutImage3Label = homeData.customFields?.aboutImage3Label || "Protocol & VIP Security";
+  const experienceBadgeYears = homeData.customFields?.experienceBadgeYears || "5+";
+  const experienceBadgeTitle = homeData.customFields?.experienceBadgeTitle || "Years of Excellence";
+  const experienceBadgeSubtext = homeData.customFields?.experienceBadgeSubtext || "500+ High-Profile Events Served";
+  const whyChooseUsHeading = homeData.customFields?.whyChooseUsHeading || "Why Event Organizers Choose Us";
 
   const highlights = [
-    "Vetted & Background Checked Crew",
-    "On-Demand Instant Staff Dispatch",
-    "Corporate Dress Code & Etiquette",
-    "Dedicated On-Site Supervisor",
-    "Punctuality & Reliability Guarantee",
-    "Seamless Digital Attendance Tracking",
+    homeData.customFields?.whyChooseUsItem1 || "Vetted & Background Checked Crew",
+    homeData.customFields?.whyChooseUsItem2 || "On-Demand Instant Staff Dispatch",
+    homeData.customFields?.whyChooseUsItem3 || "Corporate Dress Code & Etiquette",
+    homeData.customFields?.whyChooseUsItem4 || "Dedicated On-Site Supervisor",
+    homeData.customFields?.whyChooseUsItem5 || "Punctuality & Reliability Guarantee",
+    homeData.customFields?.whyChooseUsItem6 || "Seamless Digital Attendance Tracking",
   ];
 
   return (
@@ -73,25 +103,25 @@ export const About: React.FC<AboutProps> = () => {
               <div className="space-y-4">
                 <div className="relative group overflow-hidden rounded-3xl shadow-lg border border-slate-200">
                   <img
-                    src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=800&q=80"
-                    alt="Event Hostesses Ushering"
+                    src={aboutImage1Url}
+                    alt={aboutImage1Label}
                     className="w-full h-64 sm:h-72 object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 to-transparent" />
                   <span className="absolute bottom-4 left-4 px-3.5 py-1.5 bg-white/90 backdrop-blur-sm text-slate-900 text-xs sm:text-sm font-bold rounded-full">
-                    Guest Hostesses
+                    {aboutImage1Label}
                   </span>
                 </div>
 
                 <div className="relative group overflow-hidden rounded-3xl shadow-lg border border-slate-200">
                   <img
-                    src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80"
-                    alt="Team Briefing"
+                    src={aboutImage2Url}
+                    alt={aboutImage2Label}
                     className="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 to-transparent" />
                   <span className="absolute bottom-3 left-4 px-3.5 py-1.5 bg-amber-400 text-slate-950 text-xs sm:text-sm font-bold rounded-full shadow-md border border-amber-400/40">
-                    On-Site Briefing
+                    {aboutImage2Label}
                   </span>
                 </div>
               </div>
@@ -99,13 +129,13 @@ export const About: React.FC<AboutProps> = () => {
               <div className="space-y-4 pt-8">
                 <div className="relative group overflow-hidden rounded-3xl shadow-lg border border-slate-200">
                   <img
-                    src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=800&q=80"
-                    alt="Event Security & Protocol"
+                    src={aboutImage3Url}
+                    alt={aboutImage3Label}
                     className="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 to-transparent" />
                   <span className="absolute bottom-4 left-4 px-3.5 py-1.5 bg-slate-900/90 text-white text-xs sm:text-sm font-bold rounded-full">
-                    Protocol & VIP Security
+                    {aboutImage3Label}
                   </span>
                 </div>
               </div>
@@ -115,15 +145,15 @@ export const About: React.FC<AboutProps> = () => {
             {/* Experience Floating Badge */}
             <div className="absolute -bottom-6 -right-2 sm:right-6 bg-slate-900 text-white p-5 rounded-3xl shadow-2xl border-2 border-amber-400 flex items-center gap-4 max-w-xs animate-float">
               <div className="w-14 h-14 rounded-2xl bg-amber-500 text-slate-950 flex flex-col items-center justify-center font-black shrink-0">
-                <span className="text-2xl leading-none">5+</span>
+                <span className="text-2xl leading-none">{experienceBadgeYears}</span>
                 <span className="text-[10px] uppercase tracking-tighter font-extrabold">Years</span>
               </div>
               <div>
                 <h4 className="text-base font-extrabold text-white leading-tight">
-                  Years of Excellence
+                  {experienceBadgeTitle}
                 </h4>
                 <p className="text-xs sm:text-sm text-amber-400 font-semibold">
-                  500+ High-Profile Events Served
+                  {experienceBadgeSubtext}
                 </p>
               </div>
             </div>
@@ -166,7 +196,7 @@ export const About: React.FC<AboutProps> = () => {
                 <div className="space-y-3">
                   <div className="flex items-center gap-2 text-amber-600 font-bold text-base">
                     <Zap className="w-5 h-5" />
-                    <span>Empowering Event Organizers Daily</span>
+                    <span>{missionTitle}</span>
                   </div>
                   <p className="text-base sm:text-lg text-slate-700 leading-relaxed font-normal">
                     "{missionText}"
@@ -176,7 +206,7 @@ export const About: React.FC<AboutProps> = () => {
                 <div className="space-y-3">
                   <div className="flex items-center gap-2 text-amber-600 font-bold text-base">
                     <Award className="w-5 h-5 text-amber-600" />
-                    <span>Setting the Continental Standard</span>
+                    <span>{visionTitle}</span>
                   </div>
                   <p className="text-base sm:text-lg text-slate-700 leading-relaxed font-normal">
                     "{visionText}"
@@ -188,7 +218,7 @@ export const About: React.FC<AboutProps> = () => {
             {/* Why Choose Us Grid */}
             <div className="space-y-3">
               <h3 className="text-xl font-bold text-slate-900">
-                Why Event Organizers Choose Us
+                {whyChooseUsHeading}
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                 {highlights.map((item, idx) => (

@@ -51,10 +51,10 @@ export const Footer: React.FC<FooterProps> = ({ onOpenHire, onOpenJoin }) => {
   return (
     <footer id="contact" className="bg-white text-slate-900 border-t border-slate-200 pt-10 pb-6 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
+
         {/* Main Footer Grid - Mobile Optimized (2 cols for links on mobile) */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-10 pb-8 border-b border-slate-200">
-          
+
           {/* Brand & Newsletter Column */}
           <div className="lg:col-span-5 space-y-4">
             <Logo variant="light" />
@@ -100,7 +100,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenHire, onOpenJoin }) => {
 
           {/* Links Section: Side-by-side 2-column grid on mobile (7 cols on desktop) */}
           <div className="lg:col-span-7 grid grid-cols-2 sm:grid-cols-3 gap-6 lg:gap-8">
-            
+
             {/* Quick Links Column */}
             <div className="space-y-3">
               <h4 className="text-xs sm:text-sm font-extrabold text-slate-950 uppercase tracking-wider">
@@ -170,7 +170,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenHire, onOpenJoin }) => {
 
         {/* Bottom Copyright & Legal Links */}
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs sm:text-sm text-slate-600 font-semibold text-center sm:text-left">
-          <p>© {new Date().getFullYear()} Event Ushers Platform Ltd. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Event Ushers Platform Ltd. All rights reserved.  | Developed by <Link href="https://databrainit.com" target="_blank" rel="noopener noreferrer">Databrain Technology Pvt. Ltd.</Link></p>
           <div className="flex items-center gap-4 sm:gap-6">
             <Link href="/privacy-policy" className="hover:text-amber-600 transition-colors">Privacy Policy</Link>
             <Link href="/terms" className="hover:text-amber-600 transition-colors">Terms of Service</Link>

@@ -6,17 +6,18 @@ import { AdminSidebar } from "@/components/admin/AdminSidebar";
 import { AdminHeader } from "@/components/admin/AdminHeader";
 import { ImageUploader } from "@/components/admin/ImageUploader";
 import { STORAGE_KEY, saveAllPagesToStorage } from "@/lib/pageContent";
-import { 
-  Globe, 
-  Edit3, 
-  ExternalLink, 
-  Sparkles, 
-  Check, 
-  Home, 
-  Info, 
-  Layers, 
-  PhoneCall, 
-  ShieldCheck, 
+import { API_BASE_URL } from "@/lib/api";
+import {
+  Globe,
+  Edit3,
+  ExternalLink,
+  Sparkles,
+  Check,
+  Home,
+  Info,
+  Layers,
+  PhoneCall,
+  ShieldCheck,
   BookOpen,
   HelpCircle,
   ArrowLeft,
@@ -59,8 +60,29 @@ export default function AdminPageManagerPage() {
         aboutSectionBadge: "WHY CHOOSE EVENT USHERS",
         aboutSectionTitle: "Kenya's Premier Tech-Enabled Staffing Engine",
         aboutSectionDescription: "We bridge the gap between event organizers and background-checked, corporate-ready hospitality talent.",
-        servicesSectionBadge: "OUR CORE OFFERINGS",
-        servicesSectionTitle: "Tailored Staffing Categories for Every Occasion",
+        missionStatement: "To transform every event experience across Africa through smart matching technology, top-tier vetted talent, and unyielding commitment to hospitality excellence.",
+        visionStatement: "To become the leading digital infrastructure for event staffing, talent management, and hospitality logistics across Africa and beyond.",
+        missionTitle: "Empowering Event Organizers Daily",
+        visionTitle: "Setting the Continental Standard",
+        aboutImage1Url: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=800&q=80",
+        aboutImage1Label: "Guest Hostesses",
+        aboutImage2Url: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80",
+        aboutImage2Label: "On-Site Briefing",
+        aboutImage3Url: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=800&q=80",
+        aboutImage3Label: "Protocol & VIP Security",
+        experienceBadgeYears: "5+",
+        experienceBadgeTitle: "Years of Excellence",
+        experienceBadgeSubtext: "500+ High-Profile Events Served",
+        whyChooseUsHeading: "Why Event Organizers Choose Us",
+        whyChooseUsItem1: "Vetted & Background Checked Crew",
+        whyChooseUsItem2: "On-Demand Instant Staff Dispatch",
+        whyChooseUsItem3: "Corporate Dress Code & Etiquette",
+        whyChooseUsItem4: "Dedicated On-Site Supervisor",
+        whyChooseUsItem5: "Punctuality & Reliability Guarantee",
+        whyChooseUsItem6: "Seamless Digital Attendance Tracking",
+        servicesSectionBadge: "OUR CORE SERVICES",
+        servicesSectionTitle: "Comprehensive Staffing Solutions Tailored for Every Occasion",
+        servicesSectionDescription: "From intimate private banquets to massive international expos, our vetted crew delivers flawless execution.",
         blogSectionBadge: "INSIGHTS & NEWS",
         blogSectionTitle: "Latest Event Industry Trends & Protocol Guides",
         testimonialsSectionBadge: "ORGANIZER TESTIMONIALS",
@@ -190,16 +212,18 @@ export default function AdminPageManagerPage() {
   const [savedSuccess, setSavedSuccess] = useState(false);
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      if (stored) {
-        try {
-          const parsed = JSON.parse(stored);
-          setPages((prev) =>
-            prev.map((p) => {
-              const found = parsed.find((item: any) => item.key === p.key);
-              return found
-                ? {
+    const loadPages = async () => {
+      // 1. First sync with local storage if present
+      if (typeof window !== "undefined") {
+        const stored = localStorage.getItem(STORAGE_KEY);
+        if (stored) {
+          try {
+            const parsed = JSON.parse(stored);
+            setPages((prev) =>
+              prev.map((p) => {
+                const found = parsed.find((item: any) => item.key === p.key);
+                return found
+                  ? {
                     ...p,
                     headline: found.headline ?? p.headline,
                     subheading: found.subheading ?? p.subheading,
@@ -207,12 +231,51 @@ export default function AdminPageManagerPage() {
                     metaDescription: found.metaDescription ?? p.metaDescription,
                     customFields: { ...p.customFields, ...found.customFields },
                   }
-                : p;
-            })
-          );
-        } catch (e) {}
+                  : p;
+              })
+            );
+          } catch (e) { }
+        }
       }
-    }
+
+      // 2. Fetch fresh data from Express API database
+      try {
+        const res = await fetch(`${API_BASE_URL}/pages`, { cache: "no-store" });
+        if (res.ok) {
+          const json = await res.json();
+          if (json.success && json.data) {
+            const backendPages = json.data;
+            setPages((prev) => {
+              const updated = prev.map((p) => {
+                const found = backendPages.find((item: any) => item.pageKey === p.key);
+                return found
+                  ? {
+                    ...p,
+                    headline: found.heroHeadline ?? p.headline,
+                    subheading: found.heroSubheading ?? p.subheading,
+                    metaTitle: found.metaTitle ?? p.metaTitle,
+                    metaDescription: found.metaDescription ?? p.metaDescription,
+                    customFields: { ...p.customFields, ...found.customContent },
+                  }
+                  : p;
+              });
+
+              // Also sync back to localStorage
+              if (typeof window !== "undefined") {
+                const serializable = updated.map(({ icon, ...rest }) => rest);
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(serializable));
+              }
+
+              return updated;
+            });
+          }
+        }
+      } catch (err) {
+        console.warn("Failed to fetch fresh pages from API, relying on local/fallbacks.", err);
+      }
+    };
+
+    loadPages();
   }, []);
 
   const selectedPage = pages.find((p) => p.key === activeKey) || null;
@@ -234,13 +297,13 @@ export default function AdminPageManagerPage() {
     const updatedPages = pages.map((p) =>
       p.key === selectedPage.key
         ? {
-            ...p,
-            headline,
-            subheading,
-            metaTitle,
-            metaDescription,
-            customFields,
-          }
+          ...p,
+          headline,
+          subheading,
+          metaTitle,
+          metaDescription,
+          customFields,
+        }
         : p
     );
 
@@ -267,16 +330,15 @@ export default function AdminPageManagerPage() {
         />
 
         <main className="p-6 md:p-8 space-y-6 flex-1">
-          
+
           {/* Top Quick Page Selector Bar */}
           <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
             <button
               onClick={() => setActiveKey(null)}
-              className={`px-4 py-2.5 rounded-full text-xs font-extrabold whitespace-nowrap transition-all cursor-pointer ${
-                activeKey === null
+              className={`px-4 py-2.5 rounded-full text-xs font-extrabold whitespace-nowrap transition-all cursor-pointer ${activeKey === null
                   ? "bg-slate-950 text-white shadow-md"
                   : "bg-white text-slate-700 hover:bg-slate-100 border border-slate-200"
-              }`}
+                }`}
             >
               All Pages View
             </button>
@@ -287,11 +349,10 @@ export default function AdminPageManagerPage() {
                 <button
                   key={pg.key}
                   onClick={() => handleSelectPageForEditing(pg)}
-                  className={`px-4 py-2.5 rounded-full text-xs font-extrabold whitespace-nowrap transition-all cursor-pointer flex items-center gap-2 ${
-                    isSelected
+                  className={`px-4 py-2.5 rounded-full text-xs font-extrabold whitespace-nowrap transition-all cursor-pointer flex items-center gap-2 ${isSelected
                       ? "bg-gradient-to-r from-amber-400 to-pink-500 text-white shadow-md shadow-pink-500/20"
                       : "bg-white text-slate-700 hover:bg-slate-100 border border-slate-200"
-                  }`}
+                    }`}
                 >
                   <span>{pg.title}</span>
                   <span className="opacity-70 font-mono">({pg.path})</span>
@@ -365,7 +426,7 @@ export default function AdminPageManagerPage() {
           {/* VIEW MODE 2: DEDICATED INLINE FULL-PAGE EDITOR (NO POPUP) */}
           {selectedPage && (
             <div className="space-y-6 text-left animate-fadeIn">
-              
+
               {/* Back Bar & Save Button Header */}
               <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div className="flex items-center gap-3">
@@ -412,10 +473,10 @@ export default function AdminPageManagerPage() {
 
               {/* Main 2-Column Editor Layout */}
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                
+
                 {/* Left Column: Editable Form Fields (8 Cols) */}
                 <div className="lg:col-span-8 space-y-6">
-                  
+
                   {/* Hero & Headlines Box */}
                   <div className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-xs space-y-5">
                     <div className="flex items-center gap-2 border-b border-slate-100 pb-3">
@@ -460,13 +521,51 @@ export default function AdminPageManagerPage() {
                         title: "About Us Section Content",
                         icon: Info,
                         color: "text-blue-500",
-                        keys: ["aboutSectionBadge", "aboutSectionTitle", "aboutSectionDescription", "missionStatement", "visionStatement", "storyHeading", "storyContent", "coreValue1", "coreValue2", "coreValue3", "aboutHeroImageUrl"],
+                        keys: [
+                          "aboutSectionBadge",
+                          "aboutSectionTitle",
+                          "aboutSectionDescription",
+                          "missionStatement",
+                          "visionStatement",
+                          "missionTitle",
+                          "visionTitle",
+                          "aboutImage1Url",
+                          "aboutImage1Label",
+                          "aboutImage2Url",
+                          "aboutImage2Label",
+                          "aboutImage3Url",
+                          "aboutImage3Label",
+                          "experienceBadgeYears",
+                          "experienceBadgeTitle",
+                          "experienceBadgeSubtext",
+                          "whyChooseUsHeading",
+                          "whyChooseUsItem1",
+                          "whyChooseUsItem2",
+                          "whyChooseUsItem3",
+                          "whyChooseUsItem4",
+                          "whyChooseUsItem5",
+                          "whyChooseUsItem6",
+                          "storyHeading",
+                          "storyContent",
+                          "coreValue1",
+                          "coreValue2",
+                          "coreValue3",
+                          "aboutHeroImageUrl"
+                        ],
                       },
                       {
                         title: "Services Section Content",
                         icon: Layers,
                         color: "text-purple-500",
-                        keys: ["servicesSectionBadge", "servicesSectionTitle", "servicesHeroBadge", "servicesOverviewText", "bookingBannerHeading", "bookingBannerSubtext"],
+                        keys: [
+                          "servicesSectionBadge",
+                          "servicesSectionTitle",
+                          "servicesSectionDescription",
+                          "servicesHeroBadge",
+                          "servicesOverviewText",
+                          "bookingBannerHeading",
+                          "bookingBannerSubtext"
+                        ],
                       },
                       {
                         title: "Blog & Insights Section Content",
@@ -553,7 +652,7 @@ export default function AdminPageManagerPage() {
                               const v = customFields[k] || "";
                               return (
                                 <div key={k} className="space-y-1 sm:col-span-2">
-                                  {k.toLowerCase().includes("image") || k.toLowerCase().includes("img") || k.toLowerCase().includes("logo") || k.toLowerCase().includes("avatar") ? (
+                                  {(k.toLowerCase().includes("image") || k.toLowerCase().includes("img") || k.toLowerCase().includes("logo") || k.toLowerCase().includes("avatar")) && !k.toLowerCase().includes("label") ? (
                                     <ImageUploader
                                       value={v}
                                       onChange={(newUrl) => setCustomFields({ ...customFields, [k]: newUrl })}

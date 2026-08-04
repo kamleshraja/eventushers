@@ -76,6 +76,56 @@ export function usePageContent(key: string, fallback: ManagedPageData): ManagedP
 
     syncContent();
 
+    // Async sync with MongoDB API backend to update localStorage and state
+    fetch(`${API_BASE_URL}/pages/${key}`, { cache: "no-store" })
+      .then((res) => {
+        if (res.ok) return res.json();
+        throw new Error("API Offline");
+      })
+      .then((json) => {
+        if (json.success && json.data) {
+          const pg = json.data;
+          const mapped: ManagedPageData = {
+            key: pg.pageKey,
+            title: pg.pageTitle,
+            path: pg.path,
+            headline: pg.heroHeadline,
+            subheading: pg.heroSubheading,
+            metaTitle: pg.metaTitle,
+            metaDescription: pg.metaDescription,
+            customFields: pg.customContent || {},
+          };
+
+          // Save to localStorage
+          if (typeof window !== "undefined") {
+            try {
+              const raw = localStorage.getItem(STORAGE_KEY);
+              let currentPages: ManagedPageData[] = [];
+              if (raw) {
+                currentPages = JSON.parse(raw);
+              }
+              const existingIdx = currentPages.findIndex((p) => p.key === key);
+              if (existingIdx > -1) {
+                currentPages[existingIdx] = mapped;
+              } else {
+                currentPages.push(mapped);
+              }
+              localStorage.setItem(STORAGE_KEY, JSON.stringify(currentPages));
+            } catch (err) {}
+          }
+
+          // Update local component state
+          setData({
+            ...fallback,
+            ...mapped,
+            customFields: { ...fallback.customFields, ...mapped.customFields },
+          });
+        }
+      })
+      .catch(() => {
+        // Fallback silently if API is offline
+      });
+
     const handleStorage = () => syncContent();
     window.addEventListener(UPDATE_EVENT, handleStorage);
     window.addEventListener("storage", handleStorage);
