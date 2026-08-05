@@ -18,11 +18,14 @@ import {
   Layers,
   PhoneCall,
   ShieldCheck,
+  Users,
   BookOpen,
   HelpCircle,
   ArrowLeft,
   Save,
-  CheckCircle2
+  CheckCircle2,
+  Trash2,
+  Plus
 } from "lucide-react";
 
 interface ManagedPage {
@@ -60,6 +63,8 @@ export default function AdminPageManagerPage() {
         aboutSectionBadge: "WHY CHOOSE EVENT USHERS",
         aboutSectionTitle: "Kenya's Premier Tech-Enabled Staffing Engine",
         aboutSectionDescription: "We bridge the gap between event organizers and background-checked, corporate-ready hospitality talent.",
+        missionTabLabel: "Our Mission",
+        visionTabLabel: "Our Vision",
         missionStatement: "To transform every event experience across Africa through smart matching technology, top-tier vetted talent, and unyielding commitment to hospitality excellence.",
         visionStatement: "To become the leading digital infrastructure for event staffing, talent management, and hospitality logistics across Africa and beyond.",
         missionTitle: "Empowering Event Organizers Daily",
@@ -110,8 +115,90 @@ export default function AdminPageManagerPage() {
       metaTitle: "About Us — Event Ushers Staffing Platform Kenya",
       metaDescription: "Discover our journey, mission, and leadership team elevating event hospitality across Nairobi, Mombasa, Kisumu, and East Africa.",
       customFields: {
+        aboutHeroBadge: "ABOUT EVENT USHERS",
+        primaryCtaText: "Hire Staff Now",
+        primaryCtaUrl: "#hire",
+        secondaryCtaText: "Join as Crew",
+        secondaryCtaUrl: "#join",
+
+        // Our Journey Section Module (Sections 1 to 4)
+        ourJourneyStatus: "Active",
+        ourJourneyDisplayOrder: "1",
+        ourJourneyBadge: "OUR JOURNEY",
+        ourJourneyHeading: "Built to Solve Event Staffing",
+        ourJourneyHeadingHighlight: "Headaches",
+        ourJourneyHighlightColor: "amber",
+        ourJourneyIntro: "For years, event organizers across Kenya faced last-minute crew no-shows, unvetted staff, and inconsistent protocol standards. Event Ushers was launched to bring technology, trust, and accountability to event logistics.",
+        ourJourneyExtraDescription: "Today, our digital hub empowers hundreds of organizers every month while providing structured employment, professional training, and digital payout tracking for ambitious crew members in Nairobi, Mombasa, Kisumu, and beyond.",
+        
+        // Mission & Vision
+        defaultActiveTab: "mission",
+        missionTabTitle: "Our Mission",
         missionStatement: "To transform every event experience across Africa through smart matching technology, top-tier vetted talent, and unyielding commitment to hospitality excellence.",
+        missionIconUrl: "",
+        visionTabTitle: "Our Vision",
         visionStatement: "To become the leading digital infrastructure for event staffing, talent management, and hospitality logistics across East Africa and beyond.",
+        visionIconUrl: "",
+
+        // Featured Image Card
+        ourJourneyFeaturedImageUrl: "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1000&q=80",
+        // Our Standards Section Module
+        ourStandardsStatus: "Active",
+        ourStandardsBadge: "OUR STANDARDS",
+        ourStandardsHeading: "The Principles That",
+        ourStandardsHeadingHighlight: "Drive Us",
+        ourStandardsDescription: "We hold our platform and crew to the highest corporate standards in the African event industry.",
+        
+        standard1Title: "Vetted Integrity & Security",
+        standard1Description: "Every usher and crew member undergoes multi-step identity verification, background screening, and corporate etiquette training before stepping onto your event floor.",
+        standard2Title: "Instant 24-Hour Dispatch",
+        standard2Description: "Our smart matching platform connects event hosts with qualified, local talent within 24 hours — eliminating last-minute staffing panics.",
+        standard3Title: "Hospitality First",
+        standard3Description: "We believe that warm greetings, professional seating management, and flawless VIP protocol transform good events into unforgettable experiences.",
+        standard4Title: "Supervised Accountability",
+        standard4Description: "Our dedicated on-site team leaders manage attendance, dress codes, and workflow coordination so event organizers can focus on their program.",
+
+        // Leadership & Operations Team Module
+        leadershipStatus: "Active",
+        leadershipBadge: "LEADERSHIP & OPERATIONS",
+        leadershipHeading: "Meet the Team Behind",
+        leadershipHeadingHighlight: "Event Ushers",
+        leadershipDescription: "Dedicated professionals committed to elevating hospitality standards across Kenya.",
+
+        member1Name: "Wanjiru Mwangi",
+        member1Role: "FOUNDER & CHIEF EXECUTIVE",
+        member1Bio: "10+ years in corporate event management across East Africa. Passionate about empowering young professionals through standardized protocol training.",
+        member1ImageUrl: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&q=80",
+
+        member2Name: "David Kimani",
+        member2Role: "HEAD OF OPERATIONS & LOGISTICS",
+        member2Bio: "Oversees crew dispatch, venue logistics, and quality assurance across Nairobi, Mombasa, and Kisumu.",
+        member2ImageUrl: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=600&q=80",
+
+        member3Name: "Amina Ochieng",
+        member3Role: "LEAD PROTOCOL & USHER TRAINER",
+        member3Bio: "Certified hospitality specialist dedicated to training hostesses in VIP etiquette, registration software, and crowd flow management.",
+        member3ImageUrl: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=600&q=80",
+
+        // Photo Gallery Module
+        galleryStatus: "Active",
+        galleryBadge: "PHOTO GALLERY",
+        galleryHeading: "Our Crew in",
+        galleryHeadingHighlight: "Action",
+        galleryDescription: "Highlights from recent galas, summits, and VIP events across East Africa.",
+
+        gallery1Caption: "International Tech Summit • Nairobi",
+        gallery1ImageUrl: "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=800&q=80",
+
+        gallery2Caption: "Corporate Gala Night • Westlands",
+        gallery2ImageUrl: "https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&w=800&q=80",
+
+        gallery3Caption: "On-Site Crew Briefing • Kisumu",
+        gallery3ImageUrl: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80",
+
+        gallery4Caption: "VIP Protocol & Security • Mombasa",
+        gallery4ImageUrl: "https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?auto=format&fit=crop&w=800&q=80",
+
         storyHeading: "Our Journey in Event Staffing Logistics",
         storyContent: "Founded with a vision to professionalize event ushering across Kenya, Event Ushers has grown from a local Nairobi network into East Africa's leading crew dispatch hub.",
         coreValue1: "Uncompromising Hospitality Excellence",
@@ -152,10 +239,14 @@ export default function AdminPageManagerPage() {
         email: "info@eventushers.co.ke",
         officeAddress: "Nairobi, Kenya",
         workingHours: "Monday - Saturday: 8:00 AM - 8:00 PM (Emergency 24/7 Dispatch)",
-        instagramUrl: "https://instagram.com/eventushers",
-        facebookUrl: "https://facebook.com/eventushers",
-        twitterUrl: "https://twitter.com/eventushers",
-        linkedinUrl: "https://linkedin.com/company/eventushers",
+        instagramUrl: "https://www.instagram.com/africrew",
+        instagramIconUrl: "",
+        facebookUrl: "https://www.facebook.com/AfriCrew",
+        facebookIconUrl: "",
+        youtubeUrl: "https://www.youtube.com/@AfriCrew",
+        youtubeIconUrl: "",
+        tiktokUrl: "https://www.tiktok.com/@africrewhub",
+        tiktokIconUrl: "",
         faqSectionBadge: "FREQUENTLY ASKED QUESTIONS",
         faqSectionTitle: "Got Questions? We Have Answers",
         faq1Question: "How quickly can Event Ushers assemble crew for last-minute requests?",
@@ -477,80 +568,108 @@ export default function AdminPageManagerPage() {
                 {/* Left Column: Editable Form Fields (8 Cols) */}
                 <div className="lg:col-span-8 space-y-6">
 
-                  {/* Hero & Headlines Box */}
-                  <div className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-xs space-y-5">
-                    <div className="flex items-center gap-2 border-b border-slate-100 pb-3">
-                      <Sparkles className="w-5 h-5 text-amber-500" />
-                      <h3 className="text-lg font-extrabold text-slate-950">1. Hero Section & Main Headlines</h3>
-                    </div>
-
-                    <div className="space-y-1">
-                      <label className="text-xs font-bold text-slate-800">Main Page Title / Hero Headline *</label>
-                      <input
-                        type="text"
-                        value={headline}
-                        onChange={(e) => setHeadline(e.target.value)}
-                        required
-                        className="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm font-semibold focus:outline-hidden focus:ring-2 focus:ring-amber-500/40"
-                      />
-                    </div>
-
-                    <div className="space-y-1">
-                      <label className="text-xs font-bold text-slate-800">Subheading / Introduction Paragraph *</label>
-                      <textarea
-                        rows={4}
-                        value={subheading}
-                        onChange={(e) => setSubheading(e.target.value)}
-                        required
-                        className="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm font-medium focus:outline-hidden focus:ring-2 focus:ring-amber-500/40"
-                      />
-                    </div>
-                  </div>
-
                   {/* Render Custom Fields in Separate Grouped Cards */}
                   {customFields && Object.keys(customFields).length > 0 && (() => {
                     // Define field groups for clean separate cards
                     const groups: { title: string; icon: any; color: string; keys: string[] }[] = [
                       {
-                        title: "Hero & Brand Logo Customizations",
+                        title: "1. Hero Section & Main Headlines",
                         icon: Sparkles,
                         color: "text-amber-500",
-                        keys: ["siteLogoUrl", "heroBadgeText", "heroImageUrl", "trustHighlight1", "trustHighlight2", "trustHighlight3"],
+                        keys: [
+                          "siteLogoUrl",
+                          "heroBadgeText",
+                          "aboutHeroBadge",
+                          "primaryCtaText",
+                          "primaryCtaUrl",
+                          "secondaryCtaText",
+                          "secondaryCtaUrl",
+                          "heroImageUrl",
+                          "trustHighlight1",
+                          "trustHighlight2",
+                          "trustHighlight3"
+                        ],
+                        isHeroGroup: true,
                       },
                       {
-                        title: "About Us Section Content",
-                        icon: Info,
-                        color: "text-blue-500",
+                        title: "Our Journey Management Module",
+                        icon: Globe,
+                        color: "text-amber-500",
                         keys: [
-                          "aboutSectionBadge",
-                          "aboutSectionTitle",
-                          "aboutSectionDescription",
+                          "ourJourneyBadge",
+                          "ourJourneyHeading",
+                          "ourJourneyHeadingHighlight",
+                          "ourJourneyIntro",
+                          "ourJourneyExtraDescription",
+                          "missionTabTitle",
                           "missionStatement",
+                          "visionTabTitle",
                           "visionStatement",
-                          "missionTitle",
-                          "visionTitle",
-                          "aboutImage1Url",
-                          "aboutImage1Label",
-                          "aboutImage2Url",
-                          "aboutImage2Label",
-                          "aboutImage3Url",
-                          "aboutImage3Label",
-                          "experienceBadgeYears",
-                          "experienceBadgeTitle",
-                          "experienceBadgeSubtext",
-                          "whyChooseUsHeading",
-                          "whyChooseUsItem1",
-                          "whyChooseUsItem2",
-                          "whyChooseUsItem3",
-                          "whyChooseUsItem4",
-                          "whyChooseUsItem5",
-                          "whyChooseUsItem6",
-                          "storyHeading",
-                          "storyContent",
-                          "coreValue1",
-                          "coreValue2",
-                          "coreValue3",
-                          "aboutHeroImageUrl"
+                          "ourJourneyFeaturedImageUrl",
+                          "ourJourneyImageBadge",
+                          "ourJourneyImageCaption",
+                          "ourJourneyImageAltText",
+                        ],
+                      },
+                      {
+                        title: "Our Standards Management Module",
+                        icon: ShieldCheck,
+                        color: "text-amber-500",
+                        keys: [
+                          "ourStandardsBadge",
+                          "ourStandardsHeading",
+                          "ourStandardsHeadingHighlight",
+                          "ourStandardsDescription",
+                          "standard1Title",
+                          "standard1Description",
+                          "standard2Title",
+                          "standard2Description",
+                          "standard3Title",
+                          "standard3Description",
+                          "standard4Title",
+                          "standard4Description",
+                        ],
+                      },
+                      {
+                        title: "Leadership & Operations Team Module",
+                        icon: Users,
+                        color: "text-amber-500",
+                        keys: [
+                          "leadershipBadge",
+                          "leadershipHeading",
+                          "leadershipHeadingHighlight",
+                          "leadershipDescription",
+                          "member1Name",
+                          "member1Role",
+                          "member1Bio",
+                          "member1ImageUrl",
+                          "member2Name",
+                          "member2Role",
+                          "member2Bio",
+                          "member2ImageUrl",
+                          "member3Name",
+                          "member3Role",
+                          "member3Bio",
+                          "member3ImageUrl",
+                        ],
+                      },
+                      {
+                        title: "Photo Gallery Management Module",
+                        icon: Sparkles,
+                        color: "text-amber-500",
+                        keys: [
+                          "galleryBadge",
+                          "galleryHeading",
+                          "galleryHeadingHighlight",
+                          "galleryDescription",
+                          "gallery1Caption",
+                          "gallery1ImageUrl",
+                          "gallery2Caption",
+                          "gallery2ImageUrl",
+                          "gallery3Caption",
+                          "gallery3ImageUrl",
+                          "gallery4Caption",
+                          "gallery4ImageUrl",
                         ],
                       },
                       {
@@ -606,7 +725,21 @@ export default function AdminPageManagerPage() {
                         title: "Contact Info & Social Media Links",
                         icon: PhoneCall,
                         color: "text-emerald-500",
-                        keys: ["phone", "email", "officeAddress", "workingHours", "instagramUrl", "facebookUrl", "twitterUrl", "linkedinUrl"],
+                        isSocialGroup: true,
+                        keys: [
+                          "phone",
+                          "email",
+                          "officeAddress",
+                          "workingHours",
+                          "instagramUrl",
+                          "instagramIconUrl",
+                          "facebookUrl",
+                          "facebookIconUrl",
+                          "youtubeUrl",
+                          "youtubeIconUrl",
+                          "tiktokUrl",
+                          "tiktokIconUrl"
+                        ],
                       },
                       {
                         title: "Platform Statistics & KPI Numbers",
@@ -623,9 +756,18 @@ export default function AdminPageManagerPage() {
                     ];
 
                     const assignedKeys = new Set(groups.flatMap((g) => g.keys));
-                    const remainingKeys = Object.keys(customFields).filter((k) => !assignedKeys.has(k));
+                    const remainingKeys = Object.keys(customFields).filter(
+                      (k) =>
+                        !assignedKeys.has(k) &&
+                        !k.toLowerCase().includes("twitter") &&
+                        !k.toLowerCase().includes("linkedin") &&
+                        !k.toLowerCase().includes("ourjourney") &&
+                        !k.toLowerCase().includes("mission") &&
+                        !k.toLowerCase().includes("vision") &&
+                        !k.toLowerCase().includes("tab")
+                    );
 
-                    if (remainingKeys.length > 0) {
+                    if (remainingKeys.length > 0 && activeKey !== "about") {
                       groups.push({
                         title: "Additional Custom Fields",
                         icon: Globe,
@@ -640,56 +782,272 @@ export default function AdminPageManagerPage() {
 
                       const GroupIcon = grp.icon;
 
-                      return (
-                        <div key={grpIdx} className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-xs space-y-5">
-                          <div className="flex items-center gap-2 border-b border-slate-100 pb-3">
-                            <GroupIcon className={`w-5 h-5 ${grp.color}`} />
-                            <h3 className="text-lg font-extrabold text-slate-950">{grp.title}</h3>
-                          </div>
+                      // Special UI for Contact Info & Social Media Links card
+                      if (grp.isSocialGroup) {
+                        const standardKeys = ["phone", "email", "officeAddress", "workingHours"];
+                        const socialPairs: { prefix: string; label: string; urlKey: string; iconKey: string }[] = [];
 
-                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            {presentKeys.map((k) => {
-                              const v = customFields[k] || "";
-                              return (
-                                <div key={k} className="space-y-1 sm:col-span-2">
-                                  {(k.toLowerCase().includes("image") || k.toLowerCase().includes("img") || k.toLowerCase().includes("logo") || k.toLowerCase().includes("avatar")) && !k.toLowerCase().includes("label") ? (
-                                    <ImageUploader
+                        // Extract all Url fields (excluding IconUrl, twitter, linkedin)
+                        Object.keys(customFields).forEach((key) => {
+                          const lowerKey = key.toLowerCase();
+                          if (
+                            key.endsWith("Url") &&
+                            !key.endsWith("IconUrl") &&
+                            !lowerKey.includes("twitter") &&
+                            !lowerKey.includes("linkedin") &&
+                            key !== "siteLogoUrl" &&
+                            key !== "heroImageUrl" &&
+                            key !== "aboutHeroImageUrl"
+                          ) {
+                            const prefix = key.replace(/Url$/, "");
+                            const label = prefix.charAt(0).toUpperCase() + prefix.slice(1);
+                            if (!socialPairs.some((p) => p.prefix === prefix)) {
+                              socialPairs.push({
+                                prefix,
+                                label,
+                                urlKey: key,
+                                iconKey: `${prefix}IconUrl`,
+                              });
+                            }
+                          }
+                        });
+
+                        return (
+                          <div key={grpIdx} className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-xs space-y-6">
+                            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
+                              <div className="flex items-center gap-2">
+                                <GroupIcon className={`w-5 h-5 ${grp.color}`} />
+                                <div>
+                                  <h3 className="text-lg font-extrabold text-slate-950">{grp.title}</h3>
+                                  <p className="text-xs text-slate-500">Manage phone, email, address, and dynamic social media links</p>
+                                </div>
+                              </div>
+
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  const name = prompt("Enter Social Platform Name (e.g. Instagram, TikTok, YouTube, WhatsApp, Threads, Telegram):");
+                                  if (!name || !name.trim()) return;
+                                  const clean = name.trim().toLowerCase().replace(/[^a-z0-9]/g, "");
+                                  const urlKey = `${clean}Url`;
+                                  const iconKey = `${clean}IconUrl`;
+                                  setCustomFields({
+                                    ...customFields,
+                                    [urlKey]: "https://",
+                                    [iconKey]: "",
+                                  });
+                                }}
+                                className="px-4 py-2 rounded-xl bg-gradient-to-r from-amber-400 to-pink-500 hover:from-amber-500 hover:to-pink-600 text-white text-xs font-extrabold shadow-md flex items-center gap-1.5 transition-all hover:scale-105 cursor-pointer shrink-0"
+                              >
+                                <Plus className="w-4 h-4 text-white" />
+                                <span>Add Social Link</span>
+                              </button>
+                            </div>
+
+                            {/* Standard Contact Info Inputs (Phone, Email, Office, Hours) */}
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pb-4 border-b border-slate-100">
+                              {standardKeys.map((k) => {
+                                if (!(k in customFields)) return null;
+                                const v = customFields[k] || "";
+                                return (
+                                  <div key={k} className="space-y-1">
+                                    <label className="text-xs font-bold text-slate-800 capitalize">
+                                      {k.replace(/([A-Z])/g, " $1")}
+                                    </label>
+                                    <input
+                                      type="text"
                                       value={v}
-                                      onChange={(newUrl) => setCustomFields({ ...customFields, [k]: newUrl })}
-                                      label={k.replace(/([A-Z])/g, " $1")}
+                                      onChange={(e) => setCustomFields({ ...customFields, [k]: e.target.value })}
+                                      className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs sm:text-sm font-semibold focus:outline-hidden focus:ring-2 focus:ring-amber-500/40"
                                     />
-                                  ) : (
-                                    <>
-                                      <label className="text-xs font-bold text-slate-800 capitalize">
-                                        {k.replace(/([A-Z])/g, " $1")}
-                                      </label>
-                                      {v.length > 50 || k.toLowerCase().includes("description") || k.toLowerCase().includes("statement") || k.toLowerCase().includes("content") || k.toLowerCase().includes("subtext") ? (
-                                        <textarea
-                                          rows={3}
-                                          value={v}
-                                          onChange={(e) =>
-                                            setCustomFields({ ...customFields, [k]: e.target.value })
-                                          }
-                                          className="w-full px-4 py-3 rounded-xl border border-slate-200 text-xs sm:text-sm font-medium focus:outline-hidden focus:ring-2 focus:ring-amber-500/40"
-                                        />
-                                      ) : (
+                                  </div>
+                                );
+                              })}
+                            </div>
+
+                            {/* Dynamic Social Media Links & Icon Upload Cards */}
+                            <div className="space-y-4">
+                              <h4 className="text-xs font-extrabold uppercase tracking-wider text-slate-500">
+                                Dynamic Social Media Links ({socialPairs.length})
+                              </h4>
+
+                              <div className="grid grid-cols-1 gap-4">
+                                {socialPairs.map((pair) => {
+                                  const urlVal = customFields[pair.urlKey] || "";
+                                  const iconVal = customFields[pair.iconKey] || "";
+
+                                  return (
+                                    <div
+                                      key={pair.prefix}
+                                      className="p-5 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-4 relative group"
+                                    >
+                                      {/* Header with Title and Remove Button */}
+                                      <div className="flex items-center justify-between border-b border-slate-200/60 pb-2">
+                                        <span className="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
+                                          <Globe className="w-3.5 h-3.5 text-amber-600" />
+                                          {pair.label} Link & Icon
+                                        </span>
+                                        <button
+                                          type="button"
+                                          onClick={() => {
+                                            if (confirm(`Remove ${pair.label} link and icon from footer?`)) {
+                                              const updated = { ...customFields };
+                                              delete updated[pair.urlKey];
+                                              delete updated[pair.iconKey];
+                                              setCustomFields(updated);
+                                            }
+                                          }}
+                                          className="px-2.5 py-1 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-600 text-xs font-extrabold flex items-center gap-1 border border-rose-200 transition-colors cursor-pointer"
+                                        >
+                                          <Trash2 className="w-3.5 h-3.5" />
+                                          <span>Remove</span>
+                                        </button>
+                                      </div>
+
+                                      {/* URL Input */}
+                                      <div className="space-y-1">
+                                        <label className="text-[11px] font-bold text-slate-700">
+                                          {pair.label} Target URL
+                                        </label>
                                         <input
                                           type="text"
-                                          value={v}
+                                          placeholder={`https://www.${pair.prefix}.com/...`}
+                                          value={urlVal}
+                                          onChange={(e) =>
+                                            setCustomFields({ ...customFields, [pair.urlKey]: e.target.value })
+                                          }
+                                          className="w-full px-3.5 py-2 rounded-xl bg-white border border-slate-200 text-xs font-semibold text-slate-900 focus:outline-hidden focus:ring-2 focus:ring-amber-500/30"
+                                        />
+                                      </div>
+
+                                      {/* Icon Uploader */}
+                                      <div className="space-y-1">
+                                        <ImageUploader
+                                          value={iconVal}
+                                          onChange={(newUrl) =>
+                                            setCustomFields({ ...customFields, [pair.iconKey]: newUrl })
+                                          }
+                                          label={`${pair.label} Custom Icon Image (Optional)`}
+                                        />
+                                      </div>
+                                    </div>
+                                  );
+                                })}
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      } else {
+                        return (
+                          <div key={grpIdx} className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-xs space-y-5">
+                            <div className="flex items-center gap-2 border-b border-slate-100 pb-3">
+                              <GroupIcon className={`w-5 h-5 ${grp.color}`} />
+                              <h3 className="text-lg font-extrabold text-slate-950">{grp.title}</h3>
+                            </div>
+
+                            {/* Headline & Subheading Fields (Included inside Hero card) */}
+                            {grp.isHeroGroup && (
+                              <div className="space-y-4 pb-4 border-b border-slate-100">
+                                <div className="space-y-1">
+                                  <label className="text-xs font-bold text-slate-800">Main Page Title / Hero Headline *</label>
+                                  <input
+                                    type="text"
+                                    value={headline}
+                                    onChange={(e) => setHeadline(e.target.value)}
+                                    required
+                                    className="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm font-semibold focus:outline-hidden focus:ring-2 focus:ring-amber-500/40"
+                                  />
+                                </div>
+
+                                <div className="space-y-1">
+                                  <label className="text-xs font-bold text-slate-800">Subheading / Introduction Paragraph *</label>
+                                  <textarea
+                                    rows={4}
+                                    value={subheading}
+                                    onChange={(e) => setSubheading(e.target.value)}
+                                    required
+                                    className="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm font-medium focus:outline-hidden focus:ring-2 focus:ring-amber-500/40"
+                                  />
+                                </div>
+                              </div>
+                            )}
+
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                              {presentKeys.map((k) => {
+                                const v = customFields[k] || "";
+                                return (
+                                  <div key={k} className="space-y-1 sm:col-span-2">
+                                    {k === "ourJourneyStatus" ? (
+                                      <>
+                                        <label className="text-xs font-bold text-slate-800">
+                                          Our Journey Section Status (Active / Inactive)
+                                        </label>
+                                        <select
+                                          value={v || "Active"}
                                           onChange={(e) =>
                                             setCustomFields({ ...customFields, [k]: e.target.value })
                                           }
-                                          className="w-full px-4 py-3 rounded-xl border border-slate-200 text-xs sm:text-sm font-semibold focus:outline-hidden focus:ring-2 focus:ring-amber-500/40"
-                                        />
-                                      )}
-                                    </>
-                                  )}
-                                </div>
-                              );
-                            })}
+                                          className="w-full px-4 py-3 rounded-xl border border-slate-200 text-xs sm:text-sm font-extrabold focus:outline-hidden focus:ring-2 focus:ring-amber-500/40 bg-white"
+                                        >
+                                          <option value="Active">Active (Visible on Frontend)</option>
+                                          <option value="Inactive">Inactive (Hidden from Frontend)</option>
+                                        </select>
+                                      </>
+                                    ) : k === "defaultActiveTab" ? (
+                                      <>
+                                        <label className="text-xs font-bold text-slate-800">
+                                          Default Active Tab (Mission / Vision)
+                                        </label>
+                                        <select
+                                          value={v || "mission"}
+                                          onChange={(e) =>
+                                            setCustomFields({ ...customFields, [k]: e.target.value })
+                                          }
+                                          className="w-full px-4 py-3 rounded-xl border border-slate-200 text-xs sm:text-sm font-extrabold focus:outline-hidden focus:ring-2 focus:ring-amber-500/40 bg-white"
+                                        >
+                                          <option value="mission">Mission Tab (Default Active)</option>
+                                          <option value="vision">Vision Tab</option>
+                                        </select>
+                                      </>
+                                    ) : (k.endsWith("ImageUrl") || k.endsWith("LogoUrl") || k.endsWith("AvatarUrl") || k.endsWith("IconUrl")) && !k.toLowerCase().includes("label") && !k.toLowerCase().includes("cta") ? (
+                                      <ImageUploader
+                                        value={v}
+                                        onChange={(newUrl) => setCustomFields({ ...customFields, [k]: newUrl })}
+                                        label={k.replace(/([A-Z])/g, " $1")}
+                                      />
+                                    ) : (
+                                      <>
+                                        <label className="text-xs font-bold text-slate-800 capitalize">
+                                          {k.replace(/([A-Z])/g, " $1")}
+                                        </label>
+                                        {v.length > 50 || k.toLowerCase().includes("description") || k.toLowerCase().includes("statement") || k.toLowerCase().includes("content") || k.toLowerCase().includes("subtext") || k.toLowerCase().includes("intro") ? (
+                                          <textarea
+                                            rows={3}
+                                            value={v}
+                                            onChange={(e) =>
+                                              setCustomFields({ ...customFields, [k]: e.target.value })
+                                            }
+                                            className="w-full px-4 py-3 rounded-xl border border-slate-200 text-xs sm:text-sm font-medium focus:outline-hidden focus:ring-2 focus:ring-amber-500/40"
+                                          />
+                                        ) : (
+                                          <input
+                                            type="text"
+                                            value={v}
+                                            onChange={(e) =>
+                                              setCustomFields({ ...customFields, [k]: e.target.value })
+                                            }
+                                            className="w-full px-4 py-3 rounded-xl border border-slate-200 text-xs sm:text-sm font-semibold focus:outline-hidden focus:ring-2 focus:ring-amber-500/40"
+                                          />
+                                        )}
+                                      </>
+                                    )}
+                                  </div>
+                                );
+                              })}
+                            </div>
                           </div>
-                        </div>
-                      );
+                        );
+                      }
                     });
                   })()}
 

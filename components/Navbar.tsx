@@ -67,15 +67,14 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
-        scrolled
-          ? "bg-white/95 backdrop-blur-xl shadow-md py-3 border-b border-slate-200 text-slate-900"
-          : "bg-white/80 backdrop-blur-md py-5 border-b border-slate-200/60 text-slate-900"
-      }`}
+      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${scrolled
+        ? "bg-white/95 backdrop-blur-xl shadow-md py-3 border-b border-slate-200 text-slate-900"
+        : "bg-white/80 backdrop-blur-md border-b border-slate-200/60 text-slate-900"
+        }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
-          
+
           {/* Brand Logo */}
           <Link href="/" className="flex items-center">
             <Logo variant="light" />
@@ -87,24 +86,23 @@ export const Navbar: React.FC<NavbarProps> = ({
               const isActive = isHomeRoute
                 ? link.id === "hero"
                 : isAboutRoute
-                ? link.id === "about"
-                : isServicesRoute
-                ? link.id === "services"
-                : isBlogRoute
-                ? link.id === "blog"
-                : isContactRoute
-                ? link.id === "contact"
-                : activeSection === link.id;
+                  ? link.id === "about"
+                  : isServicesRoute
+                    ? link.id === "services"
+                    : isBlogRoute
+                      ? link.id === "blog"
+                      : isContactRoute
+                        ? link.id === "contact"
+                        : activeSection === link.id;
 
               return (
                 <Link
                   key={link.name}
                   href={link.href}
-                  className={`px-5 py-2.5 text-sm font-bold rounded-full transition-all duration-200 ${
-                    isActive
-                      ? "text-slate-950 bg-white shadow-md border border-amber-500/40 font-extrabold"
-                      : "text-slate-700 hover:text-slate-950 hover:bg-white/80"
-                  }`}
+                  className={`px-5 py-2.5 text-sm font-bold rounded-full transition-all duration-200 ${isActive
+                    ? "text-slate-950 bg-white shadow-md border border-amber-500/40 font-extrabold"
+                    : "text-slate-700 hover:text-slate-950 hover:bg-white/80"
+                    }`}
                 >
                   {link.name}
                 </Link>
@@ -144,25 +142,24 @@ export const Navbar: React.FC<NavbarProps> = ({
               const isActive = isHomeRoute
                 ? link.id === "hero"
                 : isAboutRoute
-                ? link.id === "about"
-                : isServicesRoute
-                ? link.id === "services"
-                : isBlogRoute
-                ? link.id === "blog"
-                : isContactRoute
-                ? link.id === "contact"
-                : activeSection === link.id;
+                  ? link.id === "about"
+                  : isServicesRoute
+                    ? link.id === "services"
+                    : isBlogRoute
+                      ? link.id === "blog"
+                      : isContactRoute
+                        ? link.id === "contact"
+                        : activeSection === link.id;
 
               return (
                 <Link
                   key={link.name}
                   href={link.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className={`px-4 py-3 text-sm font-bold rounded-xl transition-all flex items-center justify-between ${
-                    isActive
-                      ? "text-slate-950 bg-amber-500/10 border-l-4 border-amber-500 font-extrabold"
-                      : "text-slate-800 hover:text-amber-600 hover:bg-slate-100"
-                  }`}
+                  className={`px-4 py-3 text-sm font-bold rounded-xl transition-all flex items-center justify-between ${isActive
+                    ? "text-slate-950 bg-amber-500/10 border-l-4 border-amber-500 font-extrabold"
+                    : "text-slate-800 hover:text-amber-600 hover:bg-slate-100"
+                    }`}
                 >
                   <span>{link.name}</span>
                   <ArrowRight className={`w-4 h-4 ${isActive ? "text-amber-600" : "text-amber-500"}`} />

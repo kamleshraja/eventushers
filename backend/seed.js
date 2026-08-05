@@ -9,6 +9,7 @@ const Blog = require("./models/Blog");
 const Category = require("./models/Category");
 const HireRequest = require("./models/HireRequest");
 const User = require("./models/User");
+const Testimonial = require("./models/Testimonial");
 
 const seedDatabase = async () => {
   try {
@@ -162,6 +163,54 @@ const seedDatabase = async () => {
         author: "Wanjiru Mwangi",
         date: "October 02, 2026",
         published: true,
+      },
+    ]);
+
+    // 5. Seed Testimonials
+    console.log("Seeding Testimonials collection...");
+    await Testimonial.deleteMany({});
+    await Testimonial.insertMany([
+      {
+        customerName: "Wanjiru Mwangi",
+        designation: "Head of Corporate Events",
+        companyName: "Innovate Africa Tech Summit",
+        quote: "Event Ushers saved our 1,200-delegate tech summit in Nairobi! Their hostesses were exceptionally punctual, polished, and handled check-ins with zero queue delays. Highly recommended!",
+        rating: 5,
+        eventBadgeTitle: "1,200 Delegate Conference",
+        profileImage: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&q=80",
+        isVerified: true,
+        displayOrder: 1,
+        status: "Active",
+        createdBy: "System Seed",
+        updatedBy: "System Seed",
+      },
+      {
+        customerName: "James Ochieng",
+        designation: "Festival Director",
+        companyName: "AfroSound Music Festival",
+        quote: "We needed 15 vetted protocol security officers and 10 ushers for a high-profile festival in Mombasa on short notice. Event Ushers dispatched the full crew in less than 12 hours. Outstanding service!",
+        rating: 5,
+        eventBadgeTitle: "Outdoor Music Festival",
+        profileImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80",
+        isVerified: true,
+        displayOrder: 2,
+        status: "Active",
+        createdBy: "System Seed",
+        updatedBy: "System Seed",
+      },
+      {
+        customerName: "David Kimani",
+        designation: "Private Host",
+        companyName: "Kimani Family Gala",
+        quote: "The professionalism of the ushers at our daughter's wedding reception in Kisumu was unmatched. They welcomed guests with true warmth and ensured VIP tables were perfectly managed.",
+        rating: 5,
+        eventBadgeTitle: "VIP Wedding Reception",
+        profileImage: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=300&q=80",
+        isVerified: true,
+        displayOrder: 3,
+        status: "Active",
+        createdBy: "System Seed",
+        updatedBy: "System Seed",
       },
     ]);
 

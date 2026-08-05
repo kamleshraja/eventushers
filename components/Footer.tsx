@@ -1,13 +1,20 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { Logo } from "./Logo";
-import { Mail, Phone, MapPin, Send, CheckCircle2, Instagram, Facebook, Twitter, Linkedin } from "lucide-react";
+import { Mail, Phone, MapPin, Send, CheckCircle2, Instagram, Facebook, Twitter, Linkedin, Youtube, Video, Globe } from "lucide-react";
 import { usePageContent } from "@/lib/pageContent";
 
 interface FooterProps {
   onOpenHire: () => void;
   onOpenJoin: () => void;
 }
+
+// TikTok SVG Icon component
+const TiktokIcon = ({ className }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="currentColor">
+    <path d="M12.525 2.015c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.82.55-1.35 1.52-1.37 2.51-.04 1.25.66 2.45 1.75 3.01 1.05.57 2.37.49 3.37-.17.84-.54 1.37-1.47 1.45-2.46.04-3.53.01-7.06.02-10.59z" />
+  </svg>
+);
 
 export const Footer: React.FC<FooterProps> = ({ onOpenHire, onOpenJoin }) => {
   const [emailInput, setEmailInput] = useState("");
@@ -36,10 +43,48 @@ export const Footer: React.FC<FooterProps> = ({ onOpenHire, onOpenJoin }) => {
   const displayEmail = contactData.customFields?.email?.trim() || "info@eventushers.co.ke";
   const displayLocation = contactData.customFields?.officeAddress?.trim() || "Nairobi, Kenya";
 
-  const instagram = contactData.customFields?.instagramUrl || "https://instagram.com/eventushers";
-  const facebook = contactData.customFields?.facebookUrl || "https://facebook.com/eventushers";
-  const twitter = contactData.customFields?.twitterUrl || "https://twitter.com/eventushers";
-  const linkedin = contactData.customFields?.linkedinUrl || "https://linkedin.com/company/eventushers";
+  // Dynamically extract all custom social URL and Icon pairs from customFields
+  const dynamicSocialLinks: any[] = [];
+  if (contactData.customFields) {
+    const fields = contactData.customFields;
+    Object.keys(fields).forEach((key) => {
+      if (key.endsWith("Url") && key !== "siteLogoUrl" && key !== "heroImageUrl" && key !== "aboutHeroImageUrl") {
+        const urlValue = fields[key]?.trim();
+        if (urlValue) {
+          const prefix = key.replace(/Url$/, "");
+          const customIconUrl = fields[`${prefix}IconUrl`] || "";
+          
+          let defaultName = prefix.charAt(0).toUpperCase() + prefix.slice(1);
+          let defaultIcon = Globe;
+          const lower = urlValue.toLowerCase();
+
+          if (lower.includes("youtube.com") || lower.includes("youtu.be")) {
+            defaultName = "YouTube";
+            defaultIcon = Youtube;
+          } else if (lower.includes("tiktok.com")) {
+            defaultName = "TikTok";
+            defaultIcon = TiktokIcon;
+          } else if (lower.includes("instagram.com")) {
+            defaultName = "Instagram";
+            defaultIcon = Instagram;
+          } else if (lower.includes("facebook.com")) {
+            defaultName = "Facebook";
+            defaultIcon = Facebook;
+          }
+
+          dynamicSocialLinks.push({
+            url: urlValue,
+            customIconUrl,
+            label: defaultName,
+            icon: defaultIcon,
+          });
+        }
+      }
+    });
+  }
+
+  // Ensure exactly max 4 social links are displayed
+  const displaySocialLinks = dynamicSocialLinks.slice(0, 4);
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
@@ -147,20 +192,27 @@ export const Footer: React.FC<FooterProps> = ({ onOpenHire, onOpenJoin }) => {
                 </div>
               </div>
 
-              {/* Social Icons */}
+              {/* Render 4 Social Icons (URL + Optional Custom Icon Image) */}
               <div className="pt-1 flex items-center gap-2">
-                <a href={instagram} target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-xl bg-slate-100 border border-slate-200 text-slate-700 hover:text-amber-600 hover:border-amber-500/50 flex items-center justify-center transition-all" aria-label="Instagram">
-                  <Instagram className="w-3.5 h-3.5" />
-                </a>
-                <a href={facebook} target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-xl bg-slate-100 border border-slate-200 text-slate-700 hover:text-amber-600 hover:border-amber-500/50 flex items-center justify-center transition-all" aria-label="Facebook">
-                  <Facebook className="w-3.5 h-3.5" />
-                </a>
-                <a href={twitter} target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-lg bg-slate-100 border border-slate-200 text-slate-700 hover:text-amber-600 hover:border-amber-500/50 flex items-center justify-center transition-all" aria-label="Twitter">
-                  <Twitter className="w-3.5 h-3.5" />
-                </a>
-                <a href={linkedin} target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-lg bg-slate-100 border border-slate-200 text-slate-700 hover:text-amber-600 hover:border-amber-500/50 flex items-center justify-center transition-all" aria-label="LinkedIn">
-                  <Linkedin className="w-3.5 h-3.5" />
-                </a>
+                {displaySocialLinks.map((item, idx) => {
+                  const Icon = item.icon;
+                  return (
+                    <a
+                      key={idx}
+                      href={item.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-9 h-9 rounded-2xl bg-slate-100/90 hover:bg-slate-200 border border-slate-200 text-slate-700 hover:text-amber-600 hover:border-amber-500/50 flex items-center justify-center transition-all overflow-hidden p-2 shadow-2xs"
+                      aria-label={item.label}
+                    >
+                      {item.customIconUrl ? (
+                        <img src={item.customIconUrl} alt={item.label} className="w-full h-full object-contain" />
+                      ) : (
+                        <Icon className="w-4 h-4" />
+                      )}
+                    </a>
+                  );
+                })}
               </div>
             </div>
 

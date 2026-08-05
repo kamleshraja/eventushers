@@ -63,6 +63,8 @@ export const About: React.FC<AboutProps> = () => {
   const experienceBadgeTitle = homeData.customFields?.experienceBadgeTitle || "Years of Excellence";
   const experienceBadgeSubtext = homeData.customFields?.experienceBadgeSubtext || "500+ High-Profile Events Served";
   const whyChooseUsHeading = homeData.customFields?.whyChooseUsHeading || "Why Event Organizers Choose Us";
+  const missionTabLabel = homeData.customFields?.missionTabLabel || "Our Mission";
+  const visionTabLabel = homeData.customFields?.visionTabLabel || "Our Vision";
 
   const highlights = [
     homeData.customFields?.whyChooseUsItem1 || "Vetted & Background Checked Crew",
@@ -148,6 +150,7 @@ export const About: React.FC<AboutProps> = () => {
                 <span className="text-2xl leading-none">{experienceBadgeYears}</span>
                 <span className="text-[10px] uppercase tracking-tighter font-extrabold">Years</span>
               </div>
+
               <div>
                 <h4 className="text-base font-extrabold text-white leading-tight">
                   {experienceBadgeTitle}
@@ -174,7 +177,7 @@ export const About: React.FC<AboutProps> = () => {
                 }`}
               >
                 <Target className="w-4 h-4" />
-                Our Mission
+                {missionTabLabel}
               </button>
 
               <button
@@ -186,7 +189,7 @@ export const About: React.FC<AboutProps> = () => {
                 }`}
               >
                 <Eye className="w-4 h-4" />
-                Our Vision
+                {visionTabLabel}
               </button>
             </div>
 

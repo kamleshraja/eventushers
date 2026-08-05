@@ -14,7 +14,8 @@ import {
   ChevronRight,
   Globe,
   User,
-  Mail
+  Mail,
+  Quote
 } from "lucide-react";
 
 interface AdminSidebarProps {
@@ -31,6 +32,7 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({ onLogout }) => {
   ];
 
   const contentNav = [
+    { name: "Testimonials", href: "/admin/testimonials", icon: Quote },
     { name: "Blogs", href: "/admin/blogs", icon: FileText },
     { name: "Core Services", href: "/admin/services", icon: Layers },
     { name: "Categories", href: "/admin/categories", icon: FolderKanban },
