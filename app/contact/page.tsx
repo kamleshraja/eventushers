@@ -27,7 +27,7 @@ import {
 
 import { usePageContent } from "@/lib/pageContent";
 import { saveContactMessage } from "@/lib/contactMessages";
-import { renderFormattedHeading } from "@/app/admin/services-hero/page";
+import { renderFormattedHeading } from "@/lib/headingUtils";
 
 export default function ContactPage() {
   const [hireModalOpen, setHireModalOpen] = useState(false);

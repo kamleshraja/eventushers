@@ -17,7 +17,7 @@ import {
 } from "lucide-react";
 
 import { usePageContent } from "@/lib/pageContent";
-import { renderFormattedHeading } from "@/app/admin/services-hero/page";
+import { renderFormattedHeading } from "@/lib/headingUtils";
 
 export default function BlogPage() {
   const [hireModalOpen, setHireModalOpen] = useState(false);

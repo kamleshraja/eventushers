@@ -59,17 +59,28 @@ export function saveAllPagesToStorage(pages: ManagedPageData[]) {
   }
 }
 
-export function usePageContent(key: string, fallback: ManagedPageData): ManagedPageData {
-  const [data, setData] = useState<ManagedPageData>(fallback);
+export function usePageContent(key: string, fallback: Partial<ManagedPageData>): ManagedPageData {
+  const initialFull: ManagedPageData = {
+    key: fallback.key || key,
+    title: fallback.title || key,
+    path: fallback.path || `/${key}`,
+    headline: fallback.headline || "",
+    subheading: fallback.subheading || "",
+    metaTitle: fallback.metaTitle || "",
+    metaDescription: fallback.metaDescription || "",
+    customFields: fallback.customFields || {},
+  };
+
+  const [data, setData] = useState<ManagedPageData>(initialFull);
 
   useEffect(() => {
     const syncContent = () => {
       const stored = getStoredPageContent(key);
       if (stored) {
         setData({
-          ...fallback,
+          ...initialFull,
           ...stored,
-          customFields: { ...fallback.customFields, ...stored.customFields },
+          customFields: { ...initialFull.customFields, ...stored.customFields },
         });
       }
     };
@@ -116,9 +127,9 @@ export function usePageContent(key: string, fallback: ManagedPageData): ManagedP
 
           // Update local component state
           setData({
-            ...fallback,
+            ...initialFull,
             ...mapped,
-            customFields: { ...fallback.customFields, ...mapped.customFields },
+            customFields: { ...initialFull.customFields, ...mapped.customFields },
           });
         }
       })

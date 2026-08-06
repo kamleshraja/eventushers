@@ -55,7 +55,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenHire, onOpenJoin }) => {
           const customIconUrl = fields[`${prefix}IconUrl`] || "";
           
           let defaultName = prefix.charAt(0).toUpperCase() + prefix.slice(1);
-          let defaultIcon = Globe;
+          let defaultIcon: React.ComponentType<{ className?: string }> = Globe;
           const lower = urlValue.toLowerCase();
 
           if (lower.includes("youtube.com") || lower.includes("youtu.be")) {

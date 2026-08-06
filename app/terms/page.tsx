@@ -8,7 +8,7 @@ import { HireModal } from "@/components/HireModal";
 import { JoinModal } from "@/components/JoinModal";
 import { CtaBanner } from "@/components/CtaBanner";
 import { usePageContent } from "@/lib/pageContent";
-import { renderFormattedHeading } from "@/app/admin/services-hero/page";
+import { renderFormattedHeading } from "@/lib/headingUtils";
 import { 
   FileText, 
   ShieldCheck, 
