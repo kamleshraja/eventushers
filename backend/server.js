@@ -33,7 +33,16 @@ app.use("/api/dashboard", require("./routes/dashboardRoutes"));
 app.use("/api/pages", require("./routes/pageRoutes"));
 app.use("/api/testimonials", require("./routes/testimonialRoutes"));
 
-// Health Check
+// Health Check & Root Route
+app.get("/", (req, res) => {
+  res.json({
+    status: "ok",
+    service: "Event Ushers Backend API",
+    message: "Event Ushers API Server & MongoDB database are running.",
+    timestamp: new Date()
+  });
+});
+
 app.get("/api/health", (req, res) => {
   res.json({ status: "ok", service: "Event Ushers Express API Server", timestamp: new Date() });
 });
