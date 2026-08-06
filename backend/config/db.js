@@ -12,7 +12,8 @@ const connectDB = async () => {
     const conn = await mongoose.connect(connStr, {
       serverSelectionTimeoutMS: 8000,
     });
-    console.log(`[MongoDB Atlas Connected]: ${conn.connection.host}`);
+    const hostName = conn.connection?.host || mongoose.connection?.host || "connected";
+    console.log(`[MongoDB Atlas Connected]: ${hostName}`);
 
     // Auto-seed initial collections if empty
     const PageContent = require("../models/PageContent");
