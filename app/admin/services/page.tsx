@@ -119,6 +119,26 @@ export default function AdminServicesPage() {
           {/* VIEW MODE 1: SERVICES DIRECTORY GRID */}
           {viewMode === "list" && (
             <div className="space-y-6">
+              {/* Services Hero Section Banner Card */}
+              <div className="bg-gradient-to-r from-slate-950 via-slate-900 to-amber-950 p-6 rounded-3xl text-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 shadow-xl border border-slate-800">
+                <div className="space-y-1.5 max-w-2xl">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 text-xs font-extrabold uppercase tracking-wider">
+                    <Sparkles className="w-3.5 h-3.5" /> Services Page Hero Module
+                  </div>
+                  <h3 className="text-xl font-black text-white">Dynamic Services Hero Section Manager</h3>
+                  <p className="text-xs text-slate-300 leading-relaxed">
+                    Update the main banner headline, badge text, subheadings, background styling, and CTA buttons displayed on the top of the Services page.
+                  </p>
+                </div>
+                <Link
+                  href="/admin/services-hero"
+                  className="px-6 py-3 rounded-2xl bg-gradient-to-r from-amber-400 to-pink-500 hover:from-amber-500 hover:to-pink-600 text-white font-extrabold text-xs shadow-lg shadow-pink-500/20 transition-all cursor-pointer hover:scale-105 active:scale-95 whitespace-nowrap shrink-0 flex items-center gap-2"
+                >
+                  <Sparkles className="w-4 h-4" />
+                  Manage Hero Banner &rarr;
+                </Link>
+              </div>
+
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {services.map((svc) => (
                   <div

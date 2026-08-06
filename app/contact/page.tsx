@@ -27,6 +27,7 @@ import {
 
 import { usePageContent } from "@/lib/pageContent";
 import { saveContactMessage } from "@/lib/contactMessages";
+import { renderFormattedHeading } from "@/app/admin/services-hero/page";
 
 export default function ContactPage() {
   const [hireModalOpen, setHireModalOpen] = useState(false);
@@ -119,13 +120,18 @@ export default function ContactPage() {
         <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:24px_24px]" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border text-xs sm:text-sm font-bold uppercase tracking-wider bg-amber-500/10 border-amber-500/30 text-amber-800 mb-6 shadow-xs">
-            <Mail className="w-4 h-4 text-amber-600" />
-            24/7 EVENT CREW SUPPORT & INQUIRIES
-          </div>
+          {(contactData.customFields?.contactHeroBadge || contactData.customFields?.heroBadgeText || "24/7 EVENT CREW SUPPORT & INQUIRIES") && (
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border text-xs sm:text-sm font-bold uppercase tracking-wider bg-amber-500/10 border-amber-500/30 text-amber-800 mb-6 shadow-xs">
+              <Mail className="w-4 h-4 text-amber-600" />
+              {contactData.customFields?.contactHeroBadge || contactData.customFields?.heroBadgeText || "24/7 EVENT CREW SUPPORT & INQUIRIES"}
+            </div>
+          )}
 
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight text-slate-950 max-w-4xl mx-auto mb-6">
-            {contactData.headline}
+            {renderFormattedHeading(
+              contactData.headline || "Get in Touch with Our Staffing Coordinators",
+              contactData.customFields?.headlineHighlight || "Staffing Coordinators"
+            )}
           </h1>
 
           <p className="text-base sm:text-lg lg:text-xl text-slate-700 max-w-2xl mx-auto leading-relaxed font-normal">

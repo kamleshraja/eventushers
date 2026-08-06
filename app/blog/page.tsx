@@ -16,11 +16,28 @@ import {
   User
 } from "lucide-react";
 
+import { usePageContent } from "@/lib/pageContent";
+import { renderFormattedHeading } from "@/app/admin/services-hero/page";
+
 export default function BlogPage() {
   const [hireModalOpen, setHireModalOpen] = useState(false);
   const [joinModalOpen, setJoinModalOpen] = useState(false);
   const [activeCategory, setActiveCategory] = useState("All");
   const [visibleCount, setVisibleCount] = useState(6);
+
+  const blogContent = usePageContent("blog", {
+    key: "blog",
+    title: "Blog & Insights Page",
+    path: "/blog",
+    headline: "Event Industry Trends, Staffing Tips & Stories",
+    subheading: "Stay ahead with expert insights on corporate protocol, venue crowd management, event tech innovations, and crew career growth across Kenya.",
+    metaTitle: "Event Industry Insights & News — Event Ushers",
+    metaDescription: "Read the latest articles on event staffing logistics, venue management, and corporate protocol tips across Kenya.",
+    customFields: {
+      blogHeroBadge: "EVENT USHERS INSIGHTS & NEWS",
+      headlineHighlight: "Stories",
+    },
+  });
 
   const categories = ["All", "Staffing & Logistics", "Technology", "Career Insights", "Event Planning Tips"];
 
@@ -44,17 +61,22 @@ export default function BlogPage() {
         <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:24px_24px]" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border text-xs sm:text-sm font-bold uppercase tracking-wider bg-amber-500/10 border-amber-500/30 text-amber-800 mb-6 shadow-xs">
-            <BookOpen className="w-4 h-4 text-amber-600" />
-            EVENT USHERS INSIGHTS & NEWS
-          </div>
+          {(blogContent.customFields?.blogHeroBadge || blogContent.customFields?.heroBadgeText || "EVENT USHERS INSIGHTS & NEWS") && (
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border text-xs sm:text-sm font-bold uppercase tracking-wider bg-amber-500/10 border-amber-500/30 text-amber-800 mb-6 shadow-xs">
+              <BookOpen className="w-4 h-4 text-amber-600" />
+              {blogContent.customFields?.blogHeroBadge || blogContent.customFields?.heroBadgeText || "EVENT USHERS INSIGHTS & NEWS"}
+            </div>
+          )}
 
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight text-slate-950 max-w-4xl mx-auto mb-6">
-            Event Industry Trends, Staffing Tips & <span className="text-gradient-amber">Stories</span>
+            {renderFormattedHeading(
+              blogContent.headline,
+              blogContent.customFields?.headlineHighlight || "Stories"
+            )}
           </h1>
 
           <p className="text-base sm:text-lg lg:text-xl text-slate-700 max-w-2xl mx-auto leading-relaxed font-normal">
-            Stay ahead with expert insights on corporate protocol, venue crowd management, event tech innovations, and crew career growth across Kenya.
+            {blogContent.subheading}
           </p>
         </div>
       </section>

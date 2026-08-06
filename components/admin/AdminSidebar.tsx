@@ -4,11 +4,11 @@ import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Logo } from "@/components/Logo";
-import { 
-  LayoutDashboard, 
-  FileText, 
-  Layers, 
-  FolderKanban, 
+import {
+  LayoutDashboard,
+  FileText,
+  Layers,
+  FolderKanban,
   LogOut,
   ExternalLink,
   ChevronRight,
@@ -42,7 +42,7 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({ onLogout }) => {
   return (
     <aside className="w-64 bg-slate-950 text-white h-screen sticky top-0 border-r border-slate-800/80 flex flex-col justify-between shrink-0 overflow-y-auto no-scrollbar z-40 selection:bg-amber-500 selection:text-slate-950">
       <div className="p-6 space-y-7">
-        
+
         {/* Brand Header with Official Logo */}
         <Link href="/admin" className="flex flex-col items-start gap-2.5 group">
           <Logo size="sm" variant="dark" />
@@ -63,11 +63,10 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({ onLogout }) => {
                 <Link
                   key={item.name}
                   href={item.href}
-                  className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all ${
-                    isActive
+                  className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all ${isActive
                       ? "bg-gradient-to-r from-amber-400 via-orange-500 to-pink-500 text-white shadow-md shadow-pink-500/20 font-extrabold"
                       : "text-slate-400 hover:text-white hover:bg-slate-900/80"
-                  }`}
+                    }`}
                 >
                   <div className="flex items-center gap-3">
                     <Icon className={`w-4 h-4 ${isActive ? "text-white" : "text-slate-400"}`} />
@@ -89,11 +88,10 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({ onLogout }) => {
                 <Link
                   key={item.name}
                   href={item.href}
-                  className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all ${
-                    isActive
+                  className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all ${isActive
                       ? "bg-gradient-to-r from-amber-400 via-orange-500 to-pink-500 text-white shadow-md shadow-pink-500/20 font-extrabold"
                       : "text-slate-400 hover:text-white hover:bg-slate-900/80"
-                  }`}
+                    }`}
                 >
                   <div className="flex items-center gap-3">
                     <Icon className={`w-4 h-4 ${isActive ? "text-white" : "text-slate-400"}`} />

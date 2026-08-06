@@ -26,6 +26,7 @@ import {
 } from "lucide-react";
 
 import { usePageContent } from "@/lib/pageContent";
+import { renderFormattedHeading } from "@/app/admin/services-hero/page";
 
 export default function ServicesPage() {
   const [hireModalOpen, setHireModalOpen] = useState(false);
@@ -64,23 +65,23 @@ export default function ServicesPage() {
   const guarantees = [
     {
       icon: ShieldCheck,
-      title: "100% Vetted Personnel",
-      desc: "Background checks, ID verification, and corporate dress code compliance before dispatch.",
+      title: servicesDataContent.customFields?.guarantee1Title || "100% Vetted Personnel",
+      desc: servicesDataContent.customFields?.guarantee1Description || "Background checks, ID verification, and corporate dress code compliance before dispatch.",
     },
     {
       icon: Zap,
-      title: "24-Hour Express Dispatch",
-      desc: "Emergency crew replacement and last-minute staffing fulfilled within 24 hours.",
+      title: servicesDataContent.customFields?.guarantee2Title || "24-Hour Express Dispatch",
+      desc: servicesDataContent.customFields?.guarantee2Description || "Emergency crew replacement and last-minute staffing fulfilled within 24 hours.",
     },
     {
       icon: Award,
-      title: "On-Site Supervisors",
-      desc: "Dedicated team leader on-site at every major event to coordinate flow and attendance.",
+      title: servicesDataContent.customFields?.guarantee3Title || "On-Site Supervisors",
+      desc: servicesDataContent.customFields?.guarantee3Description || "Dedicated team leader on-site at every major event to coordinate flow and attendance.",
     },
     {
       icon: Users,
-      title: "Custom Uniform Options",
-      desc: "Formal suits, branded polo shirts, traditional attire, or theme-specific hostess outfits.",
+      title: servicesDataContent.customFields?.guarantee4Title || "Custom Uniform Options",
+      desc: servicesDataContent.customFields?.guarantee4Description || "Formal suits, branded polo shirts, traditional attire, or theme-specific hostess outfits.",
     },
   ];
 
@@ -102,12 +103,21 @@ export default function ServicesPage() {
           className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:24px_24px]"
         />
 
+        {servicesDataContent.customFields?.heroImageUrl && (
+          <div
+            className="absolute inset-0 bg-cover bg-center opacity-10 pointer-events-none"
+            style={{ backgroundImage: `url(${servicesDataContent.customFields.heroImageUrl})` }}
+          />
+        )}
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border text-xs sm:text-sm font-bold uppercase tracking-wider bg-amber-500/10 border-amber-500/30 text-amber-800 mb-6 shadow-xs">
-            <Sparkles className="w-4 h-4 text-amber-600" />
-            EVENT CREW SOLUTIONS
-          </div>
+          {(servicesDataContent.customFields?.servicesHeroBadge || servicesDataContent.customFields?.heroBadgeText || "EXPLORE CORE OFFERINGS") && (
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border text-xs sm:text-sm font-bold uppercase tracking-wider bg-amber-500/10 border-amber-500/30 text-amber-800 mb-6 shadow-xs">
+              <Sparkles className="w-4 h-4 text-amber-600" />
+              {servicesDataContent.customFields?.servicesHeroBadge || servicesDataContent.customFields?.heroBadgeText || "EXPLORE CORE OFFERINGS"}
+            </div>
+          )}
 
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight text-slate-950 max-w-4xl mx-auto mb-6">
             {servicesDataContent.headline}
@@ -119,16 +129,23 @@ export default function ServicesPage() {
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <button
-              onClick={() => setHireModalOpen(true)}
+              onClick={() => {
+                const url = servicesDataContent.customFields?.primaryCtaUrl;
+                if (url && (url.startsWith("/") || url.startsWith("http"))) {
+                  window.location.href = url;
+                } else {
+                  setHireModalOpen(true);
+                }
+              }}
               className="px-8 py-4 rounded-full bg-gradient-to-r from-amber-400 to-pink-500 hover:from-amber-500 hover:to-pink-600 text-white font-extrabold text-base shadow-xl shadow-pink-500/25 hover:scale-105 active:scale-95 transition-all cursor-pointer whitespace-nowrap"
             >
-              Hire Staff Now
+              {servicesDataContent.customFields?.primaryCtaText || "Hire Staff Now"}
             </button>
             <a
-              href="#services-grid"
+              href={servicesDataContent.customFields?.secondaryCtaUrl || "#services-grid"}
               className="px-8 py-4 rounded-full bg-white hover:bg-slate-50 text-slate-900 border border-slate-300 font-bold text-base shadow-xs hover:scale-105 active:scale-95 transition-all cursor-pointer whitespace-nowrap"
             >
-              Explore All Categories
+              {servicesDataContent.customFields?.secondaryCtaText || "Explore All Categories"}
             </a>
           </div>
         </div>
@@ -140,10 +157,13 @@ export default function ServicesPage() {
           
           <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-950 tracking-tight">
-              Our 6 Core <span className="text-gradient-amber">Service Pillars</span>
+              {renderFormattedHeading(
+                servicesDataContent.customFields?.servicesSectionTitle || "Our 6 Core Service Pillars",
+                servicesDataContent.customFields?.servicesSectionTitleHighlight || "Service Pillars"
+              )}
             </h2>
             <p className="text-base sm:text-lg text-slate-600 font-medium">
-              Click any service category to inspect detailed specifications, deliverables, and booking options.
+              {servicesDataContent.customFields?.servicesSectionDescription || "Click any service category to inspect detailed specifications, deliverables, and booking options."}
             </p>
           </div>
 
@@ -223,13 +243,16 @@ export default function ServicesPage() {
           
           <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-800 text-xs font-bold uppercase tracking-wider">
-              OUR PROMISE
+              {servicesDataContent.customFields?.guaranteesBadge || "OUR PROMISE"}
             </div>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-950 tracking-tight">
-              Why Event Organizers <span className="text-gradient-amber">Trust Our Crew</span>
+              {renderFormattedHeading(
+                servicesDataContent.customFields?.guaranteesHeading || "Why Event Organizers Trust Our Crew",
+                servicesDataContent.customFields?.guaranteesHeadingHighlight || "Trust Our Crew"
+              )}
             </h2>
             <p className="text-base sm:text-lg text-slate-600 font-medium">
-              We eliminate staffing risks so you can run flawless events every single time.
+              {servicesDataContent.customFields?.guaranteesDescription || "We eliminate staffing risks so you can run flawless events every single time."}
             </p>
           </div>
 
