@@ -38,6 +38,10 @@ app.get("/api/health", (req, res) => {
   res.json({ status: "ok", service: "Event Ushers Express API Server", timestamp: new Date() });
 });
 
-app.listen(PORT, () => {
-  console.log(`[Express API Server]: Running on http://localhost:${PORT}`);
-});
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`[Express API Server]: Running on http://localhost:${PORT}`);
+  });
+}
+
+module.exports = app;
