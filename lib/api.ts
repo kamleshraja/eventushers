@@ -1,8 +1,17 @@
 import { blogArticles, BlogArticle } from "@/data/blogData";
 import { servicesData } from "@/data/servicesData";
 
-export const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
-export const SERVER_BASE_URL = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:5000";
+export const API_BASE_URL =
+  process.env.NEXT_PUBLIC_API_URL ||
+  (typeof window !== "undefined"
+    ? `${window.location.origin}/api`
+    : "http://localhost:5000/api");
+
+export const SERVER_BASE_URL =
+  process.env.NEXT_PUBLIC_SERVER_URL ||
+  (typeof window !== "undefined"
+    ? window.location.origin
+    : "http://localhost:5000");
 
 export interface CategoryItem {
   _id?: string;
