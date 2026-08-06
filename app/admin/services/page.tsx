@@ -48,6 +48,9 @@ export default function AdminServicesPage() {
   const [longDescription, setLongDescription] = useState("");
   const [image, setImage] = useState("");
   const [featuresText, setFeaturesText] = useState("");
+  const [deliverablesText, setDeliverablesText] = useState("");
+  const [idealForText, setIdealForText] = useState("");
+  const [overviewChecklistText, setOverviewChecklistText] = useState("");
   const [savedNotification, setSavedNotification] = useState(false);
 
   const saveServicesState = (updated: ServiceDetail[]) => {
@@ -65,6 +68,13 @@ export default function AdminServicesPage() {
     setLongDescription(svc.longDescription || svc.description);
     setImage(svc.image || "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=800&q=80");
     setFeaturesText(svc.features ? svc.features.join("\n") : "");
+    setDeliverablesText(svc.deliverables ? svc.deliverables.join("\n") : "");
+    setIdealForText(svc.idealFor ? svc.idealFor.join("\n") : "");
+    setOverviewChecklistText(
+      svc.overviewChecklist
+        ? svc.overviewChecklist.join("\n")
+        : "24-Hour Express Dispatch Available\n100% Background Checked Staff\nIncludes On-Site Supervisor"
+    );
     setSavedNotification(false);
     setViewMode("edit");
   };
@@ -78,6 +88,21 @@ export default function AdminServicesPage() {
       .map((f) => f.trim())
       .filter((f) => f.length > 0);
 
+    const parsedDeliverables = deliverablesText
+      .split("\n")
+      .map((f) => f.trim())
+      .filter((f) => f.length > 0);
+
+    const parsedIdealFor = idealForText
+      .split("\n")
+      .map((f) => f.trim())
+      .filter((f) => f.length > 0);
+
+    const parsedOverviewChecklist = overviewChecklistText
+      .split("\n")
+      .map((f) => f.trim())
+      .filter((f) => f.length > 0);
+
     const updatedServicePayload = {
       title,
       category,
@@ -85,6 +110,9 @@ export default function AdminServicesPage() {
       longDescription,
       image,
       features: parsedFeatures.length > 0 ? parsedFeatures : editingService.features,
+      deliverables: parsedDeliverables.length > 0 ? parsedDeliverables : editingService.deliverables,
+      idealFor: parsedIdealFor.length > 0 ? parsedIdealFor : editingService.idealFor,
+      overviewChecklist: parsedOverviewChecklist.length > 0 ? parsedOverviewChecklist : editingService.overviewChecklist,
     };
 
     const updated = services.map((s) =>
@@ -309,12 +337,45 @@ export default function AdminServicesPage() {
                       </div>
 
                       <div className="space-y-1">
-                        <label className="text-xs font-bold text-slate-800">Features Included (One feature per line)</label>
+                        <label className="text-xs font-bold text-slate-800">Key Service Features (One per line)</label>
                         <textarea
-                          rows={5}
+                          rows={4}
                           value={featuresText}
                           onChange={(e) => setFeaturesText(e.target.value)}
-                          placeholder="Corporate Attire Ready&#10;Multilingual Greeting Staff&#10;Badge Printing & QR Check-in"
+                          placeholder="Corporate & Formal Attire Ready&#10;Multilingual Greeting Teams&#10;Digital QR Registration & Badge Printing"
+                          className="w-full px-4 py-3 rounded-xl border border-slate-200 text-xs sm:text-sm font-mono focus:outline-hidden focus:ring-2 focus:ring-amber-500/40"
+                        />
+                      </div>
+
+                      <div className="space-y-1">
+                        <label className="text-xs font-bold text-slate-800">Guaranteed Deliverables (One per line)</label>
+                        <textarea
+                          rows={4}
+                          value={deliverablesText}
+                          onChange={(e) => setDeliverablesText(e.target.value)}
+                          placeholder="Punctual Arrival 1-Hour Prior&#10;On-Site Floor Manager&#10;Guest Wristbanding & Seating Control"
+                          className="w-full px-4 py-3 rounded-xl border border-slate-200 text-xs sm:text-sm font-mono focus:outline-hidden focus:ring-2 focus:ring-amber-500/40"
+                        />
+                      </div>
+
+                      <div className="space-y-1">
+                        <label className="text-xs font-bold text-slate-800">Ideal Event Types (One per line)</label>
+                        <textarea
+                          rows={3}
+                          value={idealForText}
+                          onChange={(e) => setIdealForText(e.target.value)}
+                          placeholder="Weddings&#10;Galas&#10;Corporate Conferences&#10;Exhibitions"
+                          className="w-full px-4 py-3 rounded-xl border border-slate-200 text-xs sm:text-sm font-mono focus:outline-hidden focus:ring-2 focus:ring-amber-500/40"
+                        />
+                      </div>
+
+                      <div className="space-y-1">
+                        <label className="text-xs font-bold text-slate-800">Service Overview Card Checklist (One per line)</label>
+                        <textarea
+                          rows={3}
+                          value={overviewChecklistText}
+                          onChange={(e) => setOverviewChecklistText(e.target.value)}
+                          placeholder="24-Hour Express Dispatch Available&#10;100% Background Checked Staff&#10;Includes On-Site Supervisor"
                           className="w-full px-4 py-3 rounded-xl border border-slate-200 text-xs sm:text-sm font-mono focus:outline-hidden focus:ring-2 focus:ring-amber-500/40"
                         />
                       </div>

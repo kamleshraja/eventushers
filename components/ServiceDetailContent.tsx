@@ -33,7 +33,19 @@ export const ServiceDetailContent: React.FC<ServiceDetailContentProps> = ({ serv
   const [hireModalOpen, setHireModalOpen] = useState(false);
   const [joinModalOpen, setJoinModalOpen] = useState(false);
 
-  const service = servicesData.find((s) => s.id === serviceId) || servicesData[0];
+  const [services] = useState<ServiceDetail[]>(() => {
+    if (typeof window !== "undefined") {
+      const stored = localStorage.getItem("eventushers_services");
+      if (stored) {
+        try {
+          return JSON.parse(stored);
+        } catch (e) {}
+      }
+    }
+    return servicesData;
+  });
+
+  const service = services.find((s) => s.id === serviceId) || services[0];
 
   const getIcon = (id: string) => {
     switch (id) {
@@ -120,18 +132,20 @@ export const ServiceDetailContent: React.FC<ServiceDetailContentProps> = ({ serv
                 <div className="space-y-3">
                   <h3 className="text-xl font-bold text-slate-950">Service Overview</h3>
                   <div className="space-y-2 text-xs sm:text-sm font-medium text-slate-700">
-                    <div className="flex items-center gap-2">
-                      <Clock className="w-4 h-4 text-amber-600 shrink-0" />
-                      <span>24-Hour Express Dispatch Available</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <ShieldCheck className="w-4 h-4 text-amber-600 shrink-0" />
-                      <span>100% Background Checked Staff</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Award className="w-4 h-4 text-amber-600 shrink-0" />
-                      <span>Includes On-Site Supervisor</span>
-                    </div>
+                    {(service.overviewChecklist || [
+                      "24-Hour Express Dispatch Available",
+                      "100% Background Checked Staff",
+                      "Includes On-Site Supervisor"
+                    ]).map((item, idx) => {
+                      const icons = [Clock, ShieldCheck, Award];
+                      const IconComp = icons[idx % icons.length];
+                      return (
+                        <div key={idx} className="flex items-center gap-2">
+                          <IconComp className="w-4 h-4 text-amber-600 shrink-0" />
+                          <span>{item}</span>
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
 
