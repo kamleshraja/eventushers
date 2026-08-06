@@ -1,3 +1,1 @@
-const app = require("../backend/server.js");
-
-module.exports = app;
+// Next.js App Router handles API routes natively in app/api
