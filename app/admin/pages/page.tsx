@@ -61,8 +61,14 @@ export default function AdminPageManagerPage() {
         heroBadgeText: "EASY AND QUICK HIRE",
         heroImageUrl: "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1200&q=80",
         trustHighlight1: "100% Background Vetted",
-        trustHighlight2: "Instant Replacement Guarantee",
-        trustHighlight3: "Corporate Attire & Protocol Ready",
+        trustHighlight2: "Instant Replacement",
+        trustHighlight3: "Corporate Protocol",
+        heroRatingScore: "4.9 / 5",
+        heroRatingSubtext: "500+ Verified Organizers",
+        heroStatusAvatarUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80",
+        heroStatusTitle: "Lead Hostess Assigned",
+        heroStatusLocation: "Nairobi, Kenya",
+        heroStatusBadgeText: "DISPATCHED",
         aboutSectionBadge: "WHY CHOOSE EVENT USHERS",
         aboutSectionTitle: "Kenya's Premier Tech-Enabled Staffing Engine",
         aboutSectionDescription: "We bridge the gap between event organizers and background-checked, corporate-ready hospitality talent.",
@@ -91,8 +97,10 @@ export default function AdminPageManagerPage() {
         servicesSectionBadge: "OUR CORE SERVICES",
         servicesSectionTitle: "Comprehensive Staffing Solutions Tailored for Every Occasion",
         servicesSectionDescription: "From intimate private banquets to massive international expos, our vetted crew delivers flawless execution.",
-        blogSectionBadge: "INSIGHTS & NEWS",
-        blogSectionTitle: "Latest Event Industry Trends & Protocol Guides",
+        blogSectionBadge: "RECENT BLOG & NEWS",
+        blogSectionTitle: "Checkout Our Latest Insights",
+        blogSectionTitleHighlight: "Latest Insights",
+        blogSectionDescription: "Stay updated with event staffing trends, industry tips, and success stories from our network.",
         testimonialsSectionBadge: "ORGANIZER TESTIMONIALS",
         testimonialsSectionTitle: "Trusted by Event Leaders Across Kenya",
         testimonialsSectionDescription: "Discover how event planners, corporate brands, and private hosts across Kenya achieve event success with our vetted crew.",
@@ -101,10 +109,20 @@ export default function AdminPageManagerPage() {
         ctaSectionDescription: "Join hundreds of event organizers and corporate hosts across Kenya who trust Event Ushers for flawless protocol, security, and hospitality.",
         ctaButtonText: "Hire Staff Now",
         organizerCount: "250+",
+        organizerLabel: "Happy Event Organizers",
+        organizerSubtext: "Corporate & private clients",
         usherCount: "1,500+",
+        usherLabel: "Active Vetted Ushers",
+        usherSubtext: "Ready for deployment",
         projectCount: "350+",
+        projectLabel: "Projects Completed",
+        projectSubtext: "Galas, expos & festivals",
         cityCount: "18+",
+        cityLabel: "Cities Covered",
+        citySubtext: "Across Kenya & East Africa",
         supportStaffCount: "500+",
+        supportStaffLabel: "Trained Support Staff",
+        supportStaffSubtext: "Security, AV & Hostesses",
       },
     },
     {
@@ -703,28 +721,79 @@ export default function AdminPageManagerPage() {
                           "heroImageUrl",
                           "trustHighlight1",
                           "trustHighlight2",
-                          "trustHighlight3"
+                          "trustHighlight3",
+                          "heroRatingScore",
+                          "heroRatingSubtext",
+                          "heroStatusAvatarUrl",
+                          "heroStatusTitle",
+                          "heroStatusLocation",
+                          "heroStatusBadgeText"
                         ],
                         isHeroGroup: true,
                       },
                       {
-                        title: "Our Journey Management Module",
+                        title: "Platform Statistics & KPI Numbers",
                         icon: Globe,
+                        color: "text-amber-600",
+                        keys: [
+                          "organizerCount",
+                          "organizerLabel",
+                          "organizerSubtext",
+                          "usherCount",
+                          "usherLabel",
+                          "usherSubtext",
+                          "projectCount",
+                          "projectLabel",
+                          "projectSubtext",
+                          "cityCount",
+                          "cityLabel",
+                          "citySubtext",
+                          "supportStaffCount",
+                          "supportStaffLabel",
+                          "supportStaffSubtext"
+                        ],
+                      },
+                      {
+                        title: "Section 3: About Us & Mission/Vision Section",
+                        icon: Sparkles,
                         color: "text-amber-500",
                         keys: [
-                          "ourJourneyBadge",
-                          "ourJourneyHeading",
-                          "ourJourneyHeadingHighlight",
-                          "ourJourneyIntro",
-                          "ourJourneyExtraDescription",
-                          "missionTabTitle",
+                          "aboutSectionBadge",
+                          "aboutSectionTitle",
+                          "aboutSectionDescription",
+                          "missionTabLabel",
+                          "visionTabLabel",
+                          "missionTitle",
                           "missionStatement",
-                          "visionTabTitle",
+                          "visionTitle",
                           "visionStatement",
-                          "ourJourneyFeaturedImageUrl",
-                          "ourJourneyImageBadge",
-                          "ourJourneyImageCaption",
-                          "ourJourneyImageAltText",
+                          "aboutImage1Url",
+                          "aboutImage1Label",
+                          "aboutImage2Url",
+                          "aboutImage2Label",
+                          "aboutImage3Url",
+                          "aboutImage3Label",
+                          "experienceBadgeYears",
+                          "experienceBadgeTitle",
+                          "experienceBadgeSubtext",
+                          "whyChooseUsHeading",
+                          "whyChooseUsItem1",
+                          "whyChooseUsItem2",
+                          "whyChooseUsItem3",
+                          "whyChooseUsItem4",
+                          "whyChooseUsItem5",
+                          "whyChooseUsItem6"
+                        ],
+                      },
+                      {
+                        title: "Section 4: Core Services Section",
+                        icon: Layers,
+                        color: "text-purple-500",
+                        keys: [
+                          "servicesSectionBadge",
+                          "servicesSectionTitle",
+                          "servicesSectionTitleHighlight",
+                          "servicesSectionDescription"
                         ],
                       },
                       {
@@ -790,17 +859,6 @@ export default function AdminPageManagerPage() {
                       },
 
                       {
-                        title: "Section 2: Core Services Pillars Header",
-                        icon: Layers,
-                        color: "text-purple-500",
-                        keys: [
-                          "servicesSectionTitle",
-                          "servicesSectionTitleHighlight",
-                          "servicesSectionDescription",
-                        ],
-                      },
-
-                      {
                         title: "Section 3: Our Promise & Guarantees Module",
                         icon: ShieldCheck,
                         color: "text-amber-500",
@@ -822,16 +880,21 @@ export default function AdminPageManagerPage() {
 
 
                       {
-                        title: "Organizer Testimonials Section Content",
+                        title: "Section 5: Organizer Testimonials Section Content",
                         icon: Sparkles,
                         color: "text-amber-600",
                         keys: ["testimonialsSectionBadge", "testimonialsSectionTitle", "testimonialsSectionDescription"],
                       },
                       {
-                        title: "Call-To-Action (CTA) Banner Content",
-                        icon: ShieldCheck,
-                        color: "text-pink-600",
-                        keys: ["ctaSectionBadge", "ctaSectionTitle", "ctaSectionDescription", "ctaButtonText"],
+                        title: "Section 6: Insights & Recent Blog News Section",
+                        icon: BookOpen,
+                        color: "text-amber-500",
+                        keys: [
+                          "blogSectionBadge",
+                          "blogSectionTitle",
+                          "blogSectionTitleHighlight",
+                          "blogSectionDescription"
+                        ],
                       },
                       {
                         title: "Frequently Asked Questions (FAQ) Accordion",
@@ -869,12 +932,6 @@ export default function AdminPageManagerPage() {
                           "tiktokUrl",
                           "tiktokIconUrl"
                         ],
-                      },
-                      {
-                        title: "Platform Statistics & KPI Numbers",
-                        icon: Globe,
-                        color: "text-amber-600",
-                        keys: ["organizerCount", "usherCount", "projectCount", "cityCount", "supportStaffCount"],
                       },
                       {
                         title: activeKey === "terms" ? "Section 2: Terms & Client Agreement Pillars" : "Section 2: Privacy & Data Security Pillars",
@@ -1014,7 +1071,8 @@ export default function AdminPageManagerPage() {
                         !k.toLowerCase().includes("ourjourney") &&
                         !k.toLowerCase().includes("mission") &&
                         !k.toLowerCase().includes("vision") &&
-                        !k.toLowerCase().includes("tab")
+                        !k.toLowerCase().includes("tab") &&
+                        !k.toLowerCase().includes("cta")
                     );
 
                     if (remainingKeys.length > 0 && activeKey !== "about" && activeKey !== "services" && activeKey !== "blog" && activeKey !== "privacy-policy" && activeKey !== "terms") {
@@ -1259,17 +1317,98 @@ export default function AdminPageManagerPage() {
                                           <option value="vision">Vision Tab</option>
                                         </select>
                                       </>
-                                    ) : (k.endsWith("ImageUrl") || k.endsWith("LogoUrl") || k.endsWith("AvatarUrl") || k.endsWith("IconUrl")) && !k.toLowerCase().includes("label") && !k.toLowerCase().includes("cta") ? (
+                                    ) : (
+                                      k.endsWith("ImageUrl") ||
+                                      k.endsWith("LogoUrl") ||
+                                      k.endsWith("AvatarUrl") ||
+                                      k.endsWith("IconUrl") ||
+                                      k === "aboutImage1Url" ||
+                                      k === "aboutImage2Url" ||
+                                      k === "aboutImage3Url" ||
+                                      (k.endsWith("Url") &&
+                                        !k.toLowerCase().includes("label") &&
+                                        !k.toLowerCase().includes("cta") &&
+                                        !k.toLowerCase().includes("primary") &&
+                                        !k.toLowerCase().includes("secondary") &&
+                                        !k.toLowerCase().includes("instagram") &&
+                                        !k.toLowerCase().includes("facebook") &&
+                                        !k.toLowerCase().includes("youtube") &&
+                                        !k.toLowerCase().includes("tiktok") &&
+                                        !k.toLowerCase().includes("urlkey"))
+                                    ) ? (
                                       <ImageUploader
                                         value={v}
                                         onChange={(newUrl) => setCustomFields({ ...customFields, [k]: newUrl })}
-                                        label={k.replace(/([A-Z])/g, " $1")}
+                                        label={
+                                          ({
+                                            aboutImage1Url: "Gallery Image 1 (Guest Hostesses)",
+                                            aboutImage2Url: "Gallery Image 2 (On-Site Briefing)",
+                                            aboutImage3Url: "Gallery Image 3 (Protocol & VIP Security)",
+                                            heroImageUrl: "Hero Main Showcase Image",
+                                            heroStatusAvatarUrl: "Status Card Usher Avatar Image",
+                                            siteLogoUrl: "Site Logo Image",
+                                          } as Record<string, string>)[k] || k.replace(/([A-Z])/g, " $1")
+                                        }
                                       />
                                     ) : (
                                       <>
                                          <label className="text-xs font-bold text-slate-800 capitalize">
                                            {({
+                                             aboutSectionBadge: "Section Pill Badge (e.g., ABOUT EVENT USHERS)",
+                                             aboutSectionTitle: "Section Main Heading (e.g., The Crew Connect-Hub for Unforgettable Events)",
+                                             aboutSectionDescription: "Section Subheading / Intro (e.g., Your ultimate partner in elevated event experiences across Kenya.)",
+                                             missionTabLabel: "Mission Tab Button Label (e.g., Our Mission)",
+                                             visionTabLabel: "Vision Tab Button Label (e.g., Our Vision)",
+                                             missionTitle: "Mission Content Box Title (e.g., Empowering Event Organizers Daily)",
+                                             missionStatement: "Mission Quote Statement Text",
+                                             visionTitle: "Vision Content Box Title (e.g., Setting the Continental Standard)",
+                                             visionStatement: "Vision Quote Statement Text",
+                                             aboutImage1Url: "Gallery Image 1 (Guest Hostesses)",
+                                             aboutImage1Label: "Gallery Image 1 Label Tag (e.g., Guest Hostesses)",
+                                             aboutImage2Url: "Gallery Image 2 (On-Site Briefing)",
+                                             aboutImage2Label: "Gallery Image 2 Label Tag (e.g., On-Site Briefing)",
+                                             aboutImage3Url: "Gallery Image 3 (Protocol & VIP Security)",
+                                             aboutImage3Label: "Gallery Image 3 Label Tag (e.g., Protocol & VIP Security)",
+                                             experienceBadgeYears: "Experience Badge Number/Years (e.g., 5+)",
+                                             experienceBadgeTitle: "Experience Badge Title (e.g., Years of Excellence)",
+                                             experienceBadgeSubtext: "Experience Badge Subtext (e.g., 500+ High-Profile Events Served)",
+                                             whyChooseUsHeading: "Why Choose Us Section Title (e.g., Why Event Organizers Choose Us)",
+                                             whyChooseUsItem1: "Why Choose Us Feature 1",
+                                             whyChooseUsItem2: "Why Choose Us Feature 2",
+                                             whyChooseUsItem3: "Why Choose Us Feature 3",
+                                             whyChooseUsItem4: "Why Choose Us Feature 4",
+                                             whyChooseUsItem5: "Why Choose Us Feature 5",
+                                             whyChooseUsItem6: "Why Choose Us Feature 6",
+                                             organizerCount: "Stat 1 Number (e.g., 250+)",
+                                             organizerLabel: "Stat 1 Title (e.g., Happy Event Organizers)",
+                                             organizerSubtext: "Stat 1 Subtitle (e.g., Corporate & private clients)",
+                                             usherCount: "Stat 2 Number (e.g., 1,500+)",
+                                             usherLabel: "Stat 2 Title (e.g., Active Vetted Ushers)",
+                                             usherSubtext: "Stat 2 Subtitle (e.g., Ready for deployment)",
+                                             projectCount: "Stat 3 Number (e.g., 350+)",
+                                             projectLabel: "Stat 3 Title (e.g., Projects Completed)",
+                                             projectSubtext: "Stat 3 Subtitle (e.g., Galas, expos & festivals)",
+                                             cityCount: "Stat 4 Number (e.g., 18+)",
+                                             cityLabel: "Stat 4 Title (e.g., Cities Covered)",
+                                             citySubtext: "Stat 4 Subtitle (e.g., Across Kenya & East Africa)",
+                                             supportStaffCount: "Stat 5 Number (e.g., 500+)",
+                                             supportStaffLabel: "Stat 5 Title (e.g., Trained Support Staff)",
+                                             supportStaffSubtext: "Stat 5 Subtitle (e.g., Security, AV & Hostesses)",
+                                             heroBadgeText: "Hero Pill Badge (e.g., EASY AND QUICK HIRE)",
+                                             trustHighlight1: "Trust Highlight 1 (e.g., 100% Background Vetted)",
+                                             trustHighlight2: "Trust Highlight 2 (e.g., Instant Replacement)",
+                                             trustHighlight3: "Trust Highlight 3 (e.g., Corporate Protocol)",
+                                             heroRatingScore: "Rating Score (e.g., 4.9 / 5)",
+                                             heroRatingSubtext: "Rating Subtitle (e.g., 500+ Verified Organizers)",
+                                             heroStatusAvatarUrl: "Status Card Usher Avatar Image",
+                                             heroStatusTitle: "Status Card Title (e.g., Lead Hostess Assigned)",
+                                             heroStatusLocation: "Status Card Location (e.g., Nairobi, Kenya)",
+                                             heroStatusBadgeText: "Status Badge Tag (e.g., DISPATCHED)",
                                              servicesHeroBadge: "Services Hero Badge (e.g., EXPLORE CORE OFFERINGS)",
+                                             blogSectionBadge: "Section Pill Badge (e.g., RECENT BLOG & NEWS)",
+                                             blogSectionTitle: "Section Main Heading (e.g., Checkout Our Latest Insights)",
+                                             blogSectionTitleHighlight: "Heading Highlighted Text (e.g., Latest Insights)",
+                                             blogSectionDescription: "Section Subheading / Description (e.g., Stay updated with event staffing trends...)",
                                              blogHeroBadge: "Blog Hero Badge (e.g., EVENT USHERS INSIGHTS & NEWS)",
                                              contactHeroBadge: "Contact Hero Badge (e.g., 24/7 EVENT CREW SUPPORT & INQUIRIES)",
                                              privacyHeroBadge: "Privacy Hero Badge (e.g., PRIVACY POLICY & DATA PROTECTION)",
@@ -1278,6 +1417,7 @@ export default function AdminPageManagerPage() {
                                              primaryCtaUrl: "Primary CTA Button URL",
                                              secondaryCtaText: "Secondary CTA Button Text (e.g., Explore All Categories)",
                                              secondaryCtaUrl: "Secondary CTA Button URL",
+                                             servicesSectionBadge: "Section Pill Badge (e.g., OUR CORE SERVICES)",
                                              servicesSectionTitle: "Section Heading (e.g., Our 6 Core Service Pillars)",
                                              servicesSectionTitleHighlight: "Section Heading Highlighted Text (e.g., Service Pillars)",
                                              servicesSectionDescription: "Section Subtext / Description",

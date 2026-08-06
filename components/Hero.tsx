@@ -104,39 +104,39 @@ export const Hero: React.FC<HeroProps> = ({ onOpenHire, onOpenJoin, heroImage })
 
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent rounded-2xl" />
 
-                {/* Floating Glass Metric Badge 1 */}
+                {/* Floating Glass Metric Badge 1: Rating Card */}
                 <div className="absolute top-4 right-4 backdrop-blur-md p-3 rounded-2xl border shadow-xl flex items-center gap-3 animate-float bg-white/95 border-slate-200 text-slate-900">
                   <div className="w-9 h-9 rounded-xl bg-amber-500/10 flex items-center justify-center font-bold">
                     <Star className="w-5 h-5" style={{ fill: "url(#brand-gradient)", stroke: "url(#brand-gradient)" }} />
                   </div>
                   <div>
                     <div className="flex items-center gap-1">
-                      <span className="text-base font-extrabold text-slate-900">4.9 / 5</span>
+                      <span className="text-base font-extrabold text-slate-900">{homeData.customFields?.heroRatingScore || "4.9 / 5"}</span>
                       <span className="text-xs text-amber-500">★★★★★</span>
                     </div>
-                    <p className="text-xs text-slate-600 font-semibold">500+ Verified Organizers</p>
+                    <p className="text-xs text-slate-600 font-semibold">{homeData.customFields?.heroRatingSubtext || "500+ Verified Organizers"}</p>
                   </div>
                 </div>
 
-                {/* Floating Glass Metric Badge 2 */}
+                {/* Floating Glass Metric Badge 2: Status Card */}
                 <div className="absolute bottom-4 left-4 right-4 backdrop-blur-md p-3.5 rounded-2xl border shadow-2xl flex items-center justify-between bg-white/95 border-slate-200 text-slate-900">
                   <div className="flex items-center gap-3">
                     <div className="relative">
                       <img
-                        src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80"
+                        src={homeData.customFields?.heroStatusAvatarUrl || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80"}
                         alt="Lead Usher"
                         className="w-9 h-9 rounded-full object-cover border-2 border-amber-400 ring-2 ring-amber-400/40"
                       />
                       <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 border-2 border-white rounded-full" />
                     </div>
                     <div>
-                      <h4 className="text-xs sm:text-sm font-bold text-slate-900">Lead Hostess Assigned</h4>
-                      <p className="text-xs text-slate-600">Nairobi, Kenya</p>
+                      <h4 className="text-xs sm:text-sm font-bold text-slate-900">{homeData.customFields?.heroStatusTitle || "Lead Hostess Assigned"}</h4>
+                      <p className="text-xs text-slate-600">{homeData.customFields?.heroStatusLocation || "Nairobi, Kenya"}</p>
                     </div>
                   </div>
 
                   <span className="px-3.5 py-1 bg-amber-400 text-slate-950 text-xs font-bold rounded-full shadow-xs border border-amber-400/50">
-                    DISPATCHED
+                    {homeData.customFields?.heroStatusBadgeText || "DISPATCHED"}
                   </span>
                 </div>
 

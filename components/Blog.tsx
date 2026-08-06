@@ -1,7 +1,44 @@
 import React from "react";
 import { Clock, Calendar, ArrowRight, BookOpen } from "lucide-react";
+import { usePageContent } from "@/lib/pageContent";
 
 export const Blog: React.FC = () => {
+  const homeData = usePageContent("home", {
+    key: "home",
+    title: "Home Page",
+    path: "/",
+    headline: "We connect events with vetted ushers & crew — instantly.",
+    subheading: "The all-in-one platform for event organizers to find vetted, reliable, and professional ushers & crew in minutes.",
+    metaTitle: "Event Ushers",
+    metaDescription: "We connect events with vetted ushers & crew instantly.",
+    customFields: {
+      blogSectionBadge: "RECENT BLOG & NEWS",
+      blogSectionTitle: "Checkout Our Latest Insights",
+      blogSectionTitleHighlight: "Latest Insights",
+      blogSectionDescription: "Stay updated with event staffing trends, industry tips, and success stories from our network.",
+    },
+  });
+
+  const sectionBadge = homeData.customFields?.blogSectionBadge || "RECENT BLOG & NEWS";
+  const sectionTitle = homeData.customFields?.blogSectionTitle || "Checkout Our Latest Insights";
+  const sectionTitleHighlight = homeData.customFields?.blogSectionTitleHighlight || "Latest Insights";
+  const sectionDescription = homeData.customFields?.blogSectionDescription || "Stay updated with event staffing trends, industry tips, and success stories from our network.";
+
+  // Format heading with highlight
+  const renderTitle = () => {
+    if (sectionTitleHighlight && sectionTitle.includes(sectionTitleHighlight)) {
+      const parts = sectionTitle.split(sectionTitleHighlight);
+      return (
+        <>
+          {parts[0]}
+          <span className="text-gradient-amber">{sectionTitleHighlight}</span>
+          {parts[1]}
+        </>
+      );
+    }
+    return sectionTitle;
+  };
+
   const posts = [
     {
       id: 1,
@@ -43,13 +80,13 @@ export const Blog: React.FC = () => {
         <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16 space-y-3">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-700 text-xs font-bold uppercase tracking-wider">
             <BookOpen className="w-3.5 h-3.5 text-amber-600" />
-            RECENT BLOG & NEWS
+            {sectionBadge}
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-slate-900">
-            Checkout Our <span className="text-gradient-amber">Latest Insights</span>
+            {renderTitle()}
           </h2>
           <p className="text-base sm:text-lg text-slate-600">
-            Stay updated with event staffing trends, industry tips, and success stories from our network.
+            {sectionDescription}
           </p>
         </div>
 

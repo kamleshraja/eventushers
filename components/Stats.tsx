@@ -24,32 +24,32 @@ export const Stats: React.FC = () => {
     {
       icon: Smile,
       value: homeData.customFields?.organizerCount || "250+",
-      label: "Happy Event Organizers",
-      subtext: "Corporate & private clients",
+      label: homeData.customFields?.organizerLabel || "Happy Event Organizers",
+      subtext: homeData.customFields?.organizerSubtext || "Corporate & private clients",
     },
     {
       icon: Users,
       value: homeData.customFields?.usherCount || "1,500+",
-      label: "Active Vetted Ushers",
-      subtext: "Ready for deployment",
+      label: homeData.customFields?.usherLabel || "Active Vetted Ushers",
+      subtext: homeData.customFields?.usherSubtext || "Ready for deployment",
     },
     {
       icon: Briefcase,
       value: homeData.customFields?.projectCount || "350+",
-      label: "Projects Completed",
-      subtext: "Galas, expos & festivals",
+      label: homeData.customFields?.projectLabel || "Projects Completed",
+      subtext: homeData.customFields?.projectSubtext || "Galas, expos & festivals",
     },
     {
       icon: MapPin,
       value: homeData.customFields?.cityCount || "18+",
-      label: "Cities Covered",
-      subtext: "Across Kenya & East Africa",
+      label: homeData.customFields?.cityLabel || "Cities Covered",
+      subtext: homeData.customFields?.citySubtext || "Across Kenya & East Africa",
     },
     {
       icon: Award,
       value: homeData.customFields?.supportStaffCount || "500+",
-      label: "Trained Support Staff",
-      subtext: "Security, AV & Hostesses",
+      label: homeData.customFields?.supportStaffLabel || "Trained Support Staff",
+      subtext: homeData.customFields?.supportStaffSubtext || "Security, AV & Hostesses",
     },
   ];
 

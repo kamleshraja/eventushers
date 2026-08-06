@@ -1,13 +1,22 @@
 import { NextResponse } from "next/server";
-import { dbConnect } from "@/lib/dbConnect";
 
 export async function GET() {
   try {
-    await dbConnect();
+    const backendUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
+    const res = await fetch(`${backendUrl}/health`, { cache: "no-store" }).catch(() => null);
+    if (res && res.ok) {
+      const data = await res.json();
+      return NextResponse.json({
+        status: "ok",
+        service: "Event Ushers Next.js App Router API",
+        backend: data,
+        timestamp: new Date(),
+      });
+    }
     return NextResponse.json({
       status: "ok",
-      service: "Event Ushers Next.js App Router API",
-      database: "MongoDB Atlas Connected",
+      service: "Event Ushers Next.js App Router",
+      backend: "Offline / Standalone mode",
       timestamp: new Date(),
     });
   } catch (error: any) {
