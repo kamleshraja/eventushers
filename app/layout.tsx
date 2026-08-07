@@ -17,7 +17,7 @@ const jakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Event Ushers — Premium Vetted Ushers & Crew Matching Platform",
+  title: "AfriCrew",
   description:
     "The all-in-one platform for event organizers to find vetted, reliable, and corporate-ready ushers, hostesses, security, and technical crew in minutes across Kenya.",
   keywords: [
@@ -29,14 +29,14 @@ export const metadata: Metadata = {
     "Protocol Officers",
     "Event Crew Recruitment",
   ],
-  authors: [{ name: "Event Ushers" }],
+  authors: [{ name: "AfriCrew" }],
   openGraph: {
-    title: "Event Ushers — Premium Vetted Ushers & Crew Matching Platform",
+    title: "AfriCrew",
     description:
       "We connect events with vetted ushers & crew — instantly. Hire corporate hostesses, event security, and technical staff.",
     type: "website",
     locale: "en_NG",
-    siteName: "Event Ushers",
+    siteName: "AfriCrew",
   },
 };
 

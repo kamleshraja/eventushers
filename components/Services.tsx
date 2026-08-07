@@ -76,9 +76,10 @@ export const Services: React.FC<ServicesProps> = ({ onSelectService, onOpenHire 
           {servicesData.map((service) => {
             const Icon = getIcon(service.id);
             return (
-              <div
+              <Link
                 key={service.id}
-                className="group relative bg-white rounded-3xl p-8 border border-slate-200/80 hover:border-amber-500/50 shadow-sm hover:shadow-2xl hover:shadow-amber-500/10 transition-all duration-300 flex flex-col justify-between hover:-translate-y-1.5"
+                href={`/services/${service.id}`}
+                className="group relative bg-white rounded-3xl p-8 border border-slate-200/80 hover:border-amber-500/50 shadow-sm hover:shadow-2xl hover:shadow-amber-500/10 transition-all duration-300 flex flex-col justify-between hover:-translate-y-1.5 cursor-pointer block"
               >
                 {/* Subtle Amber Top Glow on Hover */}
                 <div className="absolute top-0 left-8 right-8 h-1 bg-gradient-to-r from-transparent via-amber-500/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -117,23 +118,17 @@ export const Services: React.FC<ServicesProps> = ({ onSelectService, onOpenHire 
 
                 {/* Card Action Button */}
                 <div className="pt-6 mt-6 border-t border-slate-100 flex items-center justify-between">
-                  <Link
-                    href={`/services/${service.id}`}
-                    className="text-xs sm:text-sm font-bold text-slate-950 hover:text-amber-600 flex items-center gap-1.5 transition-colors group-hover:translate-x-0.5"
-                  >
+                  <div className="text-xs sm:text-sm font-bold text-slate-950 group-hover:text-amber-600 flex items-center gap-1.5 transition-colors">
                     <span>Learn More Specs</span>
                     <ArrowRight className="w-4 h-4 text-amber-500 group-hover:translate-x-1 transition-transform" />
-                  </Link>
+                  </div>
 
-                  <Link
-                    href={`/services/${service.id}`}
-                    className="px-5 py-2.5 rounded-full bg-gradient-to-r from-amber-400 to-pink-500 hover:from-amber-500 hover:to-pink-600 text-white text-xs font-extrabold transition-all shadow-md shadow-pink-500/20 hover:scale-105 active:scale-95 whitespace-nowrap"
-                  >
+                  <div className="px-5 py-2.5 rounded-full bg-gradient-to-r from-amber-400 to-pink-500 group-hover:from-amber-500 group-hover:to-pink-600 text-white text-xs font-extrabold transition-all shadow-md shadow-pink-500/20 group-hover:scale-105 active:scale-95 whitespace-nowrap">
                     View Details
-                  </Link>
+                  </div>
                 </div>
 
-              </div>
+              </Link>
             );
           })}
         </div>

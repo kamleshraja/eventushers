@@ -1,5 +1,5 @@
 import React from "react";
-import { Users, Award, Briefcase, MapPin, Smile } from "lucide-react";
+import { Users, Briefcase, MapPin, Smile } from "lucide-react";
 import { usePageContent } from "@/lib/pageContent";
 
 export const Stats: React.FC = () => {
@@ -16,7 +16,6 @@ export const Stats: React.FC = () => {
       usherCount: "1,500+",
       projectCount: "350+",
       cityCount: "18+",
-      supportStaffCount: "500+",
     },
   });
 
@@ -45,18 +44,12 @@ export const Stats: React.FC = () => {
       label: homeData.customFields?.cityLabel || "Cities Covered",
       subtext: homeData.customFields?.citySubtext || "Across Kenya & East Africa",
     },
-    {
-      icon: Award,
-      value: homeData.customFields?.supportStaffCount || "500+",
-      label: homeData.customFields?.supportStaffLabel || "Trained Support Staff",
-      subtext: homeData.customFields?.supportStaffSubtext || "Security, AV & Hostesses",
-    },
   ];
 
   return (
     <section className="relative -mt-10 z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="rounded-3xl shadow-xl border p-6 sm:p-8 dark:bg-slate-900/95 dark:border-slate-800 dark:shadow-amber-500/5 bg-white border-slate-200/80 transition-colors duration-300">
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 divide-y lg:divide-y-0 lg:divide-x dark:divide-slate-800 divide-slate-100">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 divide-y lg:divide-y-0 lg:divide-x dark:divide-slate-800 divide-slate-100">
           {stats.map((stat, idx) => {
             const Icon = stat.icon;
             return (

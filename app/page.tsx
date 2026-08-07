@@ -7,6 +7,7 @@ import { Stats } from "@/components/Stats";
 import { About } from "@/components/About";
 import { Services } from "@/components/Services";
 import { Testimonials } from "@/components/Testimonials";
+import { HowItWorks } from "@/components/HowItWorks";
 import { Blog } from "@/components/Blog";
 import { CtaBanner } from "@/components/CtaBanner";
 import { Footer } from "@/components/Footer";
@@ -49,6 +50,12 @@ export default function Home() {
 
       {/* Client Testimonials Section */}
       <Testimonials />
+
+      {/* How It Works Section */}
+      <HowItWorks
+        onOpenHire={() => setHireModalOpen(true)}
+        onOpenJoin={() => setJoinModalOpen(true)}
+      />
 
       {/* Blog & News Section */}
       <Blog />
