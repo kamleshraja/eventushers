@@ -12,7 +12,10 @@ export function renderFormattedHeading(text: string, highlight?: string) {
           if (part.startsWith("{") && part.endsWith("}")) {
             const inner = part.slice(1, -1);
             return (
-              <span key={idx} className="bg-gradient-to-r from-amber-500 via-orange-500 to-pink-500 bg-clip-text text-transparent font-extrabold">
+              <span
+                key={idx}
+                className="bg-gradient-to-r from-amber-400 via-orange-500 to-pink-500 bg-clip-text text-transparent font-extrabold inline-block"
+              >
                 {inner}
               </span>
             );
@@ -23,23 +26,32 @@ export function renderFormattedHeading(text: string, highlight?: string) {
     );
   }
 
-  // 2. Check for explicit highlight phrase
-  if (highlight && highlight.trim() && text.includes(highlight.trim())) {
-    const parts = text.split(highlight.trim());
-    return (
-      <>
-        {parts.map((part, idx) => (
-          <React.Fragment key={idx}>
-            {part}
-            {idx < parts.length - 1 && (
-              <span className="bg-gradient-to-r from-amber-500 via-orange-500 to-pink-500 bg-clip-text text-transparent font-extrabold">
-                {highlight.trim()}
-              </span>
-            )}
-          </React.Fragment>
-        ))}
-      </>
-    );
+  // 2. Check for explicit highlight phrase (case-insensitive)
+  if (highlight && highlight.trim()) {
+    const trimmedHighlight = highlight.trim();
+    const escaped = trimmedHighlight.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const regex = new RegExp(`(${escaped})`, "gi");
+
+    if (regex.test(text)) {
+      const parts = text.split(regex);
+      return (
+        <>
+          {parts.map((part, idx) => {
+            if (part.toLowerCase() === trimmedHighlight.toLowerCase()) {
+              return (
+                <span
+                  key={idx}
+                  className="text-gradient-amber"
+                >
+                  {part}
+                </span>
+              );
+            }
+            return part;
+          })}
+        </>
+      );
+    }
   }
 
   return text;
