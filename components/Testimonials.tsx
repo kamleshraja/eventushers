@@ -270,9 +270,11 @@ const TestimonialCard: React.FC<{ item: any; isFeatured?: boolean }> = ({ item, 
             <Quote className="w-6 h-6 fill-slate-950" />
           </div>
 
-          <span className="px-3 py-1 bg-amber-400/20 text-amber-900 border border-amber-400/40 text-xs font-bold rounded-full truncate">
-            {item.eventBadgeTitle || item.eventTag || "Corporate Event"}
-          </span>
+          {(item.eventBadgeTitle || item.eventTag) && (
+            <span className="px-3 py-1 bg-amber-400/20 text-amber-900 border border-amber-400/40 text-xs font-bold rounded-full truncate">
+              {item.eventBadgeTitle || item.eventTag}
+            </span>
+          )}
         </div>
 
         {/* Star Rating */}
@@ -314,9 +316,11 @@ const TestimonialCard: React.FC<{ item: any; isFeatured?: boolean }> = ({ item, 
           <p className="text-xs sm:text-sm text-slate-500 truncate font-medium">
             {item.designation || item.title}
           </p>
-          <p className="text-xs font-bold text-amber-600 truncate">
-            {item.companyName || item.company}
-          </p>
+          {item.companyName && (
+            <p className="text-xs font-bold text-amber-600 truncate">
+              {item.companyName}
+            </p>
+          )}
         </div>
       </div>
     </div>

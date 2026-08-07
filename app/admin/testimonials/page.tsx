@@ -139,12 +139,8 @@ export default function AdminTestimonialsPage() {
     const errors: Record<string, string> = {};
     if (!formData.customerName || !formData.customerName.trim()) errors.customerName = "Customer Name is required";
     if (!formData.designation || !formData.designation.trim()) errors.designation = "Designation / Job Title is required";
-    if (!formData.companyName || !formData.companyName.trim()) errors.companyName = "Company Name is required";
     if (!formData.quote || !formData.quote.trim()) errors.quote = "Testimonial Message is required";
 
-    if (!formData.eventBadgeTitle || !formData.eventBadgeTitle.trim()) {
-      formData.eventBadgeTitle = "Corporate Event";
-    }
     if (!formData.profileImage || !formData.profileImage.trim()) {
       formData.profileImage = "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&q=80";
     }
@@ -162,7 +158,7 @@ export default function AdminTestimonialsPage() {
       companyName: "",
       quote: "",
       rating: 5,
-      eventBadgeTitle: "1,200 Delegate Conference",
+      eventBadgeTitle: "",
       profileImage: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&q=80",
       isVerified: true,
       displayOrder: nextOrder,
@@ -858,12 +854,12 @@ export default function AdminTestimonialsPage() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1">
                   <label className="text-xs font-bold text-slate-700 flex items-center gap-1">
-                    <Building className="w-3.5 h-3.5 text-amber-600" /> Company / Organization *
+                    <Building className="w-3.5 h-3.5 text-amber-600" /> Company / Organization <span className="text-slate-400 font-normal">(Optional)</span>
                   </label>
                   <input
                     type="text"
                     disabled={modalMode === "view"}
-                    placeholder="e.g. Innovate Africa Tech Summit"
+                    placeholder="e.g. Innovate Africa Tech Summit (Optional)"
                     value={formData.companyName}
                     onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
                     className="w-full px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs font-semibold text-slate-900 focus:bg-white focus:outline-none focus:border-amber-500"
@@ -875,12 +871,12 @@ export default function AdminTestimonialsPage() {
 
                 <div className="space-y-1">
                   <label className="text-xs font-bold text-slate-700 flex items-center gap-1">
-                    <Tag className="w-3.5 h-3.5 text-amber-600" /> Event / Badge Title *
+                    <Tag className="w-3.5 h-3.5 text-amber-600" /> Event / Badge Title <span className="text-slate-400 font-normal">(Optional)</span>
                   </label>
                   <input
                     type="text"
                     disabled={modalMode === "view"}
-                    placeholder="e.g. 1,200 Delegate Conference"
+                    placeholder="e.g. 1,200 Delegate Conference (Optional)"
                     value={formData.eventBadgeTitle}
                     onChange={(e) => setFormData({ ...formData, eventBadgeTitle: e.target.value })}
                     className="w-full px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs font-semibold text-slate-900 focus:bg-white focus:outline-none focus:border-amber-500"

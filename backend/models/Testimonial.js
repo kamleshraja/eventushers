@@ -4,10 +4,10 @@ const testimonialSchema = new mongoose.Schema(
   {
     customerName: { type: String, required: true },
     designation: { type: String, required: true },
-    companyName: { type: String, required: true },
+    companyName: { type: String, required: false, default: "" },
     quote: { type: String, required: true },
     rating: { type: Number, required: true, min: 1, max: 5, default: 5 },
-    eventBadgeTitle: { type: String, required: true, default: "Corporate Event" },
+    eventBadgeTitle: { type: String, required: false, default: "" },
     profileImage: {
       type: String,
       default: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&q=80",
