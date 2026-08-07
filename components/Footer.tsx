@@ -41,6 +41,8 @@ export const Footer: React.FC<FooterProps> = ({ onOpenHire, onOpenJoin }) => {
       officeAddress: "Nairobi, Kenya",
       instagramUrl: "https://instagram.com/eventushers",
       facebookUrl: "https://facebook.com/eventushers",
+      youtubeUrl: "https://youtube.com/@eventushers",
+      tiktokUrl: "https://tiktok.com/@eventushers",
     },
   });
 
@@ -115,6 +117,8 @@ export const Footer: React.FC<FooterProps> = ({ onOpenHire, onOpenJoin }) => {
   const defaultSocials = [
     { url: "https://instagram.com/eventushers", label: "Instagram", icon: Instagram },
     { url: "https://facebook.com/eventushers", label: "Facebook", icon: Facebook },
+    { url: "https://youtube.com/@eventushers", label: "YouTube", icon: Youtube },
+    { url: "https://tiktok.com/@eventushers", label: "TikTok", icon: TiktokIcon },
   ];
 
   const displaySocialLinks = dynamicSocialLinks.length > 0 ? dynamicSocialLinks : defaultSocials;

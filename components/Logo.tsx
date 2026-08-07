@@ -51,10 +51,8 @@ export const Logo: React.FC<LogoProps> = ({
         className={`${sizeClasses[size]} w-auto max-w-none object-contain filter drop-shadow-xs rounded-xl`}
         onError={(e) => {
           const target = e.currentTarget;
-          if (target.src.endsWith("logo.png")) {
-            target.src = "/images/logo.jpg";
-          } else if (target.src.endsWith("logo.jpg")) {
-            target.src = "/images/logo.svg";
+          if (!target.src.endsWith("logo.jpeg")) {
+            target.src = "/images/logo.jpeg";
           }
         }}
       />

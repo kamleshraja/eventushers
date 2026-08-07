@@ -16,6 +16,8 @@ import {
   ArrowRight,
   CheckCircle2
 } from "lucide-react";
+import { usePageContent } from "@/lib/pageContent";
+import { renderFormattedHeading } from "@/lib/headingUtils";
 
 interface HowItWorksProps {
   onOpenHire?: () => void;
@@ -25,32 +27,74 @@ interface HowItWorksProps {
 export const HowItWorks: React.FC<HowItWorksProps> = ({ onOpenHire, onOpenJoin }) => {
   const [activeTab, setActiveTab] = useState<"organizers" | "professionals">("organizers");
 
+  const homeData = usePageContent("home", {
+    key: "home",
+    title: "Home Page",
+    path: "/",
+    headline: "We connect events with vetted ushers & crew — instantly.",
+    subheading: "The all-in-one platform for event organizers to find vetted ushers.",
+    metaTitle: "Event Ushers",
+    metaDescription: "We connect events with vetted ushers & crew instantly.",
+    customFields: {
+      howItWorksSectionBadge: "HOW IT WORKS",
+      howItWorksSectionTitle: "Simple, Transparent & Fast Process",
+      howItWorksSectionTitleHighlight: "Process",
+      howItWorksSectionDescription: "Whether you are hosting an international summit or looking for your next hospitality shift, our platform streamlines every step.",
+      howItWorksTab1Label: "For Organizers",
+      howItWorksTab2Label: "For Professionals",
+      howItWorksOrgStep1Title: "Post or Search",
+      howItWorksOrgStep1Desc: "Describe your event or browse verified professionals by category, city, and availability.",
+      howItWorksOrgStep2Title: "Compare & Shortlist",
+      howItWorksOrgStep2Desc: "Review portfolios, ratings, past work, and instant quotations side by side.",
+      howItWorksOrgStep3Title: "Book & Contract",
+      howItWorksOrgStep3Desc: "Send a booking request, agree terms digitally, and confirm with secure payment.",
+      howItWorksOrgStep4Title: "Show Day",
+      howItWorksOrgStep4Desc: "Your crew arrives briefed, verified, and ready. Rate your experience afterward.",
+      howItWorksProfStep1Title: "Create your Digital CV",
+      howItWorksProfStep1Desc: "Build a portfolio showcasing your skills, experience, and past work.",
+      howItWorksProfStep2Title: "Set Your Availability",
+      howItWorksProfStep2Desc: "Control your calendar and the gigs you want to be considered for.",
+      howItWorksProfStep3Title: "Receive Bookings",
+      howItWorksProfStep3Desc: "Get discovered, negotiate quotations, and confirm jobs digitally.",
+      howItWorksProfStep4Title: "Get Paid Securely",
+      howItWorksProfStep4Desc: "Payment is protected and released on schedule — no chasing clients for weeks.",
+    },
+  });
+
+  const sectionBadge = homeData.customFields?.howItWorksSectionBadge || "HOW IT WORKS";
+  const sectionTitle = homeData.customFields?.howItWorksSectionTitle || "Simple, Transparent & Fast Process";
+  const sectionHighlight = homeData.customFields?.howItWorksSectionTitleHighlight || "Process";
+  const sectionDescription = homeData.customFields?.howItWorksSectionDescription || "Whether you are hosting an international summit or looking for your next hospitality shift, our platform streamlines every step.";
+
+  const tab1Label = homeData.customFields?.howItWorksTab1Label || "For Organizers";
+  const tab2Label = homeData.customFields?.howItWorksTab2Label || "For Professionals";
+
   const organizerSteps = [
     {
       step: "01",
-      title: "Post or Search",
-      description: "Describe your event or browse verified professionals by category, city, and availability.",
+      title: homeData.customFields?.howItWorksOrgStep1Title || "Post or Search",
+      description: homeData.customFields?.howItWorksOrgStep1Desc || "Describe your event or browse verified professionals by category, city, and availability.",
       icon: Search,
       badge: "Step 1",
     },
     {
       step: "02",
-      title: "Compare & Shortlist",
-      description: "Review portfolios, ratings, past work, and instant quotations side by side.",
+      title: homeData.customFields?.howItWorksOrgStep2Title || "Compare & Shortlist",
+      description: homeData.customFields?.howItWorksOrgStep2Desc || "Review portfolios, ratings, past work, and instant quotations side by side.",
       icon: SlidersHorizontal,
       badge: "Step 2",
     },
     {
       step: "03",
-      title: "Book & Contract",
-      description: "Send a booking request, agree terms digitally, and confirm with secure payment.",
+      title: homeData.customFields?.howItWorksOrgStep3Title || "Book & Contract",
+      description: homeData.customFields?.howItWorksOrgStep3Desc || "Send a booking request, agree terms digitally, and confirm with secure payment.",
       icon: ShieldCheck,
       badge: "Step 3",
     },
     {
       step: "04",
-      title: "Show Day",
-      description: "Your crew arrives briefed, verified, and ready. Rate your experience afterward.",
+      title: homeData.customFields?.howItWorksOrgStep4Title || "Show Day",
+      description: homeData.customFields?.howItWorksOrgStep4Desc || "Your crew arrives briefed, verified, and ready. Rate your experience afterward.",
       icon: CalendarCheck2,
       badge: "Step 4",
     },
@@ -59,29 +103,29 @@ export const HowItWorks: React.FC<HowItWorksProps> = ({ onOpenHire, onOpenJoin }
   const professionalSteps = [
     {
       step: "01",
-      title: "Create your Digital CV",
-      description: "Build a portfolio showcasing your skills, experience, and past work.",
+      title: homeData.customFields?.howItWorksProfStep1Title || "Create your Digital CV",
+      description: homeData.customFields?.howItWorksProfStep1Desc || "Build a portfolio showcasing your skills, experience, and past work.",
       icon: UserPlus,
       badge: "Step 1",
     },
     {
       step: "02",
-      title: "Set Your Availability",
-      description: "Control your calendar and the gigs you want to be considered for.",
+      title: homeData.customFields?.howItWorksProfStep2Title || "Set Your Availability",
+      description: homeData.customFields?.howItWorksProfStep2Desc || "Control your calendar and the gigs you want to be considered for.",
       icon: Clock,
       badge: "Step 2",
     },
     {
       step: "03",
-      title: "Receive Bookings",
-      description: "Get discovered, negotiate quotations, and confirm jobs digitally.",
+      title: homeData.customFields?.howItWorksProfStep3Title || "Receive Bookings",
+      description: homeData.customFields?.howItWorksProfStep3Desc || "Get discovered, negotiate quotations, and confirm jobs digitally.",
       icon: Send,
       badge: "Step 3",
     },
     {
       step: "04",
-      title: "Get Paid Securely",
-      description: "Payment is protected and released on schedule — no chasing clients for weeks.",
+      title: homeData.customFields?.howItWorksProfStep4Title || "Get Paid Securely",
+      description: homeData.customFields?.howItWorksProfStep4Desc || "Payment is protected and released on schedule — no chasing clients for weeks.",
       icon: Lock,
       badge: "Step 4",
     },
@@ -101,15 +145,15 @@ export const HowItWorks: React.FC<HowItWorksProps> = ({ onOpenHire, onOpenJoin }
         <div className="text-center max-w-3xl mx-auto space-y-4 mb-12">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-950 text-amber-400 text-xs sm:text-sm font-extrabold uppercase tracking-wider shadow-xs">
             <Sparkles className="w-4 h-4" />
-            <span>HOW IT WORKS</span>
+            <span>{sectionBadge}</span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-950 tracking-tight leading-tight">
-            Simple, Transparent & Fast <span className="bg-gradient-to-r from-amber-500 to-pink-500 bg-clip-text text-transparent">Process</span>
-          </h2>
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-950 tracking-tight leading-tight">
+            {renderFormattedHeading(sectionTitle, sectionHighlight)}
+          </h1>
 
           <p className="text-base sm:text-lg text-slate-600 font-normal max-w-2xl mx-auto leading-relaxed">
-            Whether you are hosting an international summit or looking for your next hospitality shift, our platform streamlines every step.
+            {sectionDescription}
           </p>
 
           {/* Role Switcher Tabs */}
@@ -124,7 +168,7 @@ export const HowItWorks: React.FC<HowItWorksProps> = ({ onOpenHire, onOpenJoin }
                 }`}
               >
                 <Building2 className={`w-4 h-4 ${activeTab === "organizers" ? "text-amber-400" : "text-slate-500"}`} />
-                <span>For Organizers</span>
+                <span>{tab1Label}</span>
               </button>
 
               <button
@@ -136,7 +180,7 @@ export const HowItWorks: React.FC<HowItWorksProps> = ({ onOpenHire, onOpenJoin }
                 }`}
               >
                 <UserCheck className={`w-4 h-4 ${activeTab === "professionals" ? "text-white" : "text-slate-500"}`} />
-                <span>For Professionals</span>
+                <span>{tab2Label}</span>
               </button>
             </div>
           </div>
