@@ -22,7 +22,11 @@ import {
   ShieldCheck, 
   Zap, 
   Clock, 
-  Award 
+  Award,
+  Video,
+  FileCheck,
+  Calendar,
+  Layers
 } from "lucide-react";
 
 interface ServiceDetailContentProps {
@@ -45,7 +49,7 @@ export const ServiceDetailContent: React.FC<ServiceDetailContentProps> = ({ serv
     return servicesData;
   });
 
-  const service = services.find((s) => s.id === serviceId) || services[0];
+  const service = services.find((s) => s.id === serviceId || s.slug === serviceId) || services.find((s) => s.id === "photography-media") || services[0];
 
   const getIcon = (id: string) => {
     switch (id) {
@@ -56,6 +60,7 @@ export const ServiceDetailContent: React.FC<ServiceDetailContentProps> = ({ serv
       case "event-entertainers":
         return Sparkles;
       case "photography-media":
+      case "multi-media-production-crew":
         return Camera;
       case "technical-staff":
         return Sliders;
@@ -67,7 +72,7 @@ export const ServiceDetailContent: React.FC<ServiceDetailContentProps> = ({ serv
   };
 
   const ServiceIcon = getIcon(service.id);
-  const otherServices = servicesData.filter((s) => s.id !== service.id);
+  const otherServices = servicesData.filter((s) => s.id !== service.id && s.slug !== service.id);
 
   return (
     <main className="min-h-screen bg-white text-slate-900 flex flex-col selection:bg-amber-500 selection:text-slate-950">
@@ -97,11 +102,11 @@ export const ServiceDetailContent: React.FC<ServiceDetailContentProps> = ({ serv
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             
-            {/* Title & Description */}
+            {/* Title & Subheading */}
             <div className="lg:col-span-8 space-y-6 text-left">
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border text-xs sm:text-sm font-bold uppercase tracking-wider bg-amber-500/10 border-amber-500/30 text-amber-800 shadow-xs">
                 <ServiceIcon className="w-4 h-4 text-amber-600" />
-                <span>{service.category}</span>
+                <span>{service.heroBadgeText || service.category}</span>
               </div>
 
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-950 tracking-tight leading-tight">
@@ -109,16 +114,16 @@ export const ServiceDetailContent: React.FC<ServiceDetailContentProps> = ({ serv
               </h1>
 
               <p className="text-base sm:text-lg lg:text-xl text-slate-700 leading-relaxed font-normal">
-                {service.longDescription}
+                {service.subheading || service.longDescription}
               </p>
 
               <div className="flex flex-wrap items-center gap-4 pt-2">
-                <a
-                  href="#"
+                <button
+                  onClick={() => setHireModalOpen(true)}
                   className="px-8 py-4 rounded-full bg-gradient-to-r from-amber-400 to-pink-500 hover:from-amber-500 hover:to-pink-600 text-white font-extrabold text-base shadow-xl shadow-pink-500/25 hover:scale-105 active:scale-95 transition-all cursor-pointer whitespace-nowrap inline-block"
                 >
-                  Book {service.title}
-                </a>
+                  {service.ctaButtonText || `Book ${service.title}`}
+                </button>
               </div>
             </div>
 
@@ -163,33 +168,141 @@ export const ServiceDetailContent: React.FC<ServiceDetailContentProps> = ({ serv
         </div>
       </section>
 
-      {/* Features & Deliverables Section */}
-      <section className="py-16 md:py-24 bg-slate-50 border-b border-slate-200">
+      {/* Short Summary & Scope Breakdown Section */}
+      <section className="py-16 md:py-20 bg-white border-b border-slate-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+          
+          {/* Summary Box */}
+          <div className="p-8 md:p-10 rounded-3xl bg-slate-50 border border-slate-200 shadow-xs space-y-4">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-950">Service Summary</h2>
+            <p className="text-slate-700 text-base sm:text-lg leading-relaxed font-normal">
+              {service.longDescription}
+            </p>
+          </div>
+
+          {/* Full Scope & Highlights */}
+          {service.fullScopeDescription && (
+            <div className="space-y-8">
+              <div className="space-y-3">
+                <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-950">Detailed Service Scope</h3>
+                <p className="text-slate-700 text-base sm:text-lg leading-relaxed">
+                  {service.fullScopeDescription}
+                </p>
+              </div>
+
+              {service.scopeHighlights && service.scopeHighlights.length > 0 && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                  {service.scopeHighlights.map((item, idx) => {
+                    const icons = [UserCheck, Video, Calendar, FileCheck];
+                    const IconComp = icons[idx % icons.length];
+                    return (
+                      <div key={idx} className="bg-slate-50 p-6 rounded-2xl border border-slate-200/80 space-y-2 hover:border-amber-400 transition-colors">
+                        <div className="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-600 flex items-center justify-center font-bold">
+                          <IconComp className="w-5 h-5" />
+                        </div>
+                        <h4 className="font-extrabold text-slate-950 text-base">{item.title}</h4>
+                        <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">{item.description}</p>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          )}
+
+        </div>
+      </section>
+
+      {/* Subcategories Breakdown Section */}
+      {service.subcategories && service.subcategories.length > 0 && (
+        <section className="py-16 md:py-24 bg-slate-50 border-b border-slate-200">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+            
+            <div className="text-center max-w-3xl mx-auto space-y-3">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-950 text-amber-400 text-xs sm:text-sm font-extrabold uppercase tracking-wider">
+                <Layers className="w-4 h-4" />
+                <span>Specialized Crew Roles</span>
+              </div>
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-950">Sub-categories Available</h2>
+              <p className="text-slate-600 text-base">Select individual roles or assemble a full end-to-end media production team.</p>
+            </div>
+
+            <div className="space-y-12">
+              {service.subcategories.map((group, gIdx) => (
+                <div key={gIdx} className="space-y-6">
+                  <h3 className="text-2xl font-extrabold text-slate-950 border-l-4 border-amber-500 pl-4">
+                    {group.groupTitle}
+                  </h3>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {group.items.map((subItem, sIdx) => (
+                      <div
+                        key={sIdx}
+                        className="bg-white rounded-2xl p-6 border border-slate-200/90 shadow-xs hover:border-amber-400 hover:shadow-md transition-all space-y-2"
+                      >
+                        <div className="flex items-center gap-2 text-amber-600">
+                          <Check className="w-4 h-4 shrink-0 font-extrabold" />
+                          <h4 className="font-extrabold text-slate-950 text-base">{subItem.name}</h4>
+                        </div>
+                        <p className="text-slate-600 text-xs sm:text-sm leading-relaxed pl-6">{subItem.description}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+          </div>
+        </section>
+      )}
+
+      {/* Why Choose Us & Key Features Section */}
+      <section className="py-16 md:py-24 bg-white border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             
-            {/* Core Features Column */}
-            <div className="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm space-y-6">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-600 flex items-center justify-center font-bold">
-                  <ShieldCheck className="w-5 h-5" />
-                </div>
-                <h3 className="text-2xl font-bold text-slate-950">Key Service Features</h3>
-              </div>
-
-              <div className="space-y-3 pt-2">
-                {service.features.map((feat, idx) => (
-                  <div key={idx} className="flex items-start gap-3 text-sm sm:text-base font-semibold text-slate-800">
-                    <Check className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
-                    <span>{feat}</span>
+            {/* Why Choose Us Column */}
+            {service.whyChooseUs && service.whyChooseUs.length > 0 ? (
+              <div className="bg-slate-50 rounded-3xl p-8 border border-slate-200 shadow-sm space-y-6">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-600 flex items-center justify-center font-bold">
+                    <ShieldCheck className="w-5 h-5" />
                   </div>
-                ))}
+                  <h3 className="text-2xl font-extrabold text-slate-950">Why Choose Us</h3>
+                </div>
+
+                <div className="space-y-3 pt-2">
+                  {service.whyChooseUs.map((reason, idx) => (
+                    <div key={idx} className="flex items-start gap-3 text-sm sm:text-base font-semibold text-slate-800">
+                      <Check className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+                      <span>{reason}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
+            ) : (
+              <div className="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm space-y-6">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-600 flex items-center justify-center font-bold">
+                    <ShieldCheck className="w-5 h-5" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-slate-950">Key Service Features</h3>
+                </div>
+
+                <div className="space-y-3 pt-2">
+                  {service.features.map((feat, idx) => (
+                    <div key={idx} className="flex items-start gap-3 text-sm sm:text-base font-semibold text-slate-800">
+                      <Check className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+                      <span>{feat}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
 
             {/* Deliverables Column */}
-            <div className="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm space-y-6">
+            <div className="bg-slate-50 rounded-3xl p-8 border border-slate-200 shadow-sm space-y-6">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-600 flex items-center justify-center font-bold">
                   <Zap className="w-5 h-5" />
@@ -210,7 +323,7 @@ export const ServiceDetailContent: React.FC<ServiceDetailContentProps> = ({ serv
           </div>
 
           {/* Ideal For Tags */}
-          <div className="mt-12 p-8 rounded-3xl bg-white border border-slate-200 shadow-sm space-y-4">
+          <div className="mt-12 p-8 rounded-3xl bg-slate-50 border border-slate-200 shadow-sm space-y-4">
             <h3 className="text-lg font-bold text-slate-950">Ideal Event Types for {service.title}</h3>
             <div className="flex flex-wrap gap-2.5">
               {service.idealFor.map((tag, idx) => (
@@ -251,7 +364,7 @@ export const ServiceDetailContent: React.FC<ServiceDetailContentProps> = ({ serv
               return (
                 <Link
                   key={item.id}
-                  href={`/services/${item.id}`}
+                  href={`/services/${item.slug || item.id}`}
                   className="group bg-slate-50 rounded-3xl p-6 border border-slate-200 hover:border-amber-500/50 hover:shadow-xl transition-all flex flex-col justify-between"
                 >
                   <div className="space-y-3">
@@ -275,8 +388,30 @@ export const ServiceDetailContent: React.FC<ServiceDetailContentProps> = ({ serv
         </div>
       </section>
 
-      {/* Call to Action Banner */}
-      <CtaBanner />
+      {/* Custom Service Call to Action Banner */}
+      {service.ctaHeadline ? (
+        <section className="py-16 md:py-24 bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 text-white relative overflow-hidden">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-amber-500/10 rounded-full blur-[140px] pointer-events-none" />
+          <div className="max-w-4xl mx-auto px-4 text-center space-y-6 relative z-10">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white">
+              {service.ctaHeadline}
+            </h2>
+            <p className="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed">
+              {service.ctaSubtext}
+            </p>
+            <div className="pt-4">
+              <button
+                onClick={() => setHireModalOpen(true)}
+                className="px-9 py-4 rounded-full bg-gradient-to-r from-amber-400 to-pink-500 hover:from-amber-500 hover:to-pink-600 text-white font-extrabold text-base shadow-xl shadow-pink-500/25 hover:scale-105 active:scale-95 transition-all cursor-pointer inline-block"
+              >
+                {service.ctaButtonText || "Book Your Production Crew"}
+              </button>
+            </div>
+          </div>
+        </section>
+      ) : (
+        <CtaBanner />
+      )}
 
       {/* Footer */}
       <Footer

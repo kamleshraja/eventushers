@@ -3,12 +3,37 @@
 import React from "react";
 import { X, CheckCircle, ArrowRight, ShieldCheck, Clock, Users } from "lucide-react";
 
+export interface ServiceSubcategoryItem {
+  name: string;
+  description: string;
+}
+
+export interface ServiceSubcategoryGroup {
+  groupTitle: string;
+  items: ServiceSubcategoryItem[];
+}
+
 export interface ServiceDetail {
   id: string;
+  slug?: string;
   title: string;
   category: string;
+  heroBadgeText?: string;
+  subheading?: string;
   description: string;
   longDescription: string;
+  fullScopeDescription?: string;
+  scopeHighlights?: { title: string; description: string }[];
+  subcategories?: ServiceSubcategoryGroup[];
+  whyChooseUs?: string[];
+  ctaHeadline?: string;
+  ctaSubtext?: string;
+  ctaButtonText?: string;
+  seoTitle?: string;
+  seoDescription?: string;
+  primaryKeyword?: string;
+  secondaryKeywords?: string;
+  imageAltText?: string;
   features: string[];
   deliverables: string[];
   idealFor: string[];

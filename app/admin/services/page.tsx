@@ -6,7 +6,7 @@ import { AdminSidebar } from "@/components/admin/AdminSidebar";
 import { AdminHeader } from "@/components/admin/AdminHeader";
 import { ImageUploader } from "@/components/admin/ImageUploader";
 import { servicesData as initialServices } from "@/data/servicesData";
-import { ServiceDetail } from "@/components/ServiceModal";
+import { ServiceDetail, ServiceSubcategoryGroup } from "@/components/ServiceModal";
 import { 
   Layers, 
   Edit3, 
@@ -19,11 +19,100 @@ import {
   Save,
   BookOpen,
   ExternalLink,
-  ShieldCheck
+  ShieldCheck,
+  Trash2,
+  Tag,
+  Search,
+  Globe,
+  ListChecks,
+  Grid
 } from "lucide-react";
 import { API_BASE_URL } from "@/lib/api";
 
 const SERVICES_STORAGE_KEY = "eventushers_services";
+
+function parseScopeHighlightsText(text: string): { title: string; description: string }[] {
+  return text
+    .split("\n")
+    .map((l) => l.trim())
+    .filter((l) => l.length > 0)
+    .map((line) => {
+      if (line.includes("|")) {
+        const [t, ...rest] = line.split("|");
+        return { title: t.trim(), description: rest.join("|").trim() };
+      }
+      if (line.includes("; -")) {
+        const [t, ...rest] = line.split("; -");
+        return { title: t.trim(), description: rest.join("; -").trim() };
+      }
+      if (line.includes(" - ")) {
+        const [t, ...rest] = line.split(" - ");
+        return { title: t.trim(), description: rest.join(" - ").trim() };
+      }
+      return { title: line, description: "" };
+    });
+}
+
+function serializeScopeHighlights(highlights?: { title: string; description: string }[]): string {
+  if (!highlights || highlights.length === 0) return "";
+  return highlights.map((h) => `${h.title} | ${h.description}`).join("\n");
+}
+
+function parseSubcategoriesText(text: string): ServiceSubcategoryGroup[] {
+  const groups: ServiceSubcategoryGroup[] = [];
+  let currentGroup: ServiceSubcategoryGroup | null = null;
+
+  const lines = text.split("\n").map((l) => l.trim()).filter((l) => l.length > 0);
+
+  lines.forEach((line) => {
+    if (line.startsWith("#") || line.startsWith("[")) {
+      const groupTitle = line.replace(/^[#\[\s]+|[\]]+$/g, "").trim();
+      currentGroup = { groupTitle, items: [] };
+      groups.push(currentGroup);
+    } else {
+      let name = "";
+      let description = "";
+
+      if (line.includes("; -")) {
+        const [n, ...rest] = line.split("; -");
+        name = n.trim();
+        description = rest.join("; -").trim();
+      } else if (line.includes(" - ")) {
+        const [n, ...rest] = line.split(" - ");
+        name = n.trim();
+        description = rest.join(" - ").trim();
+      } else if (line.includes(":")) {
+        const [n, ...rest] = line.split(":");
+        name = n.trim();
+        description = rest.join(":").trim();
+      } else {
+        name = line;
+        description = line;
+      }
+
+      if (name) {
+        if (!currentGroup) {
+          currentGroup = { groupTitle: "General Roles", items: [] };
+          groups.push(currentGroup);
+        }
+        currentGroup.items.push({ name, description: description || name });
+      }
+    }
+  });
+
+  return groups;
+}
+
+function serializeSubcategories(subcategories?: ServiceSubcategoryGroup[]): string {
+  if (!subcategories || subcategories.length === 0) return "";
+  return subcategories
+    .map(
+      (g) =>
+        `# ${g.groupTitle}\n` +
+        g.items.map((i) => `${i.name} - ${i.description}`).join("\n")
+    )
+    .join("\n\n");
+}
 
 export default function AdminServicesPage() {
   const [services, setServices] = useState<ServiceDetail[]>(() => {
@@ -31,7 +120,28 @@ export default function AdminServicesPage() {
       const stored = localStorage.getItem(SERVICES_STORAGE_KEY);
       if (stored) {
         try {
-          return JSON.parse(stored);
+          const parsed = JSON.parse(stored);
+          return initialServices.map((initSvc) => {
+            const existing = parsed.find((p: any) => p.id === initSvc.id || p.slug === initSvc.slug);
+            if (!existing) return initSvc;
+            return {
+              ...initSvc,
+              ...existing,
+              subcategories: existing.subcategories && existing.subcategories.length > 0 ? existing.subcategories : initSvc.subcategories,
+              scopeHighlights: existing.scopeHighlights && existing.scopeHighlights.length > 0 ? existing.scopeHighlights : initSvc.scopeHighlights,
+              whyChooseUs: existing.whyChooseUs && existing.whyChooseUs.length > 0 ? existing.whyChooseUs : initSvc.whyChooseUs,
+              heroBadgeText: existing.heroBadgeText || initSvc.heroBadgeText,
+              subheading: existing.subheading || initSvc.subheading,
+              ctaHeadline: existing.ctaHeadline || initSvc.ctaHeadline,
+              ctaSubtext: existing.ctaSubtext || initSvc.ctaSubtext,
+              ctaButtonText: existing.ctaButtonText || initSvc.ctaButtonText,
+              seoTitle: existing.seoTitle || initSvc.seoTitle,
+              seoDescription: existing.seoDescription || initSvc.seoDescription,
+              primaryKeyword: existing.primaryKeyword || initSvc.primaryKeyword,
+              secondaryKeywords: existing.secondaryKeywords || initSvc.secondaryKeywords,
+              imageAltText: existing.imageAltText || initSvc.imageAltText,
+            };
+          });
         } catch (e) {}
       }
     }
@@ -40,17 +150,32 @@ export default function AdminServicesPage() {
 
   const [viewMode, setViewMode] = useState<"list" | "edit">("list");
   const [editingService, setEditingService] = useState<ServiceDetail | null>(null);
+  const [isNewService, setIsNewService] = useState(false);
 
   // Form State
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
+  const [heroBadgeText, setHeroBadgeText] = useState("");
+  const [subheading, setSubheading] = useState("");
   const [description, setDescription] = useState("");
   const [longDescription, setLongDescription] = useState("");
+  const [fullScopeDescription, setFullScopeDescription] = useState("");
+  const [scopeHighlightsText, setScopeHighlightsText] = useState("");
+  const [subcategoriesText, setSubcategoriesText] = useState("");
   const [image, setImage] = useState("");
   const [featuresText, setFeaturesText] = useState("");
   const [deliverablesText, setDeliverablesText] = useState("");
   const [idealForText, setIdealForText] = useState("");
   const [overviewChecklistText, setOverviewChecklistText] = useState("");
+  const [whyChooseUsText, setWhyChooseUsText] = useState("");
+  const [ctaHeadline, setCtaHeadline] = useState("");
+  const [ctaSubtext, setCtaSubtext] = useState("");
+  const [ctaButtonText, setCtaButtonText] = useState("");
+  const [seoTitle, setSeoTitle] = useState("");
+  const [seoDescription, setSeoDescription] = useState("");
+  const [primaryKeyword, setPrimaryKeyword] = useState("");
+  const [secondaryKeywords, setSecondaryKeywords] = useState("");
+  const [imageAltText, setImageAltText] = useState("");
   const [savedNotification, setSavedNotification] = useState(false);
 
   const saveServicesState = (updated: ServiceDetail[]) => {
@@ -60,12 +185,60 @@ export default function AdminServicesPage() {
     }
   };
 
+  const handleAddNewService = () => {
+    const slugId = `service-${Date.now()}`;
+    const newSvc: ServiceDetail = {
+      id: slugId,
+      slug: slugId,
+      title: "",
+      category: "Photography and Media Production",
+      description: "",
+      longDescription: "",
+      features: [],
+      deliverables: [],
+      idealFor: [],
+    };
+    setEditingService(newSvc);
+    setIsNewService(true);
+    setTitle("");
+    setCategory("Photography and Media Production");
+    setHeroBadgeText("");
+    setSubheading("");
+    setDescription("");
+    setLongDescription("");
+    setFullScopeDescription("");
+    setScopeHighlightsText("");
+    setSubcategoriesText("");
+    setImage("https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=800&q=80");
+    setFeaturesText("");
+    setDeliverablesText("");
+    setIdealForText("");
+    setOverviewChecklistText("");
+    setWhyChooseUsText("");
+    setCtaHeadline("");
+    setCtaSubtext("");
+    setCtaButtonText("");
+    setSeoTitle("");
+    setSeoDescription("");
+    setPrimaryKeyword("");
+    setSecondaryKeywords("");
+    setImageAltText("");
+    setSavedNotification(false);
+    setViewMode("edit");
+  };
+
   const handleOpenEditPage = (svc: ServiceDetail) => {
     setEditingService(svc);
+    setIsNewService(false);
     setTitle(svc.title);
     setCategory(svc.category);
+    setHeroBadgeText(svc.heroBadgeText || "");
+    setSubheading(svc.subheading || "");
     setDescription(svc.description);
     setLongDescription(svc.longDescription || svc.description);
+    setFullScopeDescription(svc.fullScopeDescription || "");
+    setScopeHighlightsText(serializeScopeHighlights(svc.scopeHighlights));
+    setSubcategoriesText(serializeSubcategories(svc.subcategories));
     setImage(svc.image || "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=800&q=80");
     setFeaturesText(svc.features ? svc.features.join("\n") : "");
     setDeliverablesText(svc.deliverables ? svc.deliverables.join("\n") : "");
@@ -75,8 +248,27 @@ export default function AdminServicesPage() {
         ? svc.overviewChecklist.join("\n")
         : "24-Hour Express Dispatch Available\n100% Background Checked Staff\nIncludes On-Site Supervisor"
     );
+    setWhyChooseUsText(svc.whyChooseUs ? svc.whyChooseUs.join("\n") : "");
+    setCtaHeadline(svc.ctaHeadline || "");
+    setCtaSubtext(svc.ctaSubtext || "");
+    setCtaButtonText(svc.ctaButtonText || "");
+    setSeoTitle(svc.seoTitle || "");
+    setSeoDescription(svc.seoDescription || "");
+    setPrimaryKeyword(svc.primaryKeyword || "");
+    setSecondaryKeywords(svc.secondaryKeywords || "");
+    setImageAltText(svc.imageAltText || "");
     setSavedNotification(false);
     setViewMode("edit");
+  };
+
+  const handleDeleteService = (id: string) => {
+    if (confirm("Are you sure you want to remove this service from the admin list?")) {
+      const updated = services.filter((s) => s.id !== id && s.slug !== id);
+      saveServicesState(updated);
+      if (editingService?.id === id) {
+        setViewMode("list");
+      }
+    }
   };
 
   const handleSaveService = (e: React.FormEvent) => {
@@ -103,21 +295,53 @@ export default function AdminServicesPage() {
       .map((f) => f.trim())
       .filter((f) => f.length > 0);
 
-    const updatedServicePayload = {
+    const parsedWhyChooseUs = whyChooseUsText
+      .split("\n")
+      .map((w) => w.trim())
+      .filter((w) => w.length > 0);
+
+    const parsedScopeHighlights = parseScopeHighlightsText(scopeHighlightsText);
+    const parsedSubcategories = parseSubcategoriesText(subcategoriesText);
+
+    const generatedSlug = editingService.slug || editingService.id || title.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+
+    const updatedServicePayload: ServiceDetail = {
+      ...editingService,
+      id: editingService.id || generatedSlug,
+      slug: generatedSlug,
       title,
       category,
+      heroBadgeText,
+      subheading,
       description,
       longDescription,
+      fullScopeDescription,
+      scopeHighlights: parsedScopeHighlights.length > 0 ? parsedScopeHighlights : editingService.scopeHighlights,
+      subcategories: parsedSubcategories.length > 0 ? parsedSubcategories : editingService.subcategories,
       image,
-      features: parsedFeatures.length > 0 ? parsedFeatures : editingService.features,
-      deliverables: parsedDeliverables.length > 0 ? parsedDeliverables : editingService.deliverables,
-      idealFor: parsedIdealFor.length > 0 ? parsedIdealFor : editingService.idealFor,
+      features: parsedFeatures.length > 0 ? parsedFeatures : editingService.features || [],
+      deliverables: parsedDeliverables.length > 0 ? parsedDeliverables : editingService.deliverables || [],
+      idealFor: parsedIdealFor.length > 0 ? parsedIdealFor : editingService.idealFor || [],
       overviewChecklist: parsedOverviewChecklist.length > 0 ? parsedOverviewChecklist : editingService.overviewChecklist,
+      whyChooseUs: parsedWhyChooseUs.length > 0 ? parsedWhyChooseUs : editingService.whyChooseUs,
+      ctaHeadline,
+      ctaSubtext,
+      ctaButtonText,
+      seoTitle,
+      seoDescription,
+      primaryKeyword,
+      secondaryKeywords,
+      imageAltText,
     };
 
-    const updated = services.map((s) =>
-      s.id === editingService.id ? { ...s, ...updatedServicePayload } : s
-    );
+    let updated: ServiceDetail[];
+    if (isNewService) {
+      updated = [updatedServicePayload, ...services];
+    } else {
+      updated = services.map((s) =>
+        s.id === editingService.id ? { ...s, ...updatedServicePayload } : s
+      );
+    }
 
     saveServicesState(updated);
 
@@ -147,26 +371,23 @@ export default function AdminServicesPage() {
           {/* VIEW MODE 1: SERVICES DIRECTORY GRID */}
           {viewMode === "list" && (
             <div className="space-y-6">
-              {/* Services Hero Section Banner Card */}
-              <div className="bg-gradient-to-r from-slate-950 via-slate-900 to-amber-950 p-6 rounded-3xl text-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 shadow-xl border border-slate-800">
-                <div className="space-y-1.5 max-w-2xl">
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 text-xs font-extrabold uppercase tracking-wider">
-                    <Sparkles className="w-3.5 h-3.5" /> Services Page Hero Module
-                  </div>
-                  <h3 className="text-xl font-black text-white">Dynamic Services Hero Section Manager</h3>
-                  <p className="text-xs text-slate-300 leading-relaxed">
-                    Update the main banner headline, badge text, subheadings, background styling, and CTA buttons displayed on the top of the Services page.
-                  </p>
+              {/* Header Action Bar */}
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-white p-6 rounded-3xl border border-slate-200 shadow-xs">
+                <div>
+                  <span className="text-xs font-mono font-bold text-amber-600 uppercase tracking-wider">Service Management</span>
+                  <h2 className="text-2xl font-extrabold text-slate-950">All Platform Services ({services.length})</h2>
                 </div>
-                <Link
-                  href="/admin/services-hero"
-                  className="px-6 py-3 rounded-2xl bg-gradient-to-r from-amber-400 to-pink-500 hover:from-amber-500 hover:to-pink-600 text-white font-extrabold text-xs shadow-lg shadow-pink-500/20 transition-all cursor-pointer hover:scale-105 active:scale-95 whitespace-nowrap shrink-0 flex items-center gap-2"
+
+                <button
+                  onClick={handleAddNewService}
+                  className="px-6 py-3 rounded-full bg-gradient-to-r from-amber-400 to-pink-500 hover:from-amber-500 hover:to-pink-600 text-white font-extrabold text-xs shadow-md shadow-pink-500/20 hover:scale-105 transition-all inline-flex items-center gap-2 cursor-pointer"
                 >
-                  <Sparkles className="w-4 h-4" />
-                  Manage Hero Banner &rarr;
-                </Link>
+                  <Plus className="w-4 h-4 text-white" />
+                  <span>Add New Service</span>
+                </button>
               </div>
 
+              {/* Services Directory Grid */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {services.map((svc) => (
                   <div
@@ -192,34 +413,45 @@ export default function AdminServicesPage() {
                           </h3>
                         </div>
                         <p className="text-xs text-slate-600 leading-relaxed line-clamp-3 min-h-[48px]">
-                          {svc.description}
+                          {svc.description || svc.longDescription}
                         </p>
                       </div>
 
                       {/* Features Included List */}
-                      <div className="pt-3 border-t border-slate-100 space-y-2">
-                        <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Features Included:</p>
-                        <ul className="space-y-1.5 text-xs text-slate-700 font-medium">
-                          {svc.features.slice(0, 3).map((f, i) => (
-                            <li key={i} className="flex items-center gap-2">
-                              <span className="w-1.5 h-1.5 rounded-full bg-amber-500 shrink-0" />
-                              <span className="truncate">{f}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
+                      {svc.features && svc.features.length > 0 && (
+                        <div className="pt-3 border-t border-slate-100 space-y-2">
+                          <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Features Included:</p>
+                          <ul className="space-y-1.5 text-xs text-slate-700 font-medium">
+                            {svc.features.slice(0, 3).map((f, i) => (
+                              <li key={i} className="flex items-center gap-2">
+                                <span className="w-1.5 h-1.5 rounded-full bg-amber-500 shrink-0" />
+                                <span className="truncate">{f}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
                     </div>
 
                     {/* Card Action Footer */}
-                    <div className="pt-4 mt-6 border-t border-slate-100 flex items-center justify-between">
-                      <span className="text-xs font-mono font-bold text-slate-400">ID: #{svc.id}</span>
-                      <button
-                        onClick={() => handleOpenEditPage(svc)}
-                        className="px-4 py-2 rounded-full bg-slate-100 hover:bg-slate-900 hover:text-white text-slate-800 text-xs font-extrabold transition-all flex items-center gap-1.5 cursor-pointer shadow-2xs"
-                      >
-                        <Edit3 className="w-3.5 h-3.5" />
-                        <span>Edit Specs</span>
-                      </button>
+                    <div className="pt-4 mt-6 border-t border-slate-100 flex items-center justify-between gap-2">
+                      <span className="text-[11px] font-mono font-bold text-slate-400 truncate">/services/{svc.slug || svc.id}</span>
+                      <div className="flex items-center gap-2">
+                        <button
+                          onClick={() => handleDeleteService(svc.id)}
+                          className="p-2 rounded-full bg-rose-50 text-rose-600 hover:bg-rose-600 hover:text-white transition-colors cursor-pointer"
+                          title="Delete Service"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
+                        <button
+                          onClick={() => handleOpenEditPage(svc)}
+                          className="px-4 py-2 rounded-full bg-slate-100 hover:bg-slate-900 hover:text-white text-slate-800 text-xs font-extrabold transition-all flex items-center gap-1.5 cursor-pointer shadow-2xs"
+                        >
+                          <Edit3 className="w-3.5 h-3.5" />
+                          <span>Edit Specs</span>
+                        </button>
+                      </div>
                     </div>
 
                   </div>
@@ -245,23 +477,25 @@ export default function AdminServicesPage() {
 
                   <div className="min-w-0 flex-1">
                     <span className="text-[11px] font-mono font-extrabold text-amber-600 uppercase tracking-wider block">
-                      Editing Service Specifications
+                      {isNewService ? "Adding New Service Page" : "Editing Service Specifications"}
                     </span>
-                    <h2 className="text-xl sm:text-2xl font-extrabold text-slate-950 truncate" title={editingService.title}>
-                      {editingService.title}
+                    <h2 className="text-xl sm:text-2xl font-extrabold text-slate-950 truncate" title={title || "New Service"}>
+                      {title || "Untitled New Service"}
                     </h2>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-3 w-full md:w-auto justify-end whitespace-nowrap shrink-0">
-                  <Link
-                    href={`/services/${editingService.id}`}
-                    target="_blank"
-                    className="px-4 py-2.5 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold transition-colors inline-flex items-center gap-1.5 whitespace-nowrap shrink-0"
-                  >
-                    <span>Public Preview</span>
-                    <ExternalLink className="w-3.5 h-3.5 text-slate-500" />
-                  </Link>
+                  {!isNewService && (
+                    <Link
+                      href={`/services/${editingService.slug || editingService.id}`}
+                      target="_blank"
+                      className="px-4 py-2.5 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold transition-colors inline-flex items-center gap-1.5 whitespace-nowrap shrink-0"
+                    >
+                      <span>Public Preview</span>
+                      <ExternalLink className="w-3.5 h-3.5 text-slate-500" />
+                    </Link>
+                  )}
 
                   <button
                     onClick={handleSaveService}
@@ -286,63 +520,150 @@ export default function AdminServicesPage() {
                 {/* Left Column: Form Editor (8 Cols) */}
                 <div className="lg:col-span-8 space-y-6">
                   
+                  {/* Block 1: Service Identity & Hero Section */}
                   <div className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-xs space-y-5">
                     <div className="flex items-center gap-2 border-b border-slate-100 pb-3">
                       <Layers className="w-5 h-5 text-amber-500" />
-                      <h3 className="text-lg font-extrabold text-slate-950">Service Identity & Descriptions</h3>
+                      <h3 className="text-lg font-extrabold text-slate-950">1. Hero Section & Main Identity</h3>
+                    </div>
+
+                    <div className="space-y-4">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div className="space-y-1">
+                          <label className="text-xs font-bold text-slate-800">Service Title *</label>
+                          <input
+                            type="text"
+                            value={title}
+                            onChange={(e) => setTitle(e.target.value)}
+                            required
+                            placeholder="e.g. Multi-Media Production Crew"
+                            className="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm font-semibold focus:outline-hidden focus:ring-2 focus:ring-amber-500/40"
+                          />
+                        </div>
+
+                        <div className="space-y-1">
+                          <label className="text-xs font-bold text-slate-800">Category Name *</label>
+                          <input
+                            type="text"
+                            value={category}
+                            onChange={(e) => setCategory(e.target.value)}
+                            required
+                            placeholder="e.g. Photography and Media Production"
+                            className="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm font-semibold focus:outline-hidden focus:ring-2 focus:ring-amber-500/40"
+                          />
+                        </div>
+                      </div>
+
+                      <div className="space-y-1">
+                        <label className="text-xs font-bold text-slate-800">Hero Pill Badge Text</label>
+                        <input
+                          type="text"
+                          value={heroBadgeText}
+                          onChange={(e) => setHeroBadgeText(e.target.value)}
+                          placeholder="e.g. WE SUPPLY THE STORYTELLERS. FOR YOUR CUSTOM STORY."
+                          className="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm font-semibold focus:outline-hidden focus:ring-2 focus:ring-amber-500/40"
+                        />
+                      </div>
+
+                      <div className="space-y-1">
+                        <label className="text-xs font-bold text-slate-800">Subheading / Hero Tagline</label>
+                        <textarea
+                          rows={2}
+                          value={subheading}
+                          onChange={(e) => setSubheading(e.target.value)}
+                          placeholder="e.g. Your event happens once; the footage lasts forever..."
+                          className="w-full px-4 py-3 rounded-xl border border-slate-200 text-xs sm:text-sm font-medium focus:outline-hidden focus:ring-2 focus:ring-amber-500/40"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Block 2: Service Summary & Detailed Scope */}
+                  <div className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-xs space-y-5">
+                    <div className="flex items-center gap-2 border-b border-slate-100 pb-3">
+                      <BookOpen className="w-5 h-5 text-amber-500" />
+                      <h3 className="text-lg font-extrabold text-slate-950">2. Service Summary & Detailed Scope</h3>
                     </div>
 
                     <div className="space-y-4">
                       <div className="space-y-1">
-                        <label className="text-xs font-bold text-slate-800">Service Title</label>
-                        <input
-                          type="text"
-                          value={title}
-                          onChange={(e) => setTitle(e.target.value)}
-                          required
-                          className="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm font-semibold focus:outline-hidden focus:ring-2 focus:ring-amber-500/40"
-                        />
-                      </div>
-
-                      <div className="space-y-1">
-                        <label className="text-xs font-bold text-slate-800">Category Name</label>
-                        <input
-                          type="text"
-                          value={category}
-                          onChange={(e) => setCategory(e.target.value)}
-                          required
-                          className="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm font-semibold focus:outline-hidden focus:ring-2 focus:ring-amber-500/40"
-                        />
-                      </div>
-
-                      <div className="space-y-1">
-                        <label className="text-xs font-bold text-slate-800">Short Summary Description (Directory Card View)</label>
+                        <label className="text-xs font-bold text-slate-800">Short Summary Description (Service Summary Box & Directory Cards)</label>
                         <textarea
                           rows={3}
                           value={description}
                           onChange={(e) => setDescription(e.target.value)}
                           required
+                          placeholder="e.g. Africrew matches end-to-end multimedia production crews to events..."
                           className="w-full px-4 py-3 rounded-xl border border-slate-200 text-xs sm:text-sm font-medium focus:outline-hidden focus:ring-2 focus:ring-amber-500/40"
                         />
                       </div>
 
                       <div className="space-y-1">
-                        <label className="text-xs font-bold text-slate-800">Full Detailed Description & Service Scope</label>
+                        <label className="text-xs font-bold text-slate-800">Detailed Scope Intro Paragraph</label>
                         <textarea
-                          rows={6}
-                          value={longDescription}
-                          onChange={(e) => setLongDescription(e.target.value)}
+                          rows={5}
+                          value={fullScopeDescription}
+                          onChange={(e) => setFullScopeDescription(e.target.value)}
+                          placeholder="e.g. Africrew's Multi-Media Production Crew service goes beyond booking a photographer or videographer..."
                           className="w-full px-4 py-3 rounded-xl border border-slate-200 text-xs sm:text-sm font-medium focus:outline-hidden focus:ring-2 focus:ring-amber-500/40"
                         />
                       </div>
 
                       <div className="space-y-1">
-                        <label className="text-xs font-bold text-slate-800">Key Service Features (One per line)</label>
+                        <div className="flex items-center justify-between">
+                          <label className="text-xs font-bold text-slate-800">Detailed Scope Highlights Cards (Title | Description)</label>
+                          <span className="text-[10px] font-mono font-bold text-slate-400">Format: Card Title | Card Description</span>
+                        </div>
                         <textarea
                           rows={4}
-                          value={featuresText}
-                          onChange={(e) => setFeaturesText(e.target.value)}
-                          placeholder="Corporate & Formal Attire Ready&#10;Multilingual Greeting Teams&#10;Digital QR Registration & Badge Printing"
+                          value={scopeHighlightsText}
+                          onChange={(e) => setScopeHighlightsText(e.target.value)}
+                          placeholder="Talent Matching | Matched to your specific shoot and creative brief, not a generic search result&#10;Shot List Coordination | Required shots and coverage agreed before the day&#10;Call Time Management | Confirmed arrival times and schedules for every crew member&#10;NDA Management | Non-disclosure agreements issued and signed digitally ahead of sensitive shoots"
+                          className="w-full px-4 py-3 rounded-xl border border-slate-200 text-xs sm:text-sm font-mono focus:outline-hidden focus:ring-2 focus:ring-amber-500/40"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Block 3: Sub-categories Available */}
+                  <div className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-xs space-y-5">
+                    <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+                      <div className="flex items-center gap-2">
+                        <Grid className="w-5 h-5 text-amber-500" />
+                        <h3 className="text-lg font-extrabold text-slate-950">3. Sub-categories Available (Specialized Roles)</h3>
+                      </div>
+                      <span className="text-[10px] font-mono font-bold text-slate-400">Use # Group Name to create groups</span>
+                    </div>
+
+                    <div className="space-y-4">
+                      <div className="space-y-1">
+                        <label className="text-xs font-bold text-slate-800">Sub-categories Roles & Descriptions</label>
+                        <textarea
+                          rows={12}
+                          value={subcategoriesText}
+                          onChange={(e) => setSubcategoriesText(e.target.value)}
+                          placeholder="# On-Camera & Post-Production&#10;Event Photographers - Full event photographic coverage&#10;Videographers - Promotional and archival event video&#10;Cinematographers - Cinematic event films with advanced techniques&#10;Drone Operators - Aerial photography and videography&#10;&#10;# Broadcast & Camera Support&#10;Graphic Designers - Motion graphics, animated titles, and on-screen branding&#10;Lower Thirds / CG Operators - Live insertion of names, titles, and captions"
+                          className="w-full px-4 py-3 rounded-xl border border-slate-200 text-xs sm:text-sm font-mono focus:outline-hidden focus:ring-2 focus:ring-amber-500/40"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Block 4: Why Choose Us & Guaranteed Deliverables */}
+                  <div className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-xs space-y-5">
+                    <div className="flex items-center gap-2 border-b border-slate-100 pb-3">
+                      <ShieldCheck className="w-5 h-5 text-amber-500" />
+                      <h3 className="text-lg font-extrabold text-slate-950">4. Why Choose Us & Guaranteed Deliverables</h3>
+                    </div>
+
+                    <div className="space-y-4">
+                      <div className="space-y-1">
+                        <label className="text-xs font-bold text-slate-800">Why Choose Us Points (One per line)</label>
+                        <textarea
+                          rows={4}
+                          value={whyChooseUsText}
+                          onChange={(e) => setWhyChooseUsText(e.target.value)}
+                          placeholder="Content delivered to spec with platform-managed shot lists and timelines.&#10;Fast turnaround options and same-day highlight packages.&#10;Clear licensing and usage tracking."
                           className="w-full px-4 py-3 rounded-xl border border-slate-200 text-xs sm:text-sm font-mono focus:outline-hidden focus:ring-2 focus:ring-amber-500/40"
                         />
                       </div>
@@ -353,30 +674,140 @@ export default function AdminServicesPage() {
                           rows={4}
                           value={deliverablesText}
                           onChange={(e) => setDeliverablesText(e.target.value)}
-                          placeholder="Punctual Arrival 1-Hour Prior&#10;On-Site Floor Manager&#10;Guest Wristbanding & Seating Control"
+                          placeholder="Content Delivered to Spec with Timelines&#10;Fast Turnaround & Same-Day Highlight Packages&#10;Clear Licensing & Single Unified Invoice"
                           className="w-full px-4 py-3 rounded-xl border border-slate-200 text-xs sm:text-sm font-mono focus:outline-hidden focus:ring-2 focus:ring-amber-500/40"
                         />
                       </div>
 
                       <div className="space-y-1">
-                        <label className="text-xs font-bold text-slate-800">Ideal Event Types (One per line)</label>
+                        <label className="text-xs font-bold text-slate-800">Ideal Event Types Tags (One per line)</label>
                         <textarea
                           rows={3}
                           value={idealForText}
                           onChange={(e) => setIdealForText(e.target.value)}
-                          placeholder="Weddings&#10;Galas&#10;Corporate Conferences&#10;Exhibitions"
+                          placeholder="Corporate Summits&#10;Product Launches&#10;Fashion Shows&#10;Live Broadcast Events"
                           className="w-full px-4 py-3 rounded-xl border border-slate-200 text-xs sm:text-sm font-mono focus:outline-hidden focus:ring-2 focus:ring-amber-500/40"
                         />
                       </div>
 
                       <div className="space-y-1">
-                        <label className="text-xs font-bold text-slate-800">Service Overview Card Checklist (One per line)</label>
+                        <label className="text-xs font-bold text-slate-800">Service Overview Card Checklist (Right Card, One per line)</label>
                         <textarea
                           rows={3}
                           value={overviewChecklistText}
                           onChange={(e) => setOverviewChecklistText(e.target.value)}
-                          placeholder="24-Hour Express Dispatch Available&#10;100% Background Checked Staff&#10;Includes On-Site Supervisor"
+                          placeholder="Platform-Managed Shot Lists & NDAs&#10;Vetted Creatives with Event Experience&#10;Single Platform Invoice for All Creatives"
                           className="w-full px-4 py-3 rounded-xl border border-slate-200 text-xs sm:text-sm font-mono focus:outline-hidden focus:ring-2 focus:ring-amber-500/40"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Block 5: Bottom CTA Banner Settings */}
+                  <div className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-xs space-y-5">
+                    <div className="flex items-center gap-2 border-b border-slate-100 pb-3">
+                      <Sparkles className="w-5 h-5 text-amber-500" />
+                      <h3 className="text-lg font-extrabold text-slate-950">5. Bottom CTA Banner Settings</h3>
+                    </div>
+
+                    <div className="space-y-4">
+                      <div className="space-y-1">
+                        <label className="text-xs font-bold text-slate-800">CTA Banner Headline</label>
+                        <input
+                          type="text"
+                          value={ctaHeadline}
+                          onChange={(e) => setCtaHeadline(e.target.value)}
+                          placeholder="e.g. Your Shoot, Fully Coordinated."
+                          className="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm font-semibold focus:outline-hidden focus:ring-2 focus:ring-amber-500/40"
+                        />
+                      </div>
+
+                      <div className="space-y-1">
+                        <label className="text-xs font-bold text-slate-800">CTA Banner Subtext</label>
+                        <textarea
+                          rows={2}
+                          value={ctaSubtext}
+                          onChange={(e) => setCtaSubtext(e.target.value)}
+                          placeholder="e.g. Book verified photographers, videographers, and full broadcast crews..."
+                          className="w-full px-4 py-3 rounded-xl border border-slate-200 text-xs sm:text-sm font-medium focus:outline-hidden focus:ring-2 focus:ring-amber-500/40"
+                        />
+                      </div>
+
+                      <div className="space-y-1">
+                        <label className="text-xs font-bold text-slate-800">CTA Button Text</label>
+                        <input
+                          type="text"
+                          value={ctaButtonText}
+                          onChange={(e) => setCtaButtonText(e.target.value)}
+                          placeholder="e.g. Book Your Production Crew"
+                          className="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm font-semibold focus:outline-hidden focus:ring-2 focus:ring-amber-500/40"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Block 6: SEO Meta Tags & Keywords */}
+                  <div className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-xs space-y-5">
+                    <div className="flex items-center gap-2 border-b border-slate-100 pb-3">
+                      <Globe className="w-5 h-5 text-amber-500" />
+                      <h3 className="text-lg font-extrabold text-slate-950">6. SEO Meta Tags & Keywords</h3>
+                    </div>
+
+                    <div className="space-y-4">
+                      <div className="space-y-1">
+                        <label className="text-xs font-bold text-slate-800">Page SEO Title Tag</label>
+                        <input
+                          type="text"
+                          value={seoTitle}
+                          onChange={(e) => setSeoTitle(e.target.value)}
+                          placeholder="e.g. Hire Multi-Media Production Crews | Africrew"
+                          className="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm font-semibold focus:outline-hidden focus:ring-2 focus:ring-amber-500/40"
+                        />
+                      </div>
+
+                      <div className="space-y-1">
+                        <label className="text-xs font-bold text-slate-800">Page SEO Meta Description</label>
+                        <textarea
+                          rows={2}
+                          value={seoDescription}
+                          onChange={(e) => setSeoDescription(e.target.value)}
+                          placeholder="e.g. Hire verified production crews across Kenya — photographers, gaffers & broadcast engineers."
+                          className="w-full px-4 py-3 rounded-xl border border-slate-200 text-xs sm:text-sm font-medium focus:outline-hidden focus:ring-2 focus:ring-amber-500/40"
+                        />
+                      </div>
+
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div className="space-y-1">
+                          <label className="text-xs font-bold text-slate-800">Primary Keyword</label>
+                          <input
+                            type="text"
+                            value={primaryKeyword}
+                            onChange={(e) => setPrimaryKeyword(e.target.value)}
+                            placeholder="e.g. hire production crew Kenya"
+                            className="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm font-semibold focus:outline-hidden focus:ring-2 focus:ring-amber-500/40"
+                          />
+                        </div>
+
+                        <div className="space-y-1">
+                          <label className="text-xs font-bold text-slate-800">Image Alt Text Example</label>
+                          <input
+                            type="text"
+                            value={imageAltText}
+                            onChange={(e) => setImageAltText(e.target.value)}
+                            placeholder='e.g. "Multi-camera production crew filming in Nairobi"'
+                            className="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm font-semibold focus:outline-hidden focus:ring-2 focus:ring-amber-500/40"
+                          />
+                        </div>
+                      </div>
+
+                      <div className="space-y-1">
+                        <label className="text-xs font-bold text-slate-800">Secondary Keywords (Comma Separated)</label>
+                        <input
+                          type="text"
+                          value={secondaryKeywords}
+                          onChange={(e) => setSecondaryKeywords(e.target.value)}
+                          placeholder="e.g. multi-camera production team Kenya, broadcast engineer for hire..."
+                          className="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm font-semibold focus:outline-hidden focus:ring-2 focus:ring-amber-500/40"
                         />
                       </div>
                     </div>
@@ -406,7 +837,7 @@ export default function AdminServicesPage() {
                       <h4 className="text-sm font-extrabold text-white">Live Platform Status</h4>
                     </div>
                     <p className="text-xs text-slate-300 leading-relaxed">
-                      Changes saved here instantly update the public Service Directory and booking engine modal options for clients across Kenya.
+                      Changes saved here instantly update the public Service Directory, individual detail pages, and booking engine modal options across Kenya.
                     </p>
                   </div>
 
