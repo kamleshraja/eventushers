@@ -16,6 +16,13 @@ const TiktokIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
+// WhatsApp SVG Icon component
+const WhatsappIcon = ({ className }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="currentColor">
+    <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.705 1.754zm6.097-4.103l.363.216c1.55.92 3.327 1.408 5.143 1.409 5.431 0 9.849-4.418 9.852-9.85.002-2.631-1.022-5.103-2.884-6.966-1.861-1.864-4.336-2.888-6.967-2.889-5.432 0-9.851 4.419-9.854 9.851-.001 1.884.526 3.718 1.524 5.312l.237.382-1.01 3.689 3.796-.995z" />
+  </svg>
+);
+
 export const Footer: React.FC<FooterProps> = ({ onOpenHire, onOpenJoin }) => {
   const [emailInput, setEmailInput] = useState("");
   const [subscribed, setSubscribed] = useState(false);
@@ -34,8 +41,6 @@ export const Footer: React.FC<FooterProps> = ({ onOpenHire, onOpenJoin }) => {
       officeAddress: "Nairobi, Kenya",
       instagramUrl: "https://instagram.com/eventushers",
       facebookUrl: "https://facebook.com/eventushers",
-      twitterUrl: "https://twitter.com/eventushers",
-      linkedinUrl: "https://linkedin.com/company/eventushers",
     },
   });
 
@@ -43,33 +48,56 @@ export const Footer: React.FC<FooterProps> = ({ onOpenHire, onOpenJoin }) => {
   const displayEmail = contactData.customFields?.email?.trim() || "info@eventushers.co.ke";
   const displayLocation = contactData.customFields?.officeAddress?.trim() || "Nairobi, Kenya";
 
-  // Dynamically extract all custom social URL and Icon pairs from customFields
+  // Dynamically extract custom social URL and Icon pairs from customFields (excluding Twitter and LinkedIn)
   const dynamicSocialLinks: any[] = [];
   if (contactData.customFields) {
     const fields = contactData.customFields;
     Object.keys(fields).forEach((key) => {
-      if (key.endsWith("Url") && key !== "siteLogoUrl" && key !== "heroImageUrl" && key !== "aboutHeroImageUrl") {
+      if (
+        key.endsWith("Url") &&
+        !key.endsWith("IconUrl") &&
+        !key.endsWith("ImageUrl") &&
+        !key.endsWith("LogoUrl") &&
+        !key.endsWith("CtaUrl") &&
+        !["siteLogoUrl", "heroImageUrl", "aboutHeroImageUrl", "primaryCtaUrl", "secondaryCtaUrl"].includes(key)
+      ) {
         const urlValue = fields[key]?.trim();
-        if (urlValue) {
+        if (urlValue && !urlValue.startsWith("#")) {
           const prefix = key.replace(/Url$/, "");
-          const customIconUrl = fields[`${prefix}IconUrl`] || "";
-          
+          const lowerUrl = urlValue.toLowerCase();
+          const lowerKey = prefix.toLowerCase();
+
+          // Exclude Twitter / X and LinkedIn social links as requested
+          if (
+            lowerUrl.includes("twitter.com") ||
+            lowerUrl.includes("x.com") ||
+            lowerKey.includes("twitter") ||
+            lowerKey === "x" ||
+            lowerUrl.includes("linkedin.com") ||
+            lowerKey.includes("linkedin")
+          ) {
+            return;
+          }
+
+          const customIconUrl = fields[`${prefix}IconUrl`] || fields[`${key}Icon`] || "";
           let defaultName = prefix.charAt(0).toUpperCase() + prefix.slice(1);
           let defaultIcon: React.ComponentType<{ className?: string }> = Globe;
-          const lower = urlValue.toLowerCase();
 
-          if (lower.includes("youtube.com") || lower.includes("youtu.be")) {
-            defaultName = "YouTube";
-            defaultIcon = Youtube;
-          } else if (lower.includes("tiktok.com")) {
-            defaultName = "TikTok";
-            defaultIcon = TiktokIcon;
-          } else if (lower.includes("instagram.com")) {
+          if (lowerUrl.includes("instagram.com") || lowerKey.includes("instagram")) {
             defaultName = "Instagram";
             defaultIcon = Instagram;
-          } else if (lower.includes("facebook.com")) {
+          } else if (lowerUrl.includes("facebook.com") || lowerUrl.includes("fb.com") || lowerKey.includes("facebook")) {
             defaultName = "Facebook";
             defaultIcon = Facebook;
+          } else if (lowerUrl.includes("youtube.com") || lowerUrl.includes("youtu.be") || lowerKey.includes("youtube")) {
+            defaultName = "YouTube";
+            defaultIcon = Youtube;
+          } else if (lowerUrl.includes("tiktok.com") || lowerKey.includes("tiktok")) {
+            defaultName = "TikTok";
+            defaultIcon = TiktokIcon;
+          } else if (lowerUrl.includes("wa.me") || lowerUrl.includes("whatsapp.com") || lowerKey.includes("whatsapp")) {
+            defaultName = "WhatsApp";
+            defaultIcon = WhatsappIcon;
           }
 
           dynamicSocialLinks.push({
@@ -83,8 +111,13 @@ export const Footer: React.FC<FooterProps> = ({ onOpenHire, onOpenJoin }) => {
     });
   }
 
-  // Ensure exactly max 4 social links are displayed
-  const displaySocialLinks = dynamicSocialLinks.slice(0, 4);
+  // Fallbacks if no custom dynamic social links were configured
+  const defaultSocials = [
+    { url: "https://instagram.com/eventushers", label: "Instagram", icon: Instagram },
+    { url: "https://facebook.com/eventushers", label: "Facebook", icon: Facebook },
+  ];
+
+  const displaySocialLinks = dynamicSocialLinks.length > 0 ? dynamicSocialLinks : defaultSocials;
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
@@ -192,8 +225,8 @@ export const Footer: React.FC<FooterProps> = ({ onOpenHire, onOpenJoin }) => {
                 </div>
               </div>
 
-              {/* Render 4 Social Icons (URL + Optional Custom Icon Image) */}
-              <div className="pt-1 flex items-center gap-2">
+              {/* Render Dynamic Social Icons (URL + Optional Custom Icon Image) */}
+              <div className="pt-2 flex items-center gap-2 flex-wrap">
                 {displaySocialLinks.map((item, idx) => {
                   const Icon = item.icon;
                   return (
@@ -202,13 +235,14 @@ export const Footer: React.FC<FooterProps> = ({ onOpenHire, onOpenJoin }) => {
                       href={item.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-9 h-9 rounded-2xl bg-slate-100/90 hover:bg-slate-200 border border-slate-200 text-slate-700 hover:text-amber-600 hover:border-amber-500/50 flex items-center justify-center transition-all overflow-hidden p-2 shadow-2xs"
+                      className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-slate-100/90 hover:bg-gradient-to-r hover:from-amber-500 hover:to-pink-500 hover:text-white border border-slate-200/80 text-slate-700 hover:border-transparent flex items-center justify-center transition-all duration-300 overflow-hidden p-2 shadow-2xs hover:shadow-md hover:scale-105 active:scale-95 group"
                       aria-label={item.label}
+                      title={item.label}
                     >
                       {item.customIconUrl ? (
-                        <img src={item.customIconUrl} alt={item.label} className="w-full h-full object-contain" />
+                        <img src={item.customIconUrl} alt={item.label} className="w-full h-full object-contain group-hover:brightness-200 transition-all" />
                       ) : (
-                        <Icon className="w-4 h-4" />
+                        <Icon className="w-4 h-4 transition-transform group-hover:scale-110 shrink-0" />
                       )}
                     </a>
                   );
