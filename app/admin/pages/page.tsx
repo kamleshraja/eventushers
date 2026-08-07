@@ -142,9 +142,6 @@ export default function AdminPageManagerPage() {
         cityCount: "18+",
         cityLabel: "Cities Covered",
         citySubtext: "Across Kenya & East Africa",
-        supportStaffCount: "500+",
-        supportStaffLabel: "Trained Support Staff",
-        supportStaffSubtext: "Security, AV & Hostesses",
       },
     },
     {
@@ -769,10 +766,7 @@ export default function AdminPageManagerPage() {
                           "projectSubtext",
                           "cityCount",
                           "cityLabel",
-                          "citySubtext",
-                          "supportStaffCount",
-                          "supportStaffLabel",
-                          "supportStaffSubtext"
+                          "citySubtext"
                         ],
                       },
                       {
@@ -1442,9 +1436,6 @@ export default function AdminPageManagerPage() {
                                              cityCount: "Stat 4 Number (e.g., 18+)",
                                              cityLabel: "Stat 4 Title (e.g., Cities Covered)",
                                              citySubtext: "Stat 4 Subtitle (e.g., Across Kenya & East Africa)",
-                                             supportStaffCount: "Stat 5 Number (e.g., 500+)",
-                                             supportStaffLabel: "Stat 5 Title (e.g., Trained Support Staff)",
-                                             supportStaffSubtext: "Stat 5 Subtitle (e.g., Security, AV & Hostesses)",
                                              heroBadgeText: "Hero Pill Badge (e.g., EASY AND QUICK HIRE)",
                                              trustHighlight1: "Trust Highlight 1 (e.g., 100% Background Vetted)",
                                              trustHighlight2: "Trust Highlight 2 (e.g., Instant Replacement)",
