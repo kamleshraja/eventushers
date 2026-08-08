@@ -9,7 +9,7 @@ export const Blog: React.FC = () => {
     path: "/",
     headline: "We connect events with vetted ushers & crew — instantly.",
     subheading: "The all-in-one platform for event organizers to find vetted, reliable, and professional ushers & crew in minutes.",
-    metaTitle: "Event Ushers",
+    metaTitle: "afriCrew",
     metaDescription: "We connect events with vetted ushers & crew instantly.",
     customFields: {
       blogSectionBadge: "RECENT BLOG & NEWS",
@@ -42,7 +42,7 @@ export const Blog: React.FC = () => {
   const posts = [
     {
       id: 1,
-      title: "How Event Ushers Support Staff Members Across Kenya",
+      title: "How afriCrew Supports Staff Members Across Kenya",
       category: "Staffing & Logistics",
       date: "October 14, 2026",
       readTime: "4 min read",
@@ -52,7 +52,7 @@ export const Blog: React.FC = () => {
     },
     {
       id: 2,
-      title: "How Event Ushers Connects Organizers with the Perfect Crew",
+      title: "How afriCrew Connects Organizers with the Perfect Crew",
       category: "Technology",
       date: "October 02, 2026",
       readTime: "5 min read",

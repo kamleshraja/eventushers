@@ -8,14 +8,14 @@ export async function GET() {
       const data = await res.json();
       return NextResponse.json({
         status: "ok",
-        service: "Event Ushers Next.js App Router API",
+        service: "afriCrew Next.js App Router API",
         backend: data,
         timestamp: new Date(),
       });
     }
     return NextResponse.json({
       status: "ok",
-      service: "Event Ushers Next.js App Router",
+      service: "afriCrew Next.js App Router",
       backend: "Offline / Standalone mode",
       timestamp: new Date(),
     });

@@ -15,7 +15,7 @@ export const Testimonials: React.FC = () => {
     path: "/",
     headline: "We connect events with vetted ushers & crew — instantly.",
     subheading: "The all-in-one platform for event organizers to find vetted, reliable, and professional ushers & crew in minutes.",
-    metaTitle: "Event Ushers",
+    metaTitle: "afriCrew",
     metaDescription: "We connect events with vetted ushers & crew instantly.",
     customFields: {
       testimonialsSectionBadge: "ORGANIZER TESTIMONIALS",
@@ -59,7 +59,7 @@ export const Testimonials: React.FC = () => {
     {
       _id: "1",
       quote:
-        "Event Ushers saved our 1,200-delegate tech summit in Nairobi! Their hostesses were exceptionally punctual, polished, and handled check-ins with zero queue delays. Highly recommended!",
+        "afriCrew saved our 1,200-delegate tech summit in Nairobi! Their hostesses were exceptionally punctual, polished, and handled check-ins with zero queue delays. Highly recommended!",
       customerName: "Wanjiru Mwangi",
       designation: "Head of Corporate Events",
       companyName: "Innovate Africa Tech Summit",
@@ -73,7 +73,7 @@ export const Testimonials: React.FC = () => {
     {
       _id: "2",
       quote:
-        "We needed 15 vetted protocol security officers and 10 ushers for a high-profile festival in Mombasa on short notice. Event Ushers dispatched the full crew in less than 12 hours. Outstanding service!",
+        "We needed 15 vetted protocol security officers and 10 ushers for a high-profile festival in Mombasa on short notice. afriCrew dispatched the full crew in less than 12 hours. Outstanding service!",
       customerName: "James Ochieng",
       designation: "Festival Director",
       companyName: "AfroSound Music Festival",

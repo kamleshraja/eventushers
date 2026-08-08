@@ -73,7 +73,7 @@ router.post("/", async (req, res) => {
       excerpt,
       content: content || excerpt,
       image: image || "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1200&q=80",
-      author: author || "Event Ushers Team",
+      author: author || "afriCrew Team",
       authorRole: authorRole || "Operations Lead",
       tags: tags || ["Event Staffing"],
       keyTakeaways: keyTakeaways || ["Standardized protocol ensures event success."],

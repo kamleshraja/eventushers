@@ -17,10 +17,10 @@ export const About: React.FC<AboutProps> = () => {
     path: "/",
     headline: "We connect events with vetted ushers & crew — instantly.",
     subheading: "The all-in-one platform for event organizers to find vetted, reliable, and professional ushers & crew in minutes.",
-    metaTitle: "Event Ushers",
+    metaTitle: "afriCrew",
     metaDescription: "We connect events with vetted ushers & crew instantly.",
     customFields: {
-      aboutSectionBadge: "ABOUT EVENT USHERS",
+      aboutSectionBadge: "ABOUT AFRICREW",
       aboutSectionTitle: "The Crew Connect-Hub for Unforgettable Events",
       aboutSectionDescription: "Your ultimate partner in elevated event experiences across Kenya.",
       missionStatement: "To transform every event experience across Africa through smart matching technology, top-tier vetted talent, and unyielding commitment to hospitality excellence.",
@@ -46,7 +46,7 @@ export const About: React.FC<AboutProps> = () => {
     },
   });
 
-  const sectionBadge = homeData.customFields?.aboutSectionBadge || "ABOUT EVENT USHERS";
+  const sectionBadge = homeData.customFields?.aboutSectionBadge || "ABOUT AFRICREW";
   const sectionTitle = homeData.customFields?.aboutSectionTitle || "The Crew Connect-Hub for Unforgettable Events";
   const sectionDescription = homeData.customFields?.aboutSectionDescription || "Your ultimate partner in elevated event experiences across Kenya.";
   const missionText = homeData.customFields?.missionStatement || "To transform every event experience across Africa through smart matching technology, top-tier vetted talent, and unyielding commitment to hospitality excellence.";

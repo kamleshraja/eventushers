@@ -39,8 +39,8 @@ export default function ContactPage() {
     path: "/contact",
     headline: "Let's Make Your Next Event Extraordinary",
     subheading: "Whether you need corporate hostesses, VIP security, or full venue crowd logistics across Kenya, our operations team is ready 24/7.",
-    metaTitle: "Contact Us — Event Ushers",
-    metaDescription: "Get in touch with Event Ushers staffing coordinators.",
+    metaTitle: "Contact Us — afriCrew",
+    metaDescription: "Get in touch with afriCrew staffing coordinators.",
     customFields: {
       phone: "+254 723 742739",
       email: "info@africrew.com",
@@ -89,7 +89,7 @@ export default function ContactPage() {
 
   const faqs = [
     {
-      q: contactData.customFields?.faq1Question || "How quickly can Event Ushers assemble crew for last-minute requests?",
+      q: contactData.customFields?.faq1Question || "How quickly can afriCrew assemble crew for last-minute requests?",
       a: contactData.customFields?.faq1Answer || "Our real-time matching system can dispatch pre-vetted hostesses, security officers, and ushering crews in as little as 45 to 60 minutes across Nairobi and major Kenyan cities."
     },
     {
@@ -182,7 +182,7 @@ export default function ContactPage() {
               </div>
               <h3 className="text-xl font-extrabold text-slate-950">Corporate Inquiries</h3>
               <div className="space-y-1 text-sm font-semibold text-slate-800">
-                <p>{contactData.customFields?.email || "info@eventushers.com / hire@eventushers.com"}</p>
+                <p>{contactData.customFields?.email || "info@africrew.com / hire@africrew.com"}</p>
               </div>
               <div className="pt-2 text-xs font-extrabold text-amber-600 flex items-center gap-1">
                 <Clock className="w-4 h-4" />

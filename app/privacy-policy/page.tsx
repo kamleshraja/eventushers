@@ -34,15 +34,15 @@ export default function PrivacyPolicyPage() {
     title: "Privacy Policy Page",
     path: "/privacy-policy",
     headline: "Your Privacy & Trust Matter Most",
-    subheading: "Last Updated: October 2026. Discover how Event Ushers collects, uses, and safeguards personal data for event organizers and crew members across Kenya.",
-    metaTitle: "Privacy Policy — Event Ushers",
-    metaDescription: "Event Ushers privacy policy and data security practices.",
+    subheading: "Last Updated: October 2026. Discover how afriCrew collects, uses, and safeguards personal data for event organizers and crew members across Kenya.",
+    metaTitle: "Privacy Policy — afriCrew",
+    metaDescription: "afriCrew privacy policy and data security practices.",
     customFields: {
       privacyHeroBadge: "PRIVACY POLICY & DATA PROTECTION",
       headlineHighlight: "Matter Most",
       lastUpdatedDate: "October 2026",
-      dataProtectionSummary: "Event Ushers is committed to protecting the privacy of our clients and crew members in accordance with the Kenya Data Protection Act.",
-      contactDPO: "privacy@eventushers.co.ke",
+      dataProtectionSummary: "afriCrew is committed to protecting the privacy of our clients and crew members in accordance with the Kenya Data Protection Act.",
+      contactDPO: "privacy@africrew.co.ke",
     },
   });
 
@@ -133,7 +133,7 @@ export default function PrivacyPolicyPage() {
               {privacyContent.customFields?.overviewTitle || "1. Overview & Scope"}
             </h2>
             <p className="text-base text-slate-700 leading-relaxed">
-              {privacyContent.customFields?.overviewPara1 || "Event Ushers Platform Ltd (\"Event Ushers\", \"we\", \"us\", or \"our\") operates the website and mobile crew management platform. This Privacy Policy outlines our procedures regarding the collection, storage, processing, disclosure, and protection of personal data under the Kenya Data Protection Act (2019) and international hospitality compliance benchmarks."}
+              {privacyContent.customFields?.overviewPara1 || "afriCrew Platform Ltd (\"afriCrew\", \"we\", \"us\", or \"our\") operates the website and mobile crew management platform. This Privacy Policy outlines our procedures regarding the collection, storage, processing, disclosure, and protection of personal data under the Kenya Data Protection Act (2019) and international hospitality compliance benchmarks."}
             </p>
             <p className="text-base text-slate-700 leading-relaxed">
               {privacyContent.customFields?.overviewPara2 || "This policy applies to all users accessing our services, including event organizers booking staffing, event hostesses, protocol officers, security crew members, and website visitors."}
@@ -293,11 +293,11 @@ export default function PrivacyPolicyPage() {
             <div className="space-y-2 text-sm font-semibold text-amber-400 pt-2">
               <p className="flex items-center gap-2">
                 <Mail className="w-4 h-4 text-amber-400" />
-                <span>{privacyContent.customFields?.contactDPO || "dpo@eventushers.co.ke / privacy@eventushers.co.ke"}</span>
+                <span>{privacyContent.customFields?.contactDPO || "dpo@africrew.co.ke / privacy@africrew.co.ke"}</span>
               </p>
               <p className="flex items-center gap-2 text-slate-300 font-normal text-xs">
                 <MapPin className="w-4 h-4 text-amber-400 shrink-0" />
-                <span>{privacyContent.customFields?.dpoAddress || "Event Ushers Platform Ltd, Westlands Commercial Plaza, Nairobi, Kenya"}</span>
+                <span>{privacyContent.customFields?.dpoAddress || "afriCrew Platform Ltd, Westlands Commercial Plaza, Nairobi, Kenya"}</span>
               </p>
             </div>
           </div>

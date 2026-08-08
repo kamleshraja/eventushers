@@ -25,7 +25,7 @@ export const blogArticles: BlogArticle[] = [
   {
     id: 1,
     slug: "how-event-ushers-support-staff-members-across-kenya",
-    title: "How Event Ushers Support Staff Members Across Kenya",
+    title: "How afriCrew Supports Staff Members Across Kenya",
     category: "Staffing & Logistics",
     date: "October 14, 2026",
     readTime: "4 min read",
@@ -41,7 +41,7 @@ export const blogArticles: BlogArticle[] = [
       "Digital verification & attendance tracking ensure safety and seamless shift management.",
       "Instant post-event payouts build trust, financial dignity, and 99.4% crew retention."
     ],
-    content: `Standardized training is the backbone of exceptional event hospitality. At Event Ushers, every usher, hostess, and protocol officer undergoes a comprehensive orientation program covering corporate dress codes, queue management, VIP greetings, and crisis de-escalation.
+    content: `Standardized training is the backbone of exceptional event hospitality. At afriCrew, every usher, hostess, and protocol officer undergoes a comprehensive orientation program covering corporate dress codes, queue management, VIP greetings, and crisis de-escalation.
 
 Furthermore, our proprietary digital portal ensures instant after-event payouts, giving our young professional crew members financial security and peace of mind.`,
     sections: [
@@ -49,7 +49,7 @@ Furthermore, our proprietary digital portal ensures instant after-event payouts,
         heading: "The Foundation of Event Hospitality",
         paragraphs: [
           "In the fast-paced events industry across Kenya—from international tech summits in Nairobi to beachside corporate retreats in Mombasa—the human touch defines guest satisfaction.",
-          "At Event Ushers, we recognized early on that reliable event execution starts long before the red carpet is rolled out. It begins with rigorous onboarding, standardized protocol training, and continuous mentorship for our on-field personnel."
+          "At afriCrew, we recognized early on that reliable event execution starts long before the red carpet is rolled out. It begins with rigorous onboarding, standardized protocol training, and continuous mentorship for our on-field personnel."
         ]
       },
       {
@@ -78,7 +78,7 @@ Furthermore, our proprietary digital portal ensures instant after-event payouts,
   {
     id: 2,
     slug: "how-event-ushers-connects-organizers-with-perfect-crew",
-    title: "How Event Ushers Connects Organizers with the Perfect Crew",
+    title: "How afriCrew Connects Organizers with the Perfect Crew",
     category: "Technology",
     date: "October 02, 2026",
     readTime: "5 min read",
@@ -102,7 +102,7 @@ With on-site QR attendance scanning, event leads receive live headcount updates 
         heading: "Ending the Nightmare of Last-Minute No-Shows",
         paragraphs: [
           "Event planners frequently experience sleepless nights wondering if contracted temp staff will show up on time, correctly dressed, and ready to perform.",
-          "Event Ushers solves this challenge through intelligent automated crew allocation. Our engine analyzes crew ratings, past performance metrics, location proximity, and language capabilities to assemble the perfect team."
+          "afriCrew solves this challenge through intelligent automated crew allocation. Our engine analyzes crew ratings, past performance metrics, location proximity, and language capabilities to assemble the perfect team."
         ]
       },
       {
@@ -278,7 +278,7 @@ With on-site QR attendance scanning, event leads receive live headcount updates 
         heading: "Fintech & Automation Transforming Gig Work",
         paragraphs: [
           "The intersection of mobile financial technology (M-Pesa, instant bank APIs) and smart scheduling software has unlocked a new era for gig economy professionals across Africa.",
-          "By removing friction in payout workflows, Event Ushers incentivizes exceptional punctuality, professional appearance, and customer satisfaction."
+          "By removing friction in payout workflows, afriCrew incentivizes exceptional punctuality, professional appearance, and customer satisfaction."
         ]
       },
       {

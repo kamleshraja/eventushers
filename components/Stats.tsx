@@ -9,7 +9,7 @@ export const Stats: React.FC = () => {
     path: "/",
     headline: "We connect events with vetted ushers & crew — instantly.",
     subheading: "The all-in-one platform for event organizers to find vetted ushers.",
-    metaTitle: "Event Ushers",
+    metaTitle: "afriCrew",
     metaDescription: "We connect events with vetted ushers & crew instantly.",
     customFields: {
       organizerCount: "250+",

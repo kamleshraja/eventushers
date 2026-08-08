@@ -26,7 +26,7 @@ export const AdminHeader: React.FC<AdminHeaderProps> = ({ title, subtitle }) => 
 
   const [adminUser, setAdminUser] = useState({
     name: "Admin Manager",
-    email: "admin@eventushers.com",
+    email: "admin@africrew.com",
     role: "Super Admin",
     avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80",
   });

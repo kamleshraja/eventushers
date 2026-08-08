@@ -1,7 +1,7 @@
 {
-  "name": "eventushers-express-backend",
+  "name": "africrew-express-backend",
   "version": "1.0.0",
-  "description": "Express REST API backend with MongoDB Atlas for Event Ushers",
+  "description": "Express REST API backend with MongoDB Atlas for afriCrew",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",

@@ -47,7 +47,7 @@ export const Services: React.FC<ServicesProps> = ({ onSelectService, onOpenHire 
     path: "/",
     headline: "We connect events with vetted ushers & crew — instantly.",
     subheading: "The all-in-one platform for event organizers to find vetted, reliable, and professional ushers & crew in minutes.",
-    metaTitle: "Event Ushers",
+    metaTitle: "afriCrew",
     metaDescription: "We connect events with vetted ushers & crew instantly.",
     customFields: {
       servicesSectionBadge: "OUR CORE SERVICES",

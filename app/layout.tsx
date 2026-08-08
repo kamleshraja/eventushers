@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   description:
     "The all-in-one platform for event organizers to find vetted, reliable, and corporate-ready ushers, hostesses, security, and technical crew in minutes across Kenya.",
   keywords: [
-    "Event Ushers",
+    "afriCrew",
     "Hostesses Nairobi",
     "Event Staffing Kenya",
     "Hire Ushers Mombasa",

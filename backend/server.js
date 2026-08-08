@@ -37,14 +37,14 @@ app.use("/api/testimonials", require("./routes/testimonialRoutes"));
 app.get("/", (req, res) => {
   res.json({
     status: "ok",
-    service: "Event Ushers Backend API",
-    message: "Event Ushers API Server & MongoDB database are running.",
+    service: "afriCrew Backend API",
+    message: "afriCrew API Server & MongoDB database are running.",
     timestamp: new Date()
   });
 });
 
 app.get("/api/health", (req, res) => {
-  res.json({ status: "ok", service: "Event Ushers Express API Server", timestamp: new Date() });
+  res.json({ status: "ok", service: "afriCrew Express API Server", timestamp: new Date() });
 });
 
 if (!process.env.VERCEL) {

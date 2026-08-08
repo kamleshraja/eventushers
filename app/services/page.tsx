@@ -64,7 +64,7 @@ export default function ServicesPage() {
     path: "/services",
     headline: "Professional Staffing Services for Every Occasion",
     subheading: "From corporate tech summits in Nairobi to beach festivals in Mombasa, our vetted ushers, protocol security, hype hosts, and technical teams ensure seamless execution.",
-    metaTitle: "Event Staffing Services — Event Ushers",
+    metaTitle: "Event Staffing Services — afriCrew",
     metaDescription: "Explore our vetted staffing categories.",
   });
 

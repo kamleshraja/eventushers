@@ -3,7 +3,7 @@ const router = express.Router();
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 
-const JWT_SECRET = process.env.JWT_SECRET || "eventushers-jwt-secret-key-2026";
+const JWT_SECRET = process.env.JWT_SECRET || "africrew-jwt-secret-key-2026";
 
 // Admin Login
 router.post("/login", async (req, res) => {
@@ -41,10 +41,10 @@ router.post("/login", async (req, res) => {
     }
 
     // Fallback: Default Initial Admin Creation if no DB user exists yet
-    if (cleanEmail === "admin@eventushers.com" && password === "admin123") {
+    if ((cleanEmail === "admin@africrew.com" || cleanEmail === "admin@eventushers.com") && password === "admin123") {
       user = await User.create({
         name: "Admin Manager",
-        email: "admin@eventushers.com",
+        email: "admin@africrew.com",
         password: "admin123",
         role: "admin",
         avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80",
@@ -98,7 +98,7 @@ router.put("/profile", async (req, res) => {
   try {
     const { name, email, currentPassword, newPassword, avatar, role } = req.body;
 
-    const targetEmail = email ? email.toLowerCase().trim() : "admin@eventushers.com";
+    const targetEmail = email ? email.toLowerCase().trim() : "admin@africrew.com";
     let user = await User.findOne({ email: targetEmail });
 
     if (!user) {

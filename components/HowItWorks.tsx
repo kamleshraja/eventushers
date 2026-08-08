@@ -33,7 +33,7 @@ export const HowItWorks: React.FC<HowItWorksProps> = ({ onOpenHire, onOpenJoin }
     path: "/",
     headline: "We connect events with vetted ushers & crew — instantly.",
     subheading: "The all-in-one platform for event organizers to find vetted ushers.",
-    metaTitle: "Event Ushers",
+    metaTitle: "afriCrew",
     metaDescription: "We connect events with vetted ushers & crew instantly.",
     customFields: {
       howItWorksSectionBadge: "HOW IT WORKS",

@@ -18,7 +18,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenHire, onOpenJoin, heroImage })
     path: "/",
     headline: "We connect events with vetted ushers & crew — instantly.",
     subheading: "The all-in-one platform for event organizers to find vetted, reliable, and professional ushers & crew in minutes.",
-    metaTitle: "Event Ushers",
+    metaTitle: "afriCrew",
     metaDescription: "We connect events with vetted ushers & crew instantly.",
     customFields: {
       heroBadgeText: "EASY AND QUICK HIRE",

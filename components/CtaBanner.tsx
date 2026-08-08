@@ -15,19 +15,19 @@ export const CtaBanner: React.FC<CtaBannerProps> = ({ onOpenHire }) => {
     path: "/",
     headline: "We connect events with vetted ushers & crew — instantly.",
     subheading: "The all-in-one platform for event organizers to find vetted, reliable, and professional ushers & crew in minutes.",
-    metaTitle: "Event Ushers",
+    metaTitle: "afriCrew",
     metaDescription: "We connect events with vetted ushers & crew instantly.",
     customFields: {
       ctaSectionBadge: "READY TO ELEVATE YOUR NEXT EVENT?",
       ctaSectionTitle: "Get Top Vetted Crew On-Site in 24 Hours",
-      ctaSectionDescription: "Join hundreds of event organizers and corporate hosts across Kenya who trust Event Ushers for flawless protocol, security, and hospitality.",
+      ctaSectionDescription: "Join hundreds of event organizers and corporate hosts across Kenya who trust afriCrew for flawless protocol, security, and hospitality.",
       ctaButtonText: "Hire Staff Now",
     },
   });
 
   const badgeText = homeData.customFields?.ctaSectionBadge || "READY TO ELEVATE YOUR NEXT EVENT?";
   const headlineText = homeData.customFields?.ctaSectionTitle || "Get Top Vetted Crew On-Site in 24 Hours";
-  const subheadText = homeData.customFields?.ctaSectionDescription || "Join hundreds of event organizers and corporate hosts across Kenya who trust Event Ushers for flawless protocol, security, and hospitality.";
+  const subheadText = homeData.customFields?.ctaSectionDescription || "Join hundreds of event organizers and corporate hosts across Kenya who trust afriCrew for flawless protocol, security, and hospitality.";
   const buttonLabel = homeData.customFields?.ctaButtonText || "Hire Staff Now";
 
   return (

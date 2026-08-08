@@ -131,7 +131,7 @@ export default function TermsOfServicePage() {
               {termsContent.customFields?.scopeTitle || "1. Acceptance & Agreement Scope"}
             </h2>
             <p className="text-base text-slate-700 leading-relaxed font-normal">
-              {termsContent.customFields?.scopePara1 || "This Terms of Service agreement (\"Agreement\") is entered into by and between Event Ushers Platform Ltd (\"Event Ushers\", \"Platform\", \"we\", \"us\") and any person or corporate entity (\"Client\", \"Organizer\", \"You\") using our web applications, booking engine, or contracted crew personnel."}
+              {termsContent.customFields?.scopePara1 || "This Terms of Service agreement (\"Agreement\") is entered into by and between afriCrew Platform Ltd (\"afriCrew\", \"Platform\", \"we\", \"us\") and any person or corporate entity (\"Client\", \"Organizer\", \"You\") using our web applications, booking engine, or contracted crew personnel."}
             </p>
             <p className="text-base text-slate-700 leading-relaxed font-normal">
               {termsContent.customFields?.scopePara2 || "By submitting a crew booking form, signing an event contract, or registering as an event usher, hostess, or security crew member, you agree to comply with all terms herein."}
@@ -197,7 +197,7 @@ export default function TermsOfServicePage() {
               {termsContent.customFields?.ratesIntro || "All financial transactions are conducted transparently in accordance with Kenyan tax laws:"}
             </p>
             <ul className="space-y-2 text-sm sm:text-base text-slate-700">
-              {(termsContent.customFields?.ratesItems || "Quotations & Deposits: Written quotes are valid for 14 days. Corporate bookings require a 50% deposit upon contract signing to lock in crew availability.\nE-TIMS Tax Compliance: Event Ushers issues official KRA E-TIMS invoices for all corporate transactions.\nOvertime Hours: Shifts extending more than 30 minutes past agreed completion times are billed at standard hourly rates rounded to the nearest hour.")
+              {(termsContent.customFields?.ratesItems || "Quotations & Deposits: Written quotes are valid for 14 days. Corporate bookings require a 50% deposit upon contract signing to lock in crew availability.\nE-TIMS Tax Compliance: afriCrew issues official KRA E-TIMS invoices for all corporate transactions.\nOvertime Hours: Shifts extending more than 30 minutes past agreed completion times are billed at standard hourly rates rounded to the nearest hour.")
                 .split("\n")
                 .map((item, idx) => {
                   const parts = item.split(":");
@@ -240,7 +240,7 @@ export default function TermsOfServicePage() {
               {termsContent.customFields?.conductTitle || "6. Crew Code of Conduct & Etiquette"}
             </h2>
             <p className="text-base text-slate-700 leading-relaxed font-normal">
-              {termsContent.customFields?.conductIntro || "All crew members admitted to the Event Ushers network are bound by strict professional standards:"}
+              {termsContent.customFields?.conductIntro || "All crew members admitted to the afriCrew network are bound by strict professional standards:"}
             </p>
             <ul className="space-y-2 text-sm sm:text-base text-slate-700 font-normal">
               {(termsContent.customFields?.conductItems || "Grooming & Attire: Immaculate corporate suit, formal dress, or custom branded uniform as specified by the client.\nZero Solicitation: Crew members are strictly prohibited from soliciting personal tips, side employment, or private contact details from event guests or clients.\nVIP Non-Disclosure (NDA): High-profile summits and private galas carry strict confidentiality. Photography of confidential VIP guest lists is strictly forbidden.")
@@ -279,11 +279,11 @@ export default function TermsOfServicePage() {
             <div className="space-y-2 text-sm font-semibold text-amber-400 pt-2">
               <p className="flex items-center gap-2">
                 <Mail className="w-4 h-4 text-amber-400" />
-                <span>{termsContent.customFields?.contactLegalEmail || "legal@eventushers.co.ke / support@eventushers.co.ke"}</span>
+                <span>{termsContent.customFields?.contactLegalEmail || "legal@africrew.co.ke / support@africrew.co.ke"}</span>
               </p>
               <p className="flex items-center gap-2 text-slate-300 font-normal text-xs">
                 <Building2 className="w-4 h-4 text-amber-400 shrink-0" />
-                <span>{termsContent.customFields?.legalOfficeAddress || "Event Ushers Platform Ltd, Westlands Commercial Plaza, 4th Floor, Nairobi, Kenya"}</span>
+                <span>{termsContent.customFields?.legalOfficeAddress || "afriCrew Platform Ltd, Westlands Commercial Plaza, 4th Floor, Nairobi, Kenya"}</span>
               </p>
             </div>
           </div>

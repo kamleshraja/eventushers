@@ -20,7 +20,7 @@ export const Logo: React.FC<LogoProps> = ({
     path: "/",
     headline: "We connect events with vetted ushers & crew — instantly.",
     subheading: "The all-in-one platform for event organizers to find vetted, reliable, and professional ushers & crew in minutes.",
-    metaTitle: "Event Ushers",
+    metaTitle: "afriCrew",
     metaDescription: "We connect events with vetted ushers & crew instantly.",
     customFields: {
       siteLogoUrl: "/images/logo.jpeg",
@@ -47,7 +47,7 @@ export const Logo: React.FC<LogoProps> = ({
     >
       <img
         src={customLogo}
-        alt="Event Ushers — The Crew Connect Hub"
+        alt="afriCrew — The Crew Connect Hub"
         className={`${sizeClasses[size]} w-auto max-w-none object-contain filter drop-shadow-xs rounded-xl`}
         onError={(e) => {
           const target = e.currentTarget;

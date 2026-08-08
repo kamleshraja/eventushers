@@ -7,7 +7,7 @@ const blogSchema = new mongoose.Schema(
     category: { type: String, required: true, default: "Staffing & Logistics" },
     date: { type: String, default: () => new Date().toLocaleDateString("en-US", { month: "long", day: "2-digit", year: "numeric" }) },
     readTime: { type: String, default: "4 min read" },
-    author: { type: String, default: "Event Ushers Team" },
+    author: { type: String, default: "afriCrew Team" },
     authorRole: { type: String, default: "Hospitality & Crew Specialist" },
     authorAvatar: { type: String, default: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&q=80" },
     excerpt: { type: String, required: true },

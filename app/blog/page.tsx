@@ -31,10 +31,10 @@ export default function BlogPage() {
     path: "/blog",
     headline: "Event Industry Trends, Staffing Tips & Stories",
     subheading: "Stay ahead with expert insights on corporate protocol, venue crowd management, event tech innovations, and crew career growth across Kenya.",
-    metaTitle: "Event Industry Insights & News — Event Ushers",
+    metaTitle: "Event Industry Insights & News — afriCrew",
     metaDescription: "Read the latest articles on event staffing logistics, venue management, and corporate protocol tips across Kenya.",
     customFields: {
-      blogHeroBadge: "EVENT USHERS INSIGHTS & NEWS",
+      blogHeroBadge: "AFRICREW INSIGHTS & NEWS",
       headlineHighlight: "Stories",
     },
   });
@@ -61,10 +61,10 @@ export default function BlogPage() {
         <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:24px_24px]" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-          {(blogContent.customFields?.blogHeroBadge || blogContent.customFields?.heroBadgeText || "EVENT USHERS INSIGHTS & NEWS") && (
+          {(blogContent.customFields?.blogHeroBadge || blogContent.customFields?.heroBadgeText || "AFRICREW INSIGHTS & NEWS") && (
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border text-xs sm:text-sm font-bold uppercase tracking-wider bg-amber-500/10 border-amber-500/30 text-amber-800 mb-6 shadow-xs">
               <BookOpen className="w-4 h-4 text-amber-600" />
-              {blogContent.customFields?.blogHeroBadge || blogContent.customFields?.heroBadgeText || "EVENT USHERS INSIGHTS & NEWS"}
+              {blogContent.customFields?.blogHeroBadge || blogContent.customFields?.heroBadgeText || "AFRICREW INSIGHTS & NEWS"}
             </div>
           )}
 

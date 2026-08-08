@@ -8,7 +8,7 @@ try {
 
 const connectDB = async () => {
   try {
-    const connStr = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/eventushers";
+    const connStr = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/africrew";
     const conn = await mongoose.connect(connStr, {
       serverSelectionTimeoutMS: 8000,
     });
@@ -33,7 +33,7 @@ const connectDB = async () => {
             heroBadgeText: "EASY AND QUICK HIRE",
             organizerCount: "250+",
             usherCount: "1,500+",
-            aboutSectionBadge: "WHY CHOOSE EVENT USHERS",
+            aboutSectionBadge: "WHY CHOOSE AFRICREW",
             aboutSectionTitle: "Kenya's Premier Tech-Enabled Staffing Engine",
             aboutSectionDescription: "We bridge the gap between event organizers and background-checked, corporate-ready hospitality talent.",
             missionStatement: "To transform every event experience across Africa through smart matching technology, top-tier vetted talent, and unyielding commitment to hospitality excellence.",
@@ -74,12 +74,12 @@ const connectDB = async () => {
           pageTitle: "About Us Page",
           path: "/about",
           heroHeadline: "Connecting Events with Vetted Crew Across East Africa",
-          heroSubheading: "Event Ushers is Kenya's premier tech-enabled staffing platform. We bridge the gap between event organizers and background-checked, corporate-ready staff.",
+          heroSubheading: "afriCrew is Kenya's premier tech-enabled staffing platform. We bridge the gap between event organizers and background-checked, corporate-ready staff.",
           customContent: {
             missionStatement: "To transform every event experience across Africa through smart matching technology, top-tier vetted talent, and unyielding commitment to hospitality excellence.",
             visionStatement: "To become the leading digital infrastructure for event staffing, talent management, and hospitality logistics across East Africa and beyond.",
             storyHeading: "Our Journey in Event Staffing Logistics",
-            storyContent: "Founded with a vision to professionalize event ushering across Kenya, Event Ushers has grown from a local Nairobi network into East Africa's leading crew dispatch hub.",
+            storyContent: "Founded with a vision to professionalize event ushering across Kenya, afriCrew has grown from a local Nairobi network into East Africa's leading crew dispatch hub.",
             coreValue1: "Uncompromising Hospitality Excellence",
             coreValue2: "Verified Identity & Safety Protocols",
             coreValue3: "Transparent & Timely Crew Compensation",
@@ -104,7 +104,7 @@ const connectDB = async () => {
     if (userCount === 0) {
       await User.create({
         name: "Admin Manager",
-        email: "admin@eventushers.com",
+        email: "admin@africrew.com",
         password: "admin123",
         role: "admin",
         avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80",
@@ -119,7 +119,7 @@ const connectDB = async () => {
           customerName: "Wanjiru Mwangi",
           designation: "Head of Corporate Events",
           companyName: "Innovate Africa Tech Summit",
-          quote: "Event Ushers saved our 1,200-delegate tech summit in Nairobi! Their hostesses were exceptionally punctual, polished, and handled check-ins with zero queue delays. Highly recommended!",
+          quote: "afriCrew saved our 1,200-delegate tech summit in Nairobi! Their hostesses were exceptionally punctual, polished, and handled check-ins with zero queue delays. Highly recommended!",
           rating: 5,
           eventBadgeTitle: "1,200 Delegate Conference",
           profileImage: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&q=80",
@@ -133,7 +133,7 @@ const connectDB = async () => {
           customerName: "James Ochieng",
           designation: "Festival Director",
           companyName: "AfroSound Music Festival",
-          quote: "We needed 15 vetted protocol security officers and 10 ushers for a high-profile festival in Mombasa on short notice. Event Ushers dispatched the full crew in less than 12 hours. Outstanding service!",
+          quote: "We needed 15 vetted protocol security officers and 10 ushers for a high-profile festival in Mombasa on short notice. afriCrew dispatched the full crew in less than 12 hours. Outstanding service!",
           rating: 5,
           eventBadgeTitle: "Outdoor Music Festival",
           profileImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80",
