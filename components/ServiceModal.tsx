@@ -100,7 +100,7 @@ export const ServiceModal: React.FC<ServiceModalProps> = ({ service, onClose, on
                 Key Service Features
               </h4>
               <ul className="space-y-2">
-                {service.features.map((feat, idx) => (
+                {(service.features || []).map((feat, idx) => (
                   <li key={idx} className="text-xs text-slate-700 flex items-start gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1.5 shrink-0" />
                     <span>{feat}</span>

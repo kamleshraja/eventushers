@@ -43,11 +43,24 @@ export const ServiceDetailContent: React.FC<ServiceDetailContentProps> = ({ serv
   const [services, setServices] = useState<ServiceDetail[]>(servicesData);
 
   React.useEffect(() => {
-    getServicesFromApi(true).then((data) => {
-      if (data && data.length > 0) {
-        setServices(data);
-      }
-    });
+    const fetchServices = () => {
+      getServicesFromApi(true).then((data) => {
+        if (data && data.length > 0) {
+          setServices(data);
+        }
+      });
+    };
+
+    fetchServices();
+
+    const handleUpdate = () => fetchServices();
+    window.addEventListener("eventushers_services_updated", handleUpdate);
+    window.addEventListener("storage", handleUpdate);
+
+    return () => {
+      window.removeEventListener("eventushers_services_updated", handleUpdate);
+      window.removeEventListener("storage", handleUpdate);
+    };
   }, []);
 
   const service = services.find((s) => s.id === serviceId || s.slug === serviceId) || services.find((s) => s.id === "photography-media") || services[0];
@@ -326,7 +339,7 @@ export const ServiceDetailContent: React.FC<ServiceDetailContentProps> = ({ serv
                 </div>
 
                 <div className="space-y-3 pt-2">
-                  {service.features.map((feat, idx) => (
+                  {(service.features || []).map((feat, idx) => (
                     <div key={idx} className="flex items-start gap-3 text-sm sm:text-base font-semibold text-slate-800">
                       <Check className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
                       <span>{feat}</span>

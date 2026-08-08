@@ -36,11 +36,24 @@ export default function ServicesPage() {
   const [services, setServices] = useState<ServiceDetail[]>(servicesData);
 
   React.useEffect(() => {
-    getServicesFromApi().then((data) => {
-      if (data && data.length > 0) {
-        setServices(data);
-      }
-    });
+    const fetchServices = () => {
+      getServicesFromApi(true).then((data) => {
+        if (data && data.length > 0) {
+          setServices(data);
+        }
+      });
+    };
+
+    fetchServices();
+
+    const handleUpdate = () => fetchServices();
+    window.addEventListener("eventushers_services_updated", handleUpdate);
+    window.addEventListener("storage", handleUpdate);
+
+    return () => {
+      window.removeEventListener("eventushers_services_updated", handleUpdate);
+      window.removeEventListener("storage", handleUpdate);
+    };
   }, []);
 
   const activeServices = services.filter((s) => s.active !== false);
@@ -214,7 +227,7 @@ export default function ServicesPage() {
 
                     {/* Features checklist */}
                     <div className="pt-3 space-y-2 border-t border-slate-200/60">
-                      {service.features.map((feat, idx) => (
+                      {(service.features || []).map((feat, idx) => (
                         <div key={idx} className="flex items-center gap-2 text-xs sm:text-sm font-semibold text-slate-700">
                           <Check className="w-4 h-4 text-amber-600 shrink-0" />
                           <span>{feat}</span>

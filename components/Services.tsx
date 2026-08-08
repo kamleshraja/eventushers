@@ -20,11 +20,24 @@ export const Services: React.FC<ServicesProps> = ({ onSelectService, onOpenHire 
   const [services, setServices] = useState<ServiceDetail[]>(servicesData);
 
   useEffect(() => {
-    getServicesFromApi().then((data) => {
-      if (data && data.length > 0) {
-        setServices(data);
-      }
-    });
+    const fetchServices = () => {
+      getServicesFromApi(true).then((data) => {
+        if (data && data.length > 0) {
+          setServices(data);
+        }
+      });
+    };
+
+    fetchServices();
+
+    const handleUpdate = () => fetchServices();
+    window.addEventListener("eventushers_services_updated", handleUpdate);
+    window.addEventListener("storage", handleUpdate);
+
+    return () => {
+      window.removeEventListener("eventushers_services_updated", handleUpdate);
+      window.removeEventListener("storage", handleUpdate);
+    };
   }, []);
 
   const activeServices = services.filter((s) => s.active !== false);
@@ -119,14 +132,16 @@ export const Services: React.FC<ServicesProps> = ({ onSelectService, onOpenHire 
                   </div>
 
                   {/* Feature Highlights */}
-                  <div className="pt-3 space-y-2 border-t border-slate-200/60">
-                    {service.features.slice(0, 2).map((feat, idx) => (
-                      <div key={idx} className="flex items-center gap-2 text-xs sm:text-sm font-semibold text-slate-700">
-                        <Check className="w-4 h-4 shrink-0" style={{ stroke: "url(#brand-gradient)" }} />
-                        <span>{feat}</span>
-                      </div>
-                    ))}
-                  </div>
+                  {service.features && service.features.length > 0 && (
+                    <div className="pt-3 space-y-2 border-t border-slate-200/60">
+                      {(service.features || []).slice(0, 2).map((feat, idx) => (
+                        <div key={idx} className="flex items-center gap-2 text-xs sm:text-sm font-semibold text-slate-700">
+                          <Check className="w-4 h-4 shrink-0" style={{ stroke: "url(#brand-gradient)" }} />
+                          <span>{feat}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
 
                 {/* Card Action Button */}

@@ -78,7 +78,7 @@ export const servicesData: ServiceDetail[] = [
     id: "event-security",
     category: "Safety & Crowd Management",
     title: "Security & Crowd Control",
-    active: true,
+    active: false,
     description: "Vetted security personnel, access controllers, and protocol officers providing sleek event protection.",
     longDescription: "Protect your guests and venue with discrete, highly trained security professionals. From access verification at entry gates to VIP close protection and crowd control during large-scale concerts or conferences.",
     features: ["Uniformed & Tactical Security", "Access Control & Ticket Scanning", "De-escalation & Emergency Protocol", "VIP & Executive Bouncer Squads"],

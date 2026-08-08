@@ -2,10 +2,9 @@ import { blogArticles, BlogArticle } from "@/data/blogData";
 import { servicesData } from "@/data/servicesData";
 
 export const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL ||
-  (typeof window !== "undefined"
+  typeof window !== "undefined"
     ? `${window.location.origin}/api`
-    : "http://localhost:5000/api");
+    : process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
 
 export const SERVER_BASE_URL =
   process.env.NEXT_PUBLIC_SERVER_URL ||
@@ -100,9 +99,12 @@ function getLocalServicesCache(): any[] | null {
   return null;
 }
 
-function setLocalServicesCache(services: any[]) {
+function setLocalServicesCache(services: any[], notify = false) {
   if (typeof window !== "undefined") {
     localStorage.setItem(SERVICES_CACHE_KEY, JSON.stringify(services));
+    if (notify) {
+      window.dispatchEvent(new CustomEvent("eventushers_services_updated", { detail: services }));
+    }
   }
 }
 
@@ -117,7 +119,7 @@ export async function getServicesFromApi(all = false): Promise<any[]> {
           ...item,
           id: item.serviceId || item.id || item._id,
         }));
-        setLocalServicesCache(mapped);
+        setLocalServicesCache(mapped, false);
         return all ? mapped : mapped.filter((s: any) => s.active !== false);
       }
     }
@@ -142,7 +144,7 @@ export async function saveServiceApi(svc: any): Promise<any> {
   } else {
     updatedCache = [svc, ...currentCache];
   }
-  setLocalServicesCache(updatedCache);
+  setLocalServicesCache(updatedCache, true);
 
   try {
     const res = await fetch(`${API_BASE_URL}/services/${svc.id}`, {
@@ -169,7 +171,7 @@ export async function saveServiceApi(svc: any): Promise<any> {
 export async function deleteServiceApi(id: string): Promise<boolean> {
   const currentCache = getLocalServicesCache() || servicesData;
   const updatedCache = currentCache.filter((s: any) => s.id !== id && s.slug !== id);
-  setLocalServicesCache(updatedCache);
+  setLocalServicesCache(updatedCache, true);
 
   try {
     const res = await fetch(`${API_BASE_URL}/services/${id}`, {
