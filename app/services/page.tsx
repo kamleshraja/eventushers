@@ -26,11 +26,24 @@ import {
 
 import { usePageContent } from "@/lib/pageContent";
 import { renderFormattedHeading } from "@/lib/headingUtils";
+import { getServicesFromApi } from "@/lib/api";
 
 export default function ServicesPage() {
   const [hireModalOpen, setHireModalOpen] = useState(false);
   const [joinModalOpen, setJoinModalOpen] = useState(false);
   const [selectedService, setSelectedService] = useState<ServiceDetail | null>(null);
+
+  const [services, setServices] = useState<ServiceDetail[]>(servicesData);
+
+  React.useEffect(() => {
+    getServicesFromApi().then((data) => {
+      if (data && data.length > 0) {
+        setServices(data);
+      }
+    });
+  }, []);
+
+  const activeServices = services.filter((s) => s.active !== false);
 
   const servicesDataContent = usePageContent("services", {
     key: "services",
@@ -168,7 +181,7 @@ export default function ServicesPage() {
 
           {/* 6 Services Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {servicesData.map((service) => {
+            {activeServices.map((service) => {
               const IconComponent = getIcon(service.id);
               return (
                 <div

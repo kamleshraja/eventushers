@@ -25,10 +25,10 @@ import {
   Clock,
   Award,
   Video,
-  FileCheck,
   Calendar,
   Layers
 } from "lucide-react";
+import { getServicesFromApi } from "@/lib/api";
 
 interface ServiceDetailContentProps {
   serviceId: string;
@@ -38,17 +38,15 @@ export const ServiceDetailContent: React.FC<ServiceDetailContentProps> = ({ serv
   const [hireModalOpen, setHireModalOpen] = useState(false);
   const [joinModalOpen, setJoinModalOpen] = useState(false);
 
-  const [services] = useState<ServiceDetail[]>(() => {
-    if (typeof window !== "undefined") {
-      const stored = localStorage.getItem("eventushers_services");
-      if (stored) {
-        try {
-          return JSON.parse(stored);
-        } catch (e) { }
+  const [services, setServices] = useState<ServiceDetail[]>(servicesData);
+
+  React.useEffect(() => {
+    getServicesFromApi(true).then((data) => {
+      if (data && data.length > 0) {
+        setServices(data);
       }
-    }
-    return servicesData;
-  });
+    });
+  }, []);
 
   const service = services.find((s) => s.id === serviceId || s.slug === serviceId) || services.find((s) => s.id === "photography-media") || services[0];
 
@@ -73,7 +71,38 @@ export const ServiceDetailContent: React.FC<ServiceDetailContentProps> = ({ serv
   };
 
   const ServiceIcon = getIcon(service.id);
-  const otherServices = servicesData.filter((s) => s.id !== service.id && s.slug !== service.id);
+  const otherServices = services.filter((s) => s.active !== false && s.id !== service.id && s.slug !== service.id);
+
+  if (service && service.active === false) {
+    return (
+      <main className="min-h-screen bg-white text-slate-900 flex flex-col selection:bg-amber-500 selection:text-slate-950">
+        <Navbar
+          onOpenHire={() => setHireModalOpen(true)}
+          onOpenJoin={() => setJoinModalOpen(true)}
+        />
+        <div className="flex-1 flex flex-col items-center justify-center p-8 text-center pt-36 pb-20 max-w-2xl mx-auto space-y-6">
+          <div className="w-16 h-16 rounded-full bg-rose-50 border border-rose-200 text-rose-600 flex items-center justify-center mx-auto">
+            <X className="w-8 h-8" />
+          </div>
+          <h1 className="text-3xl font-extrabold text-slate-950">Service Currently Inactive</h1>
+          <p className="text-slate-600 text-base leading-relaxed">
+            The service <span className="font-semibold text-slate-900">"{service.title}"</span> is currently marked inactive and not available for booking.
+          </p>
+          <div className="pt-4 flex flex-wrap justify-center gap-4">
+            <Link
+              href="/services"
+              className="px-6 py-3 rounded-full bg-slate-950 hover:bg-slate-900 text-white font-extrabold text-sm transition-all shadow-md"
+            >
+              Browse Active Services
+            </Link>
+          </div>
+        </div>
+        <Footer />
+        <HireModal isOpen={hireModalOpen} onClose={() => setHireModalOpen(false)} />
+        <JoinModal isOpen={joinModalOpen} onClose={() => setJoinModalOpen(false)} />
+      </main>
+    );
+  }
 
   return (
     <main className="min-h-screen bg-white text-slate-900 flex flex-col selection:bg-amber-500 selection:text-slate-950">

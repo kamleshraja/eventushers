@@ -18,6 +18,7 @@ export interface ServiceDetail {
   slug?: string;
   title: string;
   category: string;
+  active?: boolean;
   heroBadgeText?: string;
   subheading?: string;
   description: string;

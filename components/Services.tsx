@@ -1,11 +1,13 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { ServiceDetail } from "./ServiceModal";
 import { servicesData } from "@/data/servicesData";
 import { Users, ShieldCheck, Mic2, Camera, Headset, Megaphone, Sparkles, ArrowRight, Check } from "lucide-react";
 import { usePageContent } from "@/lib/pageContent";
+
+import { getServicesFromApi } from "@/lib/api";
 
 export { servicesData };
 
@@ -15,6 +17,17 @@ interface ServicesProps {
 }
 
 export const Services: React.FC<ServicesProps> = ({ onSelectService, onOpenHire }) => {
+  const [services, setServices] = useState<ServiceDetail[]>(servicesData);
+
+  useEffect(() => {
+    getServicesFromApi().then((data) => {
+      if (data && data.length > 0) {
+        setServices(data);
+      }
+    });
+  }, []);
+
+  const activeServices = services.filter((s) => s.active !== false);
   const homeData = usePageContent("home", {
     key: "home",
     title: "Home Page",
@@ -73,7 +86,7 @@ export const Services: React.FC<ServicesProps> = ({ onSelectService, onOpenHire 
 
         {/* Services Grid (3 Columns) */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {servicesData.map((service) => {
+          {activeServices.map((service) => {
             const Icon = getIcon(service.id);
             return (
               <Link

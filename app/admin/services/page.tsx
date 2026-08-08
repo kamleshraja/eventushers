@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { AdminSidebar } from "@/components/admin/AdminSidebar";
 import { AdminHeader } from "@/components/admin/AdminHeader";
@@ -27,9 +27,7 @@ import {
   ListChecks,
   Grid
 } from "lucide-react";
-import { API_BASE_URL } from "@/lib/api";
-
-const SERVICES_STORAGE_KEY = "eventushers_services";
+import { API_BASE_URL, getServicesFromApi, saveServiceApi, deleteServiceApi } from "@/lib/api";
 
 function parseScopeHighlightsText(text: string): { title: string; description: string }[] {
   return text
@@ -115,44 +113,22 @@ function serializeSubcategories(subcategories?: ServiceSubcategoryGroup[]): stri
 }
 
 export default function AdminServicesPage() {
-  const [services, setServices] = useState<ServiceDetail[]>(() => {
-    if (typeof window !== "undefined") {
-      const stored = localStorage.getItem(SERVICES_STORAGE_KEY);
-      if (stored) {
-        try {
-          const parsed = JSON.parse(stored);
-          return initialServices.map((initSvc) => {
-            const existing = parsed.find((p: any) => p.id === initSvc.id || p.slug === initSvc.slug);
-            if (!existing) return initSvc;
-            return {
-              ...initSvc,
-              ...existing,
-              subcategories: existing.subcategories && existing.subcategories.length > 0 ? existing.subcategories : initSvc.subcategories,
-              scopeHighlights: existing.scopeHighlights && existing.scopeHighlights.length > 0 ? existing.scopeHighlights : initSvc.scopeHighlights,
-              whyChooseUs: existing.whyChooseUs && existing.whyChooseUs.length > 0 ? existing.whyChooseUs : initSvc.whyChooseUs,
-              heroBadgeText: existing.heroBadgeText || initSvc.heroBadgeText,
-              subheading: existing.subheading || initSvc.subheading,
-              ctaHeadline: existing.ctaHeadline || initSvc.ctaHeadline,
-              ctaSubtext: existing.ctaSubtext || initSvc.ctaSubtext,
-              ctaButtonText: existing.ctaButtonText || initSvc.ctaButtonText,
-              seoTitle: existing.seoTitle || initSvc.seoTitle,
-              seoDescription: existing.seoDescription || initSvc.seoDescription,
-              primaryKeyword: existing.primaryKeyword || initSvc.primaryKeyword,
-              secondaryKeywords: existing.secondaryKeywords || initSvc.secondaryKeywords,
-              imageAltText: existing.imageAltText || initSvc.imageAltText,
-            };
-          });
-        } catch (e) {}
+  const [services, setServices] = useState<ServiceDetail[]>(initialServices);
+
+  useEffect(() => {
+    getServicesFromApi(true).then((data) => {
+      if (data && data.length > 0) {
+        setServices(data);
       }
-    }
-    return initialServices;
-  });
+    });
+  }, []);
 
   const [viewMode, setViewMode] = useState<"list" | "edit">("list");
   const [editingService, setEditingService] = useState<ServiceDetail | null>(null);
   const [isNewService, setIsNewService] = useState(false);
 
   // Form State
+  const [active, setActive] = useState<boolean>(true);
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [heroBadgeText, setHeroBadgeText] = useState("");
@@ -178,11 +154,17 @@ export default function AdminServicesPage() {
   const [imageAltText, setImageAltText] = useState("");
   const [savedNotification, setSavedNotification] = useState(false);
 
-  const saveServicesState = (updated: ServiceDetail[]) => {
-    setServices(updated);
-    if (typeof window !== "undefined") {
-      localStorage.setItem(SERVICES_STORAGE_KEY, JSON.stringify(updated));
-    }
+  const handleToggleActiveStatus = (id: string, currentActiveStatus: boolean) => {
+    const nextActive = !currentActiveStatus;
+    const target = services.find((s) => s.id === id || s.slug === id);
+    if (!target) return;
+
+    const updatedService = { ...target, active: nextActive };
+    saveServiceApi(updatedService);
+
+    setServices((prev) =>
+      prev.map((s) => (s.id === id || s.slug === id ? updatedService : s))
+    );
   };
 
   const handleAddNewService = () => {
@@ -192,6 +174,7 @@ export default function AdminServicesPage() {
       slug: slugId,
       title: "",
       category: "Photography and Media Production",
+      active: true,
       description: "",
       longDescription: "",
       features: [],
@@ -200,6 +183,7 @@ export default function AdminServicesPage() {
     };
     setEditingService(newSvc);
     setIsNewService(true);
+    setActive(true);
     setTitle("");
     setCategory("Photography and Media Production");
     setHeroBadgeText("");
@@ -230,6 +214,7 @@ export default function AdminServicesPage() {
   const handleOpenEditPage = (svc: ServiceDetail) => {
     setEditingService(svc);
     setIsNewService(false);
+    setActive(svc.active !== false);
     setTitle(svc.title);
     setCategory(svc.category);
     setHeroBadgeText(svc.heroBadgeText || "");
@@ -263,8 +248,8 @@ export default function AdminServicesPage() {
 
   const handleDeleteService = (id: string) => {
     if (confirm("Are you sure you want to remove this service from the admin list?")) {
-      const updated = services.filter((s) => s.id !== id && s.slug !== id);
-      saveServicesState(updated);
+      deleteServiceApi(id);
+      setServices((prev) => prev.filter((s) => s.id !== id && s.slug !== id));
       if (editingService?.id === id) {
         setViewMode("list");
       }
@@ -311,19 +296,20 @@ export default function AdminServicesPage() {
       slug: generatedSlug,
       title,
       category,
+      active,
       heroBadgeText,
       subheading,
       description,
       longDescription,
       fullScopeDescription,
-      scopeHighlights: parsedScopeHighlights.length > 0 ? parsedScopeHighlights : editingService.scopeHighlights,
-      subcategories: parsedSubcategories.length > 0 ? parsedSubcategories : editingService.subcategories,
+      scopeHighlights: parsedScopeHighlights,
+      subcategories: parsedSubcategories,
       image,
-      features: parsedFeatures.length > 0 ? parsedFeatures : editingService.features || [],
-      deliverables: parsedDeliverables.length > 0 ? parsedDeliverables : editingService.deliverables || [],
-      idealFor: parsedIdealFor.length > 0 ? parsedIdealFor : editingService.idealFor || [],
-      overviewChecklist: parsedOverviewChecklist.length > 0 ? parsedOverviewChecklist : editingService.overviewChecklist,
-      whyChooseUs: parsedWhyChooseUs.length > 0 ? parsedWhyChooseUs : editingService.whyChooseUs,
+      features: parsedFeatures,
+      deliverables: parsedDeliverables,
+      idealFor: parsedIdealFor,
+      overviewChecklist: parsedOverviewChecklist,
+      whyChooseUs: parsedWhyChooseUs,
       ctaHeadline,
       ctaSubtext,
       ctaButtonText,
@@ -334,23 +320,15 @@ export default function AdminServicesPage() {
       imageAltText,
     };
 
-    let updated: ServiceDetail[];
+    saveServiceApi(updatedServicePayload);
+
     if (isNewService) {
-      updated = [updatedServicePayload, ...services];
+      setServices((prev) => [updatedServicePayload, ...prev]);
     } else {
-      updated = services.map((s) =>
-        s.id === editingService.id ? { ...s, ...updatedServicePayload } : s
+      setServices((prev) =>
+        prev.map((s) => (s.id === editingService.id ? { ...s, ...updatedServicePayload } : s))
       );
     }
-
-    saveServicesState(updated);
-
-    // Sync with MongoDB API
-    fetch(`${API_BASE_URL}/services/${editingService.id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(updatedServicePayload),
-    }).catch(() => {});
 
     setSavedNotification(true);
     setTimeout(() => {
@@ -400,9 +378,26 @@ export default function AdminServicesPage() {
                         <span className="text-[10px] font-black uppercase tracking-wider text-amber-900 bg-amber-50 px-3 py-1 rounded-full border border-amber-200/80 truncate max-w-[180px]" title={svc.category}>
                           {svc.category}
                         </span>
-                        <span className="flex items-center gap-1 text-[11px] font-extrabold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200/80 shrink-0">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" /> Active
-                        </span>
+                        <button
+                          type="button"
+                          onClick={() => handleToggleActiveStatus(svc.id, svc.active !== false)}
+                          className={`flex items-center gap-1.5 text-[11px] font-extrabold px-3 py-1 rounded-full border cursor-pointer transition-all shrink-0 ${
+                            svc.active !== false
+                              ? "text-emerald-700 bg-emerald-50 border-emerald-200/80 hover:bg-emerald-100"
+                              : "text-slate-500 bg-slate-100 border-slate-200 hover:bg-slate-200"
+                          }`}
+                          title={svc.active !== false ? "Click to set Inactive" : "Click to set Active"}
+                        >
+                          {svc.active !== false ? (
+                            <>
+                              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" /> Active
+                            </>
+                          ) : (
+                            <>
+                              <X className="w-3.5 h-3.5 text-slate-400" /> Inactive
+                            </>
+                          )}
+                        </button>
                       </div>
 
                       {/* Title & Short Description */}
@@ -529,6 +524,34 @@ export default function AdminServicesPage() {
 
                     <div className="space-y-4">
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div className="space-y-1 sm:col-span-2">
+                          <label className="text-xs font-bold text-slate-800">Service Status *</label>
+                          <div className="flex items-center gap-3 pt-1">
+                            <button
+                              type="button"
+                              onClick={() => setActive(true)}
+                              className={`px-4 py-2.5 rounded-xl text-xs font-extrabold transition-all flex items-center gap-2 cursor-pointer border ${
+                                active
+                                  ? "bg-emerald-600 text-white border-emerald-600 shadow-xs"
+                                  : "bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100"
+                              }`}
+                            >
+                              <CheckCircle2 className="w-4 h-4" /> Active (Visible on Frontend)
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => setActive(false)}
+                              className={`px-4 py-2.5 rounded-xl text-xs font-extrabold transition-all flex items-center gap-2 cursor-pointer border ${
+                                !active
+                                  ? "bg-rose-600 text-white border-rose-600 shadow-xs"
+                                  : "bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100"
+                              }`}
+                            >
+                              <X className="w-4 h-4" /> Inactive (Hidden from Frontend)
+                            </button>
+                          </div>
+                        </div>
+
                         <div className="space-y-1">
                           <label className="text-xs font-bold text-slate-800">Service Title *</label>
                           <input
