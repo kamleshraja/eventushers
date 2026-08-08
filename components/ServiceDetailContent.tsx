@@ -26,7 +26,9 @@ import {
   Award,
   Video,
   Calendar,
-  Layers
+  Layers,
+  FileCheck,
+  X
 } from "lucide-react";
 import { getServicesFromApi } from "@/lib/api";
 
@@ -97,7 +99,10 @@ export const ServiceDetailContent: React.FC<ServiceDetailContentProps> = ({ serv
             </Link>
           </div>
         </div>
-        <Footer />
+        <Footer
+          onOpenHire={() => setHireModalOpen(true)}
+          onOpenJoin={() => setJoinModalOpen(true)}
+        />
         <HireModal isOpen={hireModalOpen} onClose={() => setHireModalOpen(false)} />
         <JoinModal isOpen={joinModalOpen} onClose={() => setJoinModalOpen(false)} />
       </main>
