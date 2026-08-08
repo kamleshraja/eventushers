@@ -67,7 +67,7 @@ const connectDB = async () => {
           path: "/contact",
           heroHeadline: "Get in Touch with Our Staffing Coordinators",
           heroSubheading: "Have questions about hiring ushers?",
-          customContent: { phone: "+254 (0) 700 EVENT CREW", email: "info@eventushers.co.ke" },
+          customContent: { phone: "+254 723 742739", email: "info@africrew.com" },
         },
         {
           pageKey: "about",

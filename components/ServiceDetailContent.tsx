@@ -9,19 +9,20 @@ import { JoinModal } from "@/components/JoinModal";
 import { CtaBanner } from "@/components/CtaBanner";
 import { servicesData } from "@/data/servicesData";
 import { ServiceDetail } from "@/components/ServiceModal";
-import { 
-  Sparkles, 
-  UserCheck, 
-  Shield, 
-  Camera, 
-  Sliders, 
-  TrendingUp, 
-  Check, 
-  ArrowLeft, 
-  ArrowRight, 
-  ShieldCheck, 
-  Zap, 
-  Clock, 
+import {
+  Sparkles,
+  Users,
+  UserCheck,
+  ShieldCheck,
+  Camera,
+  Mic2,
+  Headset,
+  Megaphone,
+  Check,
+  ArrowLeft,
+  ArrowRight,
+  Zap,
+  Clock,
   Award,
   Video,
   FileCheck,
@@ -43,7 +44,7 @@ export const ServiceDetailContent: React.FC<ServiceDetailContentProps> = ({ serv
       if (stored) {
         try {
           return JSON.parse(stored);
-        } catch (e) {}
+        } catch (e) { }
       }
     }
     return servicesData;
@@ -54,20 +55,20 @@ export const ServiceDetailContent: React.FC<ServiceDetailContentProps> = ({ serv
   const getIcon = (id: string) => {
     switch (id) {
       case "guest-services":
-        return UserCheck;
+        return Users;
       case "event-security":
-        return Shield;
+        return ShieldCheck;
       case "event-entertainers":
-        return Sparkles;
+        return Mic2;
       case "photography-media":
       case "multi-media-production-crew":
         return Camera;
       case "technical-staff":
-        return Sliders;
+        return Headset;
       case "event-marketers":
-        return TrendingUp;
+        return Megaphone;
       default:
-        return UserCheck;
+        return Users;
     }
   };
 
@@ -88,7 +89,7 @@ export const ServiceDetailContent: React.FC<ServiceDetailContentProps> = ({ serv
         <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:24px_24px]" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          
+
           {/* Back Navigation Link */}
           <div className="mb-6">
             <Link
@@ -101,7 +102,7 @@ export const ServiceDetailContent: React.FC<ServiceDetailContentProps> = ({ serv
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            
+
             {/* Title & Subheading */}
             <div className="lg:col-span-8 space-y-6 text-left">
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border text-xs sm:text-sm font-bold uppercase tracking-wider bg-amber-500/10 border-amber-500/30 text-amber-800 shadow-xs">
@@ -171,7 +172,7 @@ export const ServiceDetailContent: React.FC<ServiceDetailContentProps> = ({ serv
       {/* Short Summary & Scope Breakdown Section */}
       <section className="py-16 md:py-20 bg-white border-b border-slate-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-          
+
           {/* Summary Box */}
           <div className="p-8 md:p-10 rounded-3xl bg-slate-50 border border-slate-200 shadow-xs space-y-4">
             <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-950">Service Summary</h2>
@@ -217,7 +218,7 @@ export const ServiceDetailContent: React.FC<ServiceDetailContentProps> = ({ serv
       {service.subcategories && service.subcategories.length > 0 && (
         <section className="py-16 md:py-24 bg-slate-50 border-b border-slate-200">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-            
+
             <div className="text-center max-w-3xl mx-auto space-y-3">
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-950 text-amber-400 text-xs sm:text-sm font-extrabold uppercase tracking-wider">
                 <Layers className="w-4 h-4" />
@@ -259,9 +260,9 @@ export const ServiceDetailContent: React.FC<ServiceDetailContentProps> = ({ serv
       {/* Why Choose Us & Key Features Section */}
       <section className="py-16 md:py-24 bg-white border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            
+
             {/* Why Choose Us Column */}
             {service.whyChooseUs && service.whyChooseUs.length > 0 ? (
               <div className="bg-slate-50 rounded-3xl p-8 border border-slate-200 shadow-sm space-y-6">
@@ -343,7 +344,7 @@ export const ServiceDetailContent: React.FC<ServiceDetailContentProps> = ({ serv
       {/* Explore Other Services */}
       <section className="py-16 md:py-24 bg-white border-b border-slate-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
+
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-12 gap-4">
             <div>
               <h2 className="text-3xl font-extrabold text-slate-950">Explore Other Services</h2>

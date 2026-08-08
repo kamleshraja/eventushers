@@ -9,20 +9,19 @@ import { JoinModal } from "@/components/JoinModal";
 import { ServiceModal, ServiceDetail } from "@/components/ServiceModal";
 import { CtaBanner } from "@/components/CtaBanner";
 import { servicesData } from "@/components/Services";
-import { 
-  Sparkles, 
-  UserCheck, 
-  Shield, 
-  Camera, 
-  Sliders, 
-  TrendingUp, 
-  ArrowRight, 
-  Check, 
-  CheckCircle2, 
-  ShieldCheck, 
-  Zap, 
-  Award,
-  Users
+import {
+  Sparkles,
+  Users,
+  ShieldCheck,
+  Camera,
+  Mic2,
+  Headset,
+  Megaphone,
+  ArrowRight,
+  Check,
+  CheckCircle2,
+  Zap,
+  Award
 } from "lucide-react";
 
 import { usePageContent } from "@/lib/pageContent";
@@ -46,19 +45,19 @@ export default function ServicesPage() {
   const getIcon = (id: string) => {
     switch (id) {
       case "guest-services":
-        return UserCheck;
+        return Users;
       case "event-security":
-        return Shield;
+        return ShieldCheck;
       case "event-entertainers":
-        return Sparkles;
+        return Mic2;
       case "photography-media":
         return Camera;
       case "technical-staff":
-        return Sliders;
+        return Headset;
       case "event-marketers":
-        return TrendingUp;
+        return Megaphone;
       default:
-        return UserCheck;
+        return Users;
     }
   };
 
@@ -154,7 +153,7 @@ export default function ServicesPage() {
       {/* Services Grid Section */}
       <section id="services-grid" className="py-16 md:py-24 bg-slate-50 border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
+
           <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-950 tracking-tight">
               {renderFormattedHeading(
@@ -181,12 +180,12 @@ export default function ServicesPage() {
 
                   <div className="space-y-5">
                     {/* Category Pill & Icon */}
-                    <div className="flex items-center justify-between">
-                      <div className="w-14 h-14 rounded-2xl bg-amber-500/10 group-hover:bg-amber-500 text-amber-600 group-hover:text-slate-950 flex items-center justify-center transition-colors duration-300 shadow-xs">
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="w-14 h-14 rounded-2xl bg-amber-500/10 group-hover:bg-amber-500 text-amber-600 group-hover:text-slate-950 flex items-center justify-center shrink-0 transition-colors duration-300 shadow-xs">
                         <IconComponent className="w-7 h-7" />
                       </div>
-                      <span className="text-xs font-extrabold uppercase tracking-wider text-slate-500 group-hover:text-amber-600 transition-colors">
-                        {service.category.split("&")[0]}
+                      <span className="text-[11px] sm:text-xs font-extrabold uppercase tracking-wider text-slate-500 group-hover:text-amber-600 transition-colors text-right max-w-[65%] leading-tight pt-1">
+                        {service.category}
                       </span>
                     </div>
 
@@ -240,7 +239,7 @@ export default function ServicesPage() {
       {/* Service Guarantees Section */}
       <section className="py-16 md:py-24 bg-white border-b border-slate-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
+
           <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-800 text-xs font-bold uppercase tracking-wider">
               {servicesDataContent.customFields?.guaranteesBadge || "OUR PROMISE"}

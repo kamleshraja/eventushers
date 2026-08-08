@@ -107,8 +107,8 @@ const seedDatabase = async () => {
         metaTitle: "Contact Us — Event Ushers Staffing",
         metaDescription: "Get in touch with Event Ushers staffing coordinators in Nairobi, Mombasa, and Kisumu.",
         customContent: {
-          phone: "+254 (0) 700 EVENT CREW",
-          email: "info@eventushers.co.ke",
+          phone: "+254 723 742739",
+          email: "info@africrew.com",
           officeAddress: "Westlands Commercial Center, Ring Road, Westlands, Nairobi, Kenya",
           workingHours: "Monday - Saturday: 8:00 AM - 8:00 PM (Emergency 24/7 Dispatch)",
           instagramUrl: "https://instagram.com/eventushers",

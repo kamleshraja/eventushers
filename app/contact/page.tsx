@@ -42,8 +42,8 @@ export default function ContactPage() {
     metaTitle: "Contact Us — Event Ushers",
     metaDescription: "Get in touch with Event Ushers staffing coordinators.",
     customFields: {
-      phone: "+254 700 123 456 / +254 711 987 654",
-      email: "info@eventushers.co.ke / bookings@eventushers.co.ke",
+      phone: "+254 723 742739",
+      email: "info@africrew.com",
       officeAddress: "Westlands Commercial Plaza, 4th Floor, Woodvale Groove, Nairobi, Kenya",
       workingHours: "Monday - Saturday: 8:00 AM - 8:00 PM (24/7 Shift Management)",
     },

@@ -36,18 +36,18 @@ export const Footer: React.FC<FooterProps> = ({ onOpenHire, onOpenJoin }) => {
     metaTitle: "Contact Us",
     metaDescription: "Contact Us",
     customFields: {
-      phone: "+254 (0) 700 EVENT CREW",
-      email: "info@eventushers.co.ke",
+      phone: "+254 723 742739",
+      email: "info@africrew.com",
       officeAddress: "Nairobi, Kenya",
-      instagramUrl: "https://instagram.com/eventushers",
-      facebookUrl: "https://facebook.com/eventushers",
-      youtubeUrl: "https://youtube.com/@eventushers",
-      tiktokUrl: "https://tiktok.com/@eventushers",
+      instagramUrl: "https://instagram.com/africrew",
+      facebookUrl: "https://facebook.com/africrew",
+      youtubeUrl: "https://youtube.com/@africrew",
+      tiktokUrl: "https://tiktok.com/@africrew",
     },
   });
 
-  const displayPhone = contactData.customFields?.phone?.trim() || "+254 (0) 700 EVENT CREW";
-  const displayEmail = contactData.customFields?.email?.trim() || "info@eventushers.co.ke";
+  const displayPhone = contactData.customFields?.phone?.trim() || "+254 723 742739";
+  const displayEmail = contactData.customFields?.email?.trim() || "info@africrew.com";
   const displayLocation = contactData.customFields?.officeAddress?.trim() || "Nairobi, Kenya";
 
   // Dynamically extract custom social URL and Icon pairs from customFields (excluding Twitter and LinkedIn)
@@ -115,10 +115,10 @@ export const Footer: React.FC<FooterProps> = ({ onOpenHire, onOpenJoin }) => {
 
   // Fallbacks if no custom dynamic social links were configured
   const defaultSocials = [
-    { url: "https://instagram.com/eventushers", label: "Instagram", icon: Instagram },
-    { url: "https://facebook.com/eventushers", label: "Facebook", icon: Facebook },
-    { url: "https://youtube.com/@eventushers", label: "YouTube", icon: Youtube },
-    { url: "https://tiktok.com/@eventushers", label: "TikTok", icon: TiktokIcon },
+    { url: "https://instagram.com/africrew", label: "Instagram", icon: Instagram },
+    { url: "https://facebook.com/africrew", label: "Facebook", icon: Facebook },
+    { url: "https://youtube.com/@africrew", label: "YouTube", icon: Youtube },
+    { url: "https://tiktok.com/@africrew", label: "TikTok", icon: TiktokIcon },
   ];
 
   const displaySocialLinks = dynamicSocialLinks.length > 0 ? dynamicSocialLinks : defaultSocials;
@@ -260,7 +260,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenHire, onOpenJoin }) => {
 
         {/* Bottom Copyright & Legal Links */}
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs sm:text-sm text-slate-600 font-semibold text-center sm:text-left">
-          <p>© {new Date().getFullYear()} Event Ushers Platform Ltd. All rights reserved.  | Developed by <Link href="https://databrainit.com" target="_blank" rel="noopener noreferrer">Databrain Technology Pvt. Ltd.</Link></p>
+          <p>© {new Date().getFullYear()}. All Rights Reserved. AfriCrew™</p>
           <div className="flex items-center gap-4 sm:gap-6">
             <Link href="/privacy-policy" className="hover:text-amber-600 transition-colors">Privacy Policy</Link>
             <Link href="/terms" className="hover:text-amber-600 transition-colors">Terms of Service</Link>

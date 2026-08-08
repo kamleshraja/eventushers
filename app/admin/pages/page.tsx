@@ -293,8 +293,8 @@ export default function AdminPageManagerPage() {
       customFields: {
         contactHeroBadge: "24/7 EVENT CREW SUPPORT & INQUIRIES",
         headlineHighlight: "Staffing Coordinators",
-        phone: "+254 (0) 700 EVENT CREW",
-        email: "info@eventushers.co.ke",
+        phone: "+254 723 742739",
+        email: "info@africrew.com",
         officeAddress: "Nairobi, Kenya",
         workingHours: "Monday - Saturday: 8:00 AM - 8:00 PM (Emergency 24/7 Dispatch)",
         instagramUrl: "https://www.instagram.com/africrew",

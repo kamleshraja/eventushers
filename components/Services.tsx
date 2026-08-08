@@ -4,7 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { ServiceDetail } from "./ServiceModal";
 import { servicesData } from "@/data/servicesData";
-import { UserCheck, Shield, Sparkles, Camera, Sliders, TrendingUp, ArrowRight, Check } from "lucide-react";
+import { Users, ShieldCheck, Mic2, Camera, Headset, Megaphone, Sparkles, ArrowRight, Check } from "lucide-react";
 import { usePageContent } from "@/lib/pageContent";
 
 export { servicesData };
@@ -37,17 +37,17 @@ export const Services: React.FC<ServicesProps> = ({ onSelectService, onOpenHire 
   const getIcon = (id: string) => {
     switch (id) {
       case "guest-services":
-        return UserCheck;
+        return Users;
       case "event-security":
-        return Shield;
+        return ShieldCheck;
       case "event-entertainers":
-        return Sparkles;
+        return Mic2;
       case "photography-media":
         return Camera;
       case "technical-staff":
-        return Sliders;
+        return Headset;
       case "event-marketers":
-        return TrendingUp;
+        return Megaphone;
       default:
         return Sparkles;
     }
@@ -86,12 +86,12 @@ export const Services: React.FC<ServicesProps> = ({ onSelectService, onOpenHire 
 
                 <div className="space-y-5">
                   {/* Category Pill & Icon */}
-                  <div className="flex items-center justify-between">
-                    <div className="w-14 h-14 rounded-2xl bg-amber-500/10 flex items-center justify-center transition-colors duration-300 shadow-xs">
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="w-14 h-14 rounded-2xl bg-amber-500/10 flex items-center justify-center shrink-0 transition-colors duration-300 shadow-xs">
                       <Icon className="w-7 h-7" style={{ stroke: "url(#brand-gradient)" }} />
                     </div>
-                    <span className="text-xs font-extrabold uppercase tracking-wider text-slate-500 group-hover:text-amber-600 transition-colors">
-                      {service.category.split("&")[0]}
+                    <span className="text-[11px] sm:text-xs font-extrabold uppercase tracking-wider text-slate-500 group-hover:text-amber-600 transition-colors text-right max-w-[65%] leading-tight pt-1">
+                      {service.category}
                     </span>
                   </div>
 
