@@ -616,7 +616,7 @@ export default function AdminServicesPage() {
                           value={description}
                           onChange={(e) => setDescription(e.target.value)}
                           required
-                          placeholder="e.g. Africrew matches end-to-end multimedia production crews to events..."
+                          placeholder="e.g. AfriCrew matches end-to-end multimedia production crews to events..."
                           className="w-full px-4 py-3 rounded-xl border border-slate-200 text-xs sm:text-sm font-medium focus:outline-hidden focus:ring-2 focus:ring-amber-500/40"
                         />
                       </div>
@@ -627,7 +627,7 @@ export default function AdminServicesPage() {
                           rows={5}
                           value={fullScopeDescription}
                           onChange={(e) => setFullScopeDescription(e.target.value)}
-                          placeholder="e.g. Africrew's Multi-Media Production Crew service goes beyond booking a photographer or videographer..."
+                          placeholder="e.g. AfriCrew's Multi-Media Production Crew service goes beyond booking a photographer or videographer..."
                           className="w-full px-4 py-3 rounded-xl border border-slate-200 text-xs sm:text-sm font-medium focus:outline-hidden focus:ring-2 focus:ring-amber-500/40"
                         />
                       </div>
@@ -783,7 +783,7 @@ export default function AdminServicesPage() {
                           type="text"
                           value={seoTitle}
                           onChange={(e) => setSeoTitle(e.target.value)}
-                          placeholder="e.g. Hire Multi-Media Production Crews | Africrew"
+                          placeholder="e.g. Hire Multi-Media Production Crews | AfriCrew"
                           className="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm font-semibold focus:outline-hidden focus:ring-2 focus:ring-amber-500/40"
                         />
                       </div>
