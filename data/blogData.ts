@@ -433,7 +433,22 @@ With on-site QR attendance scanning, event leads receive live headcount updates 
 ];
 
 export function getArticleByIdOrSlug(idOrSlug: string): BlogArticle | undefined {
+  if (typeof window !== "undefined") {
+    const stored = localStorage.getItem("eventushers_blogs");
+    if (stored) {
+      try {
+        const parsed: BlogArticle[] = JSON.parse(stored);
+        const found = parsed.find(
+          (art) =>
+            (art.id && art.id.toString() === idOrSlug) ||
+            ((art as any)._id && (art as any)._id === idOrSlug) ||
+            art.slug === idOrSlug
+        );
+        if (found) return found;
+      } catch (e) {}
+    }
+  }
   return blogArticles.find(
-    (art) => art.id.toString() === idOrSlug || art.slug === idOrSlug
+    (art) => art.id.toString() === idOrSlug || art.slug === idOrSlug || (art as any)._id === idOrSlug
   );
 }

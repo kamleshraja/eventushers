@@ -37,7 +37,6 @@ export interface HireSubmission {
   createdAt?: string;
 }
 
-// Fetch all blogs (API + fallback)
 export async function getArticlesFromApi(): Promise<BlogArticle[]> {
   try {
     const res = await fetch(`${API_BASE_URL}/blogs`, { cache: "no-store" });
@@ -47,12 +46,20 @@ export async function getArticlesFromApi(): Promise<BlogArticle[]> {
       return json.data;
     }
   } catch (error) {
-    console.warn("Using fallback static blog articles.");
+    console.warn("Using fallback static/localStorage blog articles.");
+  }
+  if (typeof window !== "undefined") {
+    const stored = localStorage.getItem("eventushers_blogs");
+    if (stored) {
+      try {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      } catch (e) {}
+    }
   }
   return blogArticles;
 }
 
-// Fetch single article by slug
 export async function getArticleBySlugFromApi(slug: string): Promise<BlogArticle | null> {
   try {
     const res = await fetch(`${API_BASE_URL}/blogs/${slug}`, { cache: "no-store" });
@@ -62,6 +69,16 @@ export async function getArticleBySlugFromApi(slug: string): Promise<BlogArticle
     }
   } catch (error) {
     console.warn(`Fallback fetch for slug ${slug}`);
+  }
+  if (typeof window !== "undefined") {
+    const stored = localStorage.getItem("eventushers_blogs");
+    if (stored) {
+      try {
+        const parsed: BlogArticle[] = JSON.parse(stored);
+        const found = parsed.find((art) => art.slug === slug || art.id.toString() === slug || (art as any)._id === slug);
+        if (found) return found;
+      } catch (e) {}
+    }
   }
   return blogArticles.find((art) => art.slug === slug || art.id.toString() === slug) || null;
 }

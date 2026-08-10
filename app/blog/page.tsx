@@ -1,13 +1,14 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { HireModal } from "@/components/HireModal";
 import { JoinModal } from "@/components/JoinModal";
 import { CtaBanner } from "@/components/CtaBanner";
-import { blogArticles } from "@/data/blogData";
+import { blogArticles as staticBlogArticles, BlogArticle } from "@/data/blogData";
+import { getArticlesFromApi } from "@/lib/api";
 import { 
   BookOpen, 
   Clock, 
@@ -24,6 +25,15 @@ export default function BlogPage() {
   const [joinModalOpen, setJoinModalOpen] = useState(false);
   const [activeCategory, setActiveCategory] = useState("All");
   const [visibleCount, setVisibleCount] = useState(6);
+  const [articles, setArticles] = useState<BlogArticle[]>(staticBlogArticles);
+
+  useEffect(() => {
+    getArticlesFromApi().then((data) => {
+      if (data && data.length > 0) {
+        setArticles(data);
+      }
+    });
+  }, []);
 
   const blogContent = usePageContent("blog", {
     key: "blog",
@@ -41,7 +51,7 @@ export default function BlogPage() {
 
   const categories = ["All", "Staffing & Logistics", "Technology", "Career Insights", "Event Planning Tips"];
 
-  const filteredArticles = blogArticles.filter((art) => {
+  const filteredArticles = articles.filter((art) => {
     return activeCategory === "All" || art.category === activeCategory;
   });
 
@@ -107,9 +117,9 @@ export default function BlogPage() {
 
           {/* Articles 3-Column Grid */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {visibleArticles.map((post) => (
+            {visibleArticles.map((post, idx) => (
               <Link
-                key={post.id}
+                key={(post as any)._id || post.id || post.slug || idx}
                 href={`/blog/${post.slug}`}
                 className="group cursor-pointer rounded-3xl overflow-hidden border shadow-sm hover:shadow-2xl hover:shadow-amber-500/10 transition-all duration-300 flex flex-col justify-between hover:-translate-y-1.5 bg-white border-slate-200/80"
               >

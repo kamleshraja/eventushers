@@ -1,8 +1,21 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import Link from "next/link";
 import { Clock, Calendar, ArrowRight, BookOpen } from "lucide-react";
 import { usePageContent } from "@/lib/pageContent";
+import { getArticlesFromApi } from "@/lib/api";
+import { blogArticles as staticBlogArticles, BlogArticle } from "@/data/blogData";
 
 export const Blog: React.FC = () => {
+  const [articles, setArticles] = useState<BlogArticle[]>(staticBlogArticles);
+
+  useEffect(() => {
+    getArticlesFromApi().then((data) => {
+      if (data && data.length > 0) {
+        setArticles(data);
+      }
+    });
+  }, []);
+
   const homeData = usePageContent("home", {
     key: "home",
     title: "Home Page",
@@ -39,38 +52,7 @@ export const Blog: React.FC = () => {
     return sectionTitle;
   };
 
-  const posts = [
-    {
-      id: 1,
-      title: "How afriCrew Supports Staff Members Across Kenya",
-      category: "Staffing & Logistics",
-      date: "October 14, 2026",
-      readTime: "4 min read",
-      excerpt:
-        "Explore how standardized onboarding, protocol training, and digital payout tracking empower our crew members to deliver world-class event hospitality.",
-      image: "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=600&q=80",
-    },
-    {
-      id: 2,
-      title: "How afriCrew Connects Organizers with the Perfect Crew",
-      category: "Technology",
-      date: "October 02, 2026",
-      readTime: "5 min read",
-      excerpt:
-        "Learn how real-time location matching, verified identity checks, and automated scheduling eliminate event staffing headaches in minutes.",
-      image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=600&q=80",
-    },
-    {
-      id: 3,
-      title: "Building a Successful Career in the African Events Industry",
-      category: "Career Insights",
-      date: "September 28, 2026",
-      readTime: "6 min read",
-      excerpt:
-        "Key skills, corporate etiquette standards, and leadership paths for ambitious young professionals entering ushering, security, and event coordination.",
-      image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=600&q=80",
-    },
-  ];
+  const posts = articles.slice(0, 3);
 
   return (
     <section id="blog" className="py-16 md:py-20 relative bg-white text-slate-900 border-b border-slate-100">
@@ -92,9 +74,9 @@ export const Blog: React.FC = () => {
 
         {/* Blog Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {posts.map((post) => (
+          {posts.map((post, idx) => (
             <article
-              key={post.id}
+              key={(post as any)._id || post.id || post.slug || idx}
               className="group rounded-3xl overflow-hidden border shadow-sm hover:shadow-2xl hover:shadow-amber-500/10 transition-all duration-300 flex flex-col justify-between hover:-translate-y-1.5 bg-white border-slate-200"
             >
               <div>
@@ -138,13 +120,13 @@ export const Blog: React.FC = () => {
 
               {/* Read More Footer */}
               <div className="px-6 pb-6 pt-2">
-                <a
-                  href="/blog"
+                <Link
+                  href={`/blog/${post.slug}`}
                   className="inline-flex items-center gap-2 text-xs font-bold text-amber-500 group-hover:text-amber-600 transition-colors"
                 >
                   <span>Read Article</span>
                   <ArrowRight className="w-4 h-4 text-amber-500 group-hover:translate-x-1 transition-transform" />
-                </a>
+                </Link>
               </div>
 
             </article>

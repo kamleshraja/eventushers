@@ -166,16 +166,38 @@ export default function AdminBlogsPage() {
           const json = await res.json();
           if (json.success && json.data) {
             const updated = articles.map((a) =>
-              a.id === editingArticle.id || (a as any)._id === (editingArticle as any)._id
+              (editingArticle.id && a.id === editingArticle.id) || 
+              ((editingArticle as any)._id && (a as any)._id === (editingArticle as any)._id) ||
+              (editingArticle.slug && a.slug === editingArticle.slug)
                 ? { ...a, ...json.data }
                 : a
             );
             saveArticlesToStateAndStorage(updated);
+          } else {
+            const updated = articles.map((a) =>
+              (editingArticle.id && a.id === editingArticle.id) || 
+              ((editingArticle as any)._id && (a as any)._id === (editingArticle as any)._id) ||
+              (editingArticle.slug && a.slug === editingArticle.slug)
+                ? { ...a, ...payload }
+                : a
+            );
+            saveArticlesToStateAndStorage(updated);
           }
+        } else {
+          const updated = articles.map((a) =>
+            (editingArticle.id && a.id === editingArticle.id) || 
+            ((editingArticle as any)._id && (a as any)._id === (editingArticle as any)._id) ||
+            (editingArticle.slug && a.slug === editingArticle.slug)
+              ? { ...a, ...payload }
+              : a
+          );
+          saveArticlesToStateAndStorage(updated);
         }
       } catch (err) {
         const updated = articles.map((a) =>
-          a.id === editingArticle.id || (a as any)._id === (editingArticle as any)._id
+          (editingArticle.id && a.id === editingArticle.id) || 
+          ((editingArticle as any)._id && (a as any)._id === (editingArticle as any)._id) ||
+          (editingArticle.slug && a.slug === editingArticle.slug)
             ? { ...a, ...payload }
             : a
         );
@@ -293,8 +315,8 @@ export default function AdminBlogsPage() {
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-100 font-medium">
-                      {filteredArticles.map((article) => (
-                        <tr key={article.id} className="hover:bg-slate-50/80 transition-colors">
+                      {filteredArticles.map((article, idx) => (
+                        <tr key={(article as any)._id || article.id || article.slug || idx} className="hover:bg-slate-50/80 transition-colors">
                           <td className="p-4 pl-6">
                             <div className="flex items-center gap-3">
                               <img

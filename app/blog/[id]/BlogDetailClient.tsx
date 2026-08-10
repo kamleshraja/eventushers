@@ -1,13 +1,14 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { HireModal } from "@/components/HireModal";
 import { JoinModal } from "@/components/JoinModal";
 import { CtaBanner } from "@/components/CtaBanner";
-import { getArticleByIdOrSlug, blogArticles } from "@/data/blogData";
+import { getArticleByIdOrSlug, blogArticles, BlogArticle } from "@/data/blogData";
+import { getArticleBySlugFromApi, getArticlesFromApi } from "@/lib/api";
 import { 
   ArrowLeft, 
   Calendar, 
@@ -27,8 +28,17 @@ export function BlogDetailClient({ articleId }: BlogDetailClientProps) {
   const [hireModalOpen, setHireModalOpen] = useState(false);
   const [joinModalOpen, setJoinModalOpen] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [article, setArticle] = useState<BlogArticle | null>(() => getArticleByIdOrSlug(articleId) || null);
+  const [allArticles, setAllArticles] = useState<BlogArticle[]>(blogArticles);
 
-  const article = getArticleByIdOrSlug(articleId);
+  useEffect(() => {
+    getArticleBySlugFromApi(articleId).then((fetched) => {
+      if (fetched) setArticle(fetched);
+    });
+    getArticlesFromApi().then((list) => {
+      if (list && list.length > 0) setAllArticles(list);
+    });
+  }, [articleId]);
 
   if (!article) {
     return (
@@ -60,8 +70,8 @@ export function BlogDetailClient({ articleId }: BlogDetailClientProps) {
   }
 
   // Get 3 related articles (excluding current article)
-  const relatedArticles = blogArticles
-    .filter((art) => art.id !== article.id)
+  const relatedArticles = allArticles
+    .filter((art) => art.slug !== article.slug && art.id !== article.id)
     .slice(0, 3);
 
   const handleCopyLink = () => {
